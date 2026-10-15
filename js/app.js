@@ -141,7 +141,22 @@ function updateThemeIcon() {
 
 // ─── Navigation ───────────────────────────────────────────────────────────────
 
-function showView(viewName, data = {}) {
+function viewToHash(viewName, data = {}) {
+  if (viewName === 'module') return `#module/${data.levelId}/${data.topicId}`;
+  if (viewName === 'topics') return `#topics/${data.levelId}`;
+  if (viewName === 'landing') return '#home';
+  return `#${viewName}`;
+}
+
+function hashToView(hash) {
+  if (!hash || hash === '#' || hash === '#home') return { viewName: 'landing', data: {} };
+  const parts = hash.slice(1).split('/');
+  if (parts[0] === 'module' && parts[1] && parts[2]) return { viewName: 'module', data: { levelId: parts[1], topicId: parts[2] } };
+  if (parts[0] === 'topics' && parts[1]) return { viewName: 'topics', data: { levelId: parts[1] } };
+  return { viewName: parts[0], data: {} };
+}
+
+function showView(viewName, data = {}, { pushHash = true } = {}) {
   // Hide all views
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
 
@@ -150,11 +165,20 @@ function showView(viewName, data = {}) {
   if (view) view.classList.add('active');
 
   state.currentView = viewName;
+  state.currentData = data;
 
   // Update nav active state
   document.querySelectorAll('.nav-link, .mobile-nav-btn').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.view === viewName);
   });
+
+  // Update URL hash without triggering hashchange
+  if (pushHash) {
+    const hash = viewToHash(viewName, data);
+    if (window.location.hash !== hash) {
+      history.pushState(null, '', hash);
+    }
+  }
 
   window.scrollTo(0, 0);
 
@@ -165,6 +189,11 @@ function showView(viewName, data = {}) {
   if (viewName === 'dashboard') renderDashboard();
   if (viewName === 'library') renderLibrary();
   if (viewName === 'about') renderAbout();
+}
+
+function navigateFromHash() {
+  const { viewName, data } = hashToView(window.location.hash);
+  showView(viewName, data, { pushHash: false });
 }
 
 // ─── Render: Streak Badge ─────────────────────────────────────────────────────
@@ -830,8 +859,11 @@ function init() {
   renderStreakBadge();
   updateThemeIcon();
 
-  // Land on landing page
-  showView('landing');
+  // Navigate to hash on load, or landing if none
+  navigateFromHash();
+
+  // Back/forward button support
+  window.addEventListener('popstate', navigateFromHash);
 }
 
 document.addEventListener('DOMContentLoaded', init);

@@ -1009,7 +1009,6 @@ const PM_GYM_DATA = {
     {
       category: "Articles & Blogs",
       items: [
-        { title: "Lenny: What Makes a Great PM?", url: "https://www.lennysnewsletter.com/p/what-makes-a-great-pm", description: "Lenny Rachitsky's most-shared piece on the traits that separate great PMs from good ones." },
         { title: "Lenny: Choosing Your North Star Metric", url: "https://www.lennysnewsletter.com/p/choosing-your-north-star-metric", description: "Lenny's breakdown of how to pick the right North Star Metric — with examples from Airbnb, Slack, and more." },
         { title: "Amplitude: The North Star Checklist", url: "https://amplitude.com/books/north-star/the-north-star-checklist", description: "A practical checklist from Amplitude's North Star Playbook to validate and refine your North Star Metric." },
         { title: "Stratechery: Aggregation Theory", url: "https://stratechery.com/2015/aggregation-theory/", description: "Ben Thompson's foundational free essay on how internet companies build lasting product advantages." },
@@ -1021,15 +1020,8 @@ const PM_GYM_DATA = {
       items: [
         { title: "Inspired — Marty Cagan", url: "https://www.svpg.com/books/inspired-how-to-create-tech-products-customers-love-2nd-edition/", description: "The PM bible. Covers how top tech companies build products." },
         { title: "Continuous Discovery Habits — Teresa Torres", url: "https://www.amazon.com/Continuous-Discovery-Habits-Discover-Products/dp/1736633309", description: "The modern framework for user research integrated into product development." },
-        { title: "Good Strategy Bad Strategy — Rumelt", url: "https://www.amazon.com/Good-Strategy-Bad-Difference-Matters/dp/0307886239", description: "The clearest book on what strategy actually is — and isn't." }
-      ]
-    },
-    {
-      category: "Free Courses",
-      items: [
-        { title: "Exponent Free PM Resources", url: "https://www.tryexponent.com/blog", description: "Exponent's free blog with PM interview guides, frameworks, and career advice — no paywall." },
-        { title: "Product School Free Resources", url: "https://productschool.com/resources", description: "Free PM templates, webinars, and guides from Product School." },
-        { title: "Reforge Blog", url: "https://www.reforge.com/blog", description: "Deep, free articles on growth, metrics, and PM thinking from the premium course platform." }
+        { title: "Good Strategy Bad Strategy — Rumelt", url: "https://www.amazon.com/Good-Strategy-Bad-Difference-Matters/dp/0307886239", description: "The clearest book on what strategy actually is — and isn't." },
+        { title: "Agile Product Management with Scrum — Roman Pichler", url: "https://www.amazon.de/-/en/Agile-Product-Management-Scrum-Addison-Wesley/dp/0321605780", description: "How to apply Scrum as a Product Owner — practical and concise." }
       ]
     }
   ]
