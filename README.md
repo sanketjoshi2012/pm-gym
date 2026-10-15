@@ -4,7 +4,7 @@
 
 Built for career switchers — analysts, engineers, designers, and consultants who want to break into PM without paying for a bootcamp.
 
-🔗 **[Try it live →](https://sanketjoshi.github.io/pm-gym)**
+🔗 **[Try it live →](https://sanketjoshi2012.github.io/pm-gym)**
 
 ---
 
@@ -88,4 +88,4 @@ Current version: **v1.0.0**
 
 ---
 
-*Built by [Sanket Joshi](https://linkedin.com/in/sanketjoshi). Contributions welcome.*
+*Built by [Sanket Joshi](https://linkedin.com/in/sanketjoshi2012). Contributions welcome.*

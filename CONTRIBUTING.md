@@ -150,7 +150,7 @@ To add a new category entirely:
 
 ## How to Submit
 
-1. [Fork the repository](https://github.com/sanketjoshi/pm-gym/fork)
+1. [Fork the repository](https://github.com/sanketjoshi2012/pm-gym/fork)
 2. Create a branch: `git checkout -b add/topic-name`
 3. Edit `js/data.js` with your content
 4. Test locally: open `index.html` in a browser (or `python3 -m http.server` from the repo root)
