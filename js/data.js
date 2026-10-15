@@ -103,14 +103,14 @@ const PM_GYM_DATA = {
           ],
           resources: [
             {
-              title: "What is a Product Manager? (Video)",
-              url: "https://www.youtube.com/watch?v=yUOC-Y0f5ZQ",
-              description: "Exponent's 10-min explainer — the clearest intro to the PM role on YouTube."
+              title: "Exponent — PM Interview Prep (YouTube Channel)",
+              url: "https://www.youtube.com/@tryexponent",
+              description: "The best free PM content on YouTube — role breakdowns, mock interviews, and framework walkthroughs. Browse the channel for intro videos."
             },
             {
-              title: "Lenny Rachitsky: What Does a PM Actually Do?",
-              url: "https://www.lennysnewsletter.com/p/what-does-a-pm-do",
-              description: "A Lenny's Newsletter deep-dive into the PM role from one of the best PM writers."
+              title: "Lenny Rachitsky: The Jobs of a Product Manager",
+              url: "https://www.lennysnewsletter.com/p/jobs-of-product-manager",
+              description: "A clear breakdown of the three core jobs every PM owns — directly from one of the most-read PM writers."
             },
             {
               title: "Ken Norton: How to Hire a Product Manager",
@@ -235,14 +235,14 @@ const PM_GYM_DATA = {
               description: "Amplitude's comprehensive guide to identifying the metrics that actually matter for your product."
             },
             {
-              title: "Lenny's Newsletter: The Only Metric That Matters",
-              url: "https://www.lennysnewsletter.com/p/north-star-metric",
-              description: "A practical guide to finding your product's most important metric, with examples from top companies."
+              title: "Andrew Chen: Why DAU/MAU is the key stickiness ratio",
+              url: "https://andrewchen.com/dau-mau-is-an-important-metric/",
+              description: "Andrew Chen breaks down the stickiness ratio that top consumer PMs live by — with examples from social and gaming products."
             },
             {
-              title: "Andrew Chen: Growth Metrics Deep Dive",
-              url: "https://andrewchen.com/metrics-game/",
-              description: "How top growth teams at companies like Uber and Andreessen-backed startups think about metrics."
+              title: "Andrew Chen: 5 Steps to a Metrics-Driven Business",
+              url: "https://andrewchen.com/5-steps-towards-building-a-metrics-driven-business/",
+              description: "A practical framework for building the habit of measuring what actually matters, not just what's easy to track."
             }
           ]
         },
@@ -363,9 +363,9 @@ const PM_GYM_DATA = {
               description: "A practical, template-driven guide to writing PRDs from a former Asana and Google PM."
             },
             {
-              title: "Shreyas Doshi: PM Mental Models",
-              url: "https://twitter.com/shreyas/status/1282197568765702144",
-              description: "Stripe and Twitter PM Shreyas Doshi's widely-shared thread on mental models every PM should know."
+              title: "Mind the Product: Mental Models for PMs",
+              url: "https://www.mindtheproduct.com/mental-models-product-managers",
+              description: "A clear guide to the mental models PMs use to structure ambiguous problems — written for practitioners, not academics."
             }
           ]
         }
@@ -491,9 +491,9 @@ const PM_GYM_DATA = {
               description: "Brian Balfour's deep dive into how to find the right metric for your company."
             },
             {
-              title: "How Duolingo Grew to 500M Users",
-              url: "https://www.lennysnewsletter.com/p/how-duolingo-grew-to-500m-users",
-              description: "A case study in how metrics choices shaped Duolingo's product direction — from Lenny's Newsletter."
+              title: "Amplitude: Every Product Needs a North Star Metric",
+              url: "https://amplitude.com/blog/product-north-star-metric",
+              description: "Amplitude's blog post on how to define your North Star Metric — free, practical, with real company examples."
             }
           ]
         },
@@ -996,9 +996,9 @@ const PM_GYM_DATA = {
               description: "Weekly essays on tech company strategy — arguably the best public source for product strategy thinking in tech."
             },
             {
-              title: "Lenny's Newsletter: How to Write a Product Strategy",
-              url: "https://www.lennysnewsletter.com/p/product-strategy-overview",
-              description: "A practical, template-based guide to writing a product strategy from one of the most-read PM writers."
+              title: "Stratechery: The Aggregation Theory (Ben Thompson)",
+              url: "https://stratechery.com/2015/aggregation-theory/",
+              description: "Ben Thompson's foundational free essay on how internet companies build strategic moats — essential product strategy reading."
             }
           ]
         }
@@ -1007,11 +1007,11 @@ const PM_GYM_DATA = {
   ],
   resources: [
     {
-      category: "Newsletters",
+      category: "Articles & Blogs",
       items: [
-        { title: "Lenny's Newsletter", url: "https://www.lennysnewsletter.com", description: "Weekly deep dives on product management, growth, and career. The most widely-read PM newsletter." },
-        { title: "Stratechery (Ben Thompson)", url: "https://stratechery.com", description: "Tech strategy analysis. Paid, but weekly free articles are excellent." },
-        { title: "The Product Compass (Bart Jaworski)", url: "https://productcompass.pm", description: "Practical PM frameworks and career advice." }
+        { title: "Lenny: What Makes a Great PM?", url: "https://www.lennysnewsletter.com/p/what-makes-a-great-pm", description: "Lenny Rachitsky's most-shared piece on the traits that separate great PMs from good ones." },
+        { title: "Stratechery: Aggregation Theory", url: "https://stratechery.com/2015/aggregation-theory/", description: "Ben Thompson's foundational free essay on how internet companies build lasting product advantages." },
+        { title: "Ken Norton: Leading Cross-Functional Teams", url: "https://www.bringthedonuts.com/essays/leading-cross-functional-teams.html", description: "How PMs lead teams they don't manage — by the author of the most-cited PM essay ever written." }
       ]
     },
     {
@@ -1033,7 +1033,7 @@ const PM_GYM_DATA = {
     {
       category: "Free Courses",
       items: [
-        { title: "Google's PM Interview Prep (YouTube)", url: "https://www.youtube.com/watch?v=2Jg8gJvTqAk", description: "Google's own product interview preparation walkthrough." },
+        { title: "Exponent Free PM Resources", url: "https://www.tryexponent.com/blog", description: "Exponent's free blog with PM interview guides, frameworks, and career advice — no paywall." },
         { title: "Product School Free Resources", url: "https://productschool.com/resources", description: "Free PM templates, webinars, and guides from Product School." },
         { title: "Reforge Blog", url: "https://www.reforge.com/blog", description: "Deep, free articles on growth, metrics, and PM thinking from the premium course platform." }
       ]
