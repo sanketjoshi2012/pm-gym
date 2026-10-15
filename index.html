@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>PM Gym</title>
+  <meta name="description" content="Free practice platform for aspiring Product Managers. Lessons, quizzes, case studies, and curated resources for career switchers breaking into PM.">
+  <meta name="theme-color" content="#5b35f5">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ─── Navigation ─── -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <div class="nav-logo" onclick="showView('landing')">
+        <div class="nav-logo-icon">💪</div>
+        <span class="nav-logo-text">PM Gym</span>
+      </div>
+
+      <div class="nav-links">
+        <button class="nav-link" data-view="landing" onclick="showView('landing')">Home</button>
+        <button class="nav-link" data-view="levels" onclick="showView('levels')">Practice</button>
+        <button class="nav-link" data-view="library" onclick="showView('library')">Resources</button>
+        <button class="nav-link" data-view="dashboard" onclick="showView('dashboard')">Progress</button>
+      </div>
+
+      <div class="nav-actions">
+        <div class="streak-badge" id="streakBadge" style="display:none">
+          🔥 <span class="streak-count">0</span>
+        </div>
+        <button class="btn-icon" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle dark mode">🌙</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ─── Landing View ─── -->
+  <section id="view-landing" class="view active">
+    <div class="hero">
+      <div class="hero-eyebrow">⚡ Free PM Learning Platform</div>
+
+      <h1 class="hero-title">
+        Train for your<br><span class="accent">PM role</span>
+      </h1>
+
+      <p class="hero-sub">
+        The free practice platform for career switchers breaking into Product Management — from first principles to real case studies.
+      </p>
+
+      <div class="hero-for">
+        <span class="for-chip">👩‍💻 Software Engineers</span>
+        <span class="for-chip">📊 Analysts &amp; Data Scientists</span>
+        <span class="for-chip">🎨 Designers</span>
+        <span class="for-chip">🏢 Consultants</span>
+        <span class="for-chip">📈 Business Analysts</span>
+      </div>
+
+      <button class="hero-cta" onclick="showView('levels')">
+        Start Practicing
+        <span>→</span>
+      </button>
+
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-num">9</div>
+          <div class="stat-label">Topic modules</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">40+</div>
+          <div class="stat-label">Quiz questions</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">2</div>
+          <div class="stat-label">Full case studies</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">Free</div>
+          <div class="stat-label">Always</div>
+        </div>
+      </div>
+
+      <!-- How it works -->
+      <div style="max-width: 720px; margin: 4rem auto 0; text-align: left;">
+        <h2 style="font-size: 1.5rem; font-weight: 700; text-align: center; margin: 0 0 2rem;">How PM Gym Works</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem;">
+          <div style="padding: 1.25rem; background: var(--bg-card); border: 1.5px solid var(--border); border-radius: 12px;">
+            <div style="font-size: 1.75rem; margin-bottom: 0.5rem;">1️⃣</div>
+            <div style="font-weight: 700; margin-bottom: 0.3rem;">Pick your level</div>
+            <div style="font-size: 0.875rem; color: var(--fg-2);">Beginner, Intermediate, or Advanced — start where it makes sense for you.</div>
+          </div>
+          <div style="padding: 1.25rem; background: var(--bg-card); border: 1.5px solid var(--border); border-radius: 12px;">
+            <div style="font-size: 1.75rem; margin-bottom: 0.5rem;">2️⃣</div>
+            <div style="font-weight: 700; margin-bottom: 0.3rem;">Read the lesson</div>
+            <div style="font-size: 0.875rem; color: var(--fg-2);">Real PM concepts with examples from Spotify, LinkedIn, Airbnb, and more.</div>
+          </div>
+          <div style="padding: 1.25rem; background: var(--bg-card); border: 1.5px solid var(--border); border-radius: 12px;">
+            <div style="font-size: 1.75rem; margin-bottom: 0.5rem;">3️⃣</div>
+            <div style="font-weight: 700; margin-bottom: 0.3rem;">Take the quiz</div>
+            <div style="font-size: 0.875rem; color: var(--fg-2);">5–10 multiple-choice questions with explanations to reinforce each concept.</div>
+          </div>
+          <div style="padding: 1.25rem; background: var(--bg-card); border: 1.5px solid var(--border); border-radius: 12px;">
+            <div style="font-size: 1.75rem; margin-bottom: 0.5rem;">4️⃣</div>
+            <div style="font-weight: 700; margin-bottom: 0.3rem;">Try case studies</div>
+            <div style="font-size: 0.875rem; color: var(--fg-2);">Advanced: real PM scenarios where you write answers and compare to expert rubrics.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Levels View ─── -->
+  <section id="view-levels" class="view levels-view">
+    <div class="container">
+      <div class="section-header">
+        <h2>Choose Your Level</h2>
+        <p>Each level has multiple topics with lessons, quizzes, and curated resources</p>
+      </div>
+      <div class="levels-grid" id="levelsGrid">
+        <!-- rendered by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Topics View ─── -->
+  <section id="view-topics" class="view topics-view">
+    <div class="container">
+      <div id="topicsContainer">
+        <!-- rendered by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Module View ─── -->
+  <section id="view-module" class="view">
+    <div class="container module-view">
+      <div id="moduleContainer">
+        <!-- rendered by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Dashboard View ─── -->
+  <section id="view-dashboard" class="view dashboard-view">
+    <div class="container">
+      <div id="dashboardContainer">
+        <!-- rendered by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Library View ─── -->
+  <section id="view-library" class="view library-view">
+    <div class="container">
+      <div id="libraryContainer">
+        <!-- rendered by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Mobile Bottom Nav ─── -->
+  <nav class="mobile-nav">
+    <button class="mobile-nav-btn active" data-view="landing" onclick="showView('landing')">
+      <span class="mobile-nav-icon">🏠</span>
+      <span>Home</span>
+    </button>
+    <button class="mobile-nav-btn" data-view="levels" onclick="showView('levels')">
+      <span class="mobile-nav-icon">💪</span>
+      <span>Practice</span>
+    </button>
+    <button class="mobile-nav-btn" data-view="library" onclick="showView('library')">
+      <span class="mobile-nav-icon">🔗</span>
+      <span>Resources</span>
+    </button>
+    <button class="mobile-nav-btn" data-view="dashboard" onclick="showView('dashboard')">
+      <span class="mobile-nav-icon">📊</span>
+      <span>Progress</span>
+    </button>
+  </nav>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
