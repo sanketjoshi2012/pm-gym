@@ -328,8 +328,8 @@ function renderModule(levelId, topicId) {
   // Reset quiz state
   state.quizState = { currentQ: 0, answers: [], answered: false };
 
-  const tabs = ['lesson', 'quiz', 'resources'];
-  const tabLabels = { lesson: '📖 Lesson', quiz: '🧠 Quiz', resources: '🔗 Resources' };
+  const tabs = ['lesson', 'quiz'];
+  const tabLabels = { lesson: '📖 Lesson', quiz: '🧠 Quiz' };
 
   container.innerHTML = `
     <button class="back-btn" onclick="showView('topics', {levelId: '${levelId}'})">← Back to ${level.title}</button>
@@ -345,9 +345,6 @@ function renderModule(levelId, topicId) {
     </div>
     <div id="tab-quiz" class="tab-panel">
       ${renderQuizPanel(topic)}
-    </div>
-    <div id="tab-resources" class="tab-panel">
-      ${renderResourcesPanel(topic)}
     </div>`;
 }
 
