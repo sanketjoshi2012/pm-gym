@@ -88,4 +88,4 @@ Current version: **v1.0.0**
 
 ---
 
-*Built by [Sanket Joshi](https://linkedin.com/in/sanketjoshi2012). Contributions welcome.*
+*Built by [Sanket Joshi](https://www.linkedin.com/in/sanket-joshi-897961102/). Contributions welcome.*

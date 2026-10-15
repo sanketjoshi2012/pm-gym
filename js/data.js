@@ -1010,16 +1010,10 @@ const PM_GYM_DATA = {
       category: "Articles & Blogs",
       items: [
         { title: "Lenny: What Makes a Great PM?", url: "https://www.lennysnewsletter.com/p/what-makes-a-great-pm", description: "Lenny Rachitsky's most-shared piece on the traits that separate great PMs from good ones." },
+        { title: "Lenny: Choosing Your North Star Metric", url: "https://www.lennysnewsletter.com/p/choosing-your-north-star-metric", description: "Lenny's breakdown of how to pick the right North Star Metric — with examples from Airbnb, Slack, and more." },
+        { title: "Amplitude: The North Star Checklist", url: "https://amplitude.com/books/north-star/the-north-star-checklist", description: "A practical checklist from Amplitude's North Star Playbook to validate and refine your North Star Metric." },
         { title: "Stratechery: Aggregation Theory", url: "https://stratechery.com/2015/aggregation-theory/", description: "Ben Thompson's foundational free essay on how internet companies build lasting product advantages." },
         { title: "Ken Norton: Leading Cross-Functional Teams", url: "https://www.bringthedonuts.com/essays/leading-cross-functional-teams.html", description: "How PMs lead teams they don't manage — by the author of the most-cited PM essay ever written." }
-      ]
-    },
-    {
-      category: "YouTube Channels",
-      items: [
-        { title: "Exponent (PM Interview Prep)", url: "https://www.youtube.com/@tryexponent", description: "Best PM interview prep on YouTube — mock interviews, frameworks, and deep dives." },
-        { title: "Product School", url: "https://www.youtube.com/@ProductSchool", description: "Talks and workshops from working PMs at top companies." },
-        { title: "Jeff H Seibert", url: "https://www.youtube.com/@JeffHSeibert", description: "Former Twitter product leader with practical PM career advice." }
       ]
     },
     {

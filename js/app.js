@@ -164,6 +164,7 @@ function showView(viewName, data = {}) {
   if (viewName === 'module') renderModule(data.levelId, data.topicId);
   if (viewName === 'dashboard') renderDashboard();
   if (viewName === 'library') renderLibrary();
+  if (viewName === 'about') renderAbout();
 }
 
 // ─── Render: Streak Badge ─────────────────────────────────────────────────────
@@ -726,8 +727,8 @@ function renderLibrary() {
   if (!container) return;
 
   const categoryIcons = {
+    'Articles & Blogs': '📝',
     'Newsletters': '📬',
-    'YouTube Channels': '▶️',
     'Books': '📚',
     'Free Courses': '🎓',
   };
@@ -736,6 +737,10 @@ function renderLibrary() {
     <div class="section-header">
       <h2>Resource Library</h2>
       <p>Curated free resources organized by format</p>
+    </div>
+    <div class="library-disclaimer">
+      <span class="disclaimer-icon">💡</span>
+      <span>These resources are curated based on what Sanket personally went through while transitioning into PM. Know something better? <a href="https://github.com/sanketjoshi2012/pm-gym" target="_blank" rel="noopener">Contribute to the repo ↗</a></span>
     </div>
     <div class="resource-categories">
       ${PM_GYM_DATA.resources.map(cat => `
@@ -753,6 +758,50 @@ function renderLibrary() {
               </a>`).join('')}
           </div>
         </div>`).join('')}
+    </div>`;
+}
+
+// ─── Render: About ───────────────────────────────────────────────────────────
+
+function renderAbout() {
+  const container = document.getElementById('aboutContainer');
+  if (!container) return;
+
+  container.innerHTML = `
+    <div class="section-header">
+      <h2>About PM Gym</h2>
+      <p>Who built this and why</p>
+    </div>
+
+    <div class="about-layout">
+      <div class="about-card">
+        <div class="about-avatar">SJ</div>
+        <div class="about-bio">
+          <h3>Sanket Joshi</h3>
+          <p class="about-role">Data &amp; Analytics Professional · Transitioning to APM / PM</p>
+          <p class="about-location">📍 Berlin, Germany · 7+ years in data &amp; analytics</p>
+          <p class="about-text">
+            Most recently at <strong>KNIME GmbH</strong> in Berlin — started as a Data Analyst owning content marketing analytics end-to-end, then moved to Data Scientist building agentic AI workflows with LLM tool-calling. Before that: consulting in insurance operations at Syntel (India), and a Master's in Data &amp; Knowledge Engineering at Otto von Guericke Universität Magdeburg.
+          </p>
+          <p class="about-text">
+            I built PM Gym because I'm making the same transition I'm helping you prepare for. Everything here is what I personally read, practiced, and found valuable — nothing padded, nothing paywalled.
+          </p>
+          <div class="about-links">
+            <a href="https://www.linkedin.com/in/sanket-joshi-897961102/" target="_blank" rel="noopener" class="about-link">LinkedIn ↗</a>
+            <a href="https://github.com/sanketjoshi2012/pm-gym" target="_blank" rel="noopener" class="about-link">GitHub ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-contribute">
+        <h3>🤝 This is a Community Project</h3>
+        <p>PM Gym is fully open source. If you know a resource that should be here, a case study that would help, or a topic that's missing — pull requests are welcome.</p>
+        <p>You don't need to know how to code. If you can edit a text file and write clearly, you can contribute a topic, a quiz question, or a resource.</p>
+        <div class="about-contribute-actions">
+          <a href="https://github.com/sanketjoshi2012/pm-gym" target="_blank" rel="noopener" class="btn-primary">View on GitHub ↗</a>
+          <a href="https://github.com/sanketjoshi2012/pm-gym/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener" class="btn-secondary">How to Contribute</a>
+        </div>
+      </div>
     </div>`;
 }
 
