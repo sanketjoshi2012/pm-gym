@@ -342,6 +342,12 @@ img { max-width: 100%; }
   transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.level-card .btn-level {
+  margin-top: auto;
 }
 
 .level-card::before {
