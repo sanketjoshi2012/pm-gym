@@ -136,7 +136,11 @@ function toggleTheme() {
 function updateThemeIcon() {
   const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
   const btn = document.getElementById('themeToggle');
-  if (btn) btn.textContent = isDark ? '☀️' : '🌙';
+  if (btn) {
+    btn.innerHTML = isDark
+      ? '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>'
+      : '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>';
+  }
 }
 
 // ─── Navigation ───────────────────────────────────────────────────────────────
@@ -227,7 +231,9 @@ function renderLevelCards() {
 
     return `
       <div class="level-card" onclick="showView('topics', {levelId: '${level.id}'})">
-        <div class="level-icon">${level.icon}</div>
+        <div class="level-icon">
+          <span class="level-badge">LEVEL ${level.id === 'beginner' ? '01' : level.id === 'intermediate' ? '02' : '03'}</span>
+        </div>
         <div class="level-title">${level.title}</div>
         <div class="level-subtitle">"${level.subtitle}"</div>
         <div class="level-desc">${level.description}</div>
