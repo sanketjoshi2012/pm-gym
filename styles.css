@@ -1255,6 +1255,83 @@ html { scroll-behavior: smooth; }
   outline-offset: 2px;
 }
 
+/* ─── WIP Banner ─── */
+.wip-banner {
+  background: var(--accent-soft);
+  color: var(--accent-text);
+  font-size: 0.82rem;
+  font-weight: 500;
+  text-align: center;
+  padding: 0.5rem 1rem;
+  line-height: 1.4;
+}
+
+.wip-banner a {
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.wip-banner a:hover { text-decoration: underline; }
+
+/* ─── Submit Scenario Section ─── */
+.submit-scenario-section {
+  max-width: 720px;
+  margin: 3rem auto 0;
+  padding: 0 var(--gutter);
+}
+
+.submit-scenario-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  background: var(--bg-card);
+  border: 1.5px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 1.5rem 2rem;
+}
+
+.submit-scenario-text h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0 0 0.4rem;
+}
+
+.submit-scenario-text p {
+  font-size: 0.875rem;
+  color: var(--fg-2);
+  margin: 0;
+  line-height: 1.55;
+}
+
+.submit-scenario-btn {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.65rem 1.25rem;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+.submit-scenario-btn:hover { background: var(--accent-hover); }
+
+@media (max-width: 600px) {
+  .submit-scenario-inner {
+    flex-direction: column;
+    padding: 1.25rem;
+    text-align: center;
+  }
+
+  .submit-scenario-btn { width: 100%; justify-content: center; }
+}
+
 /* ─── About Section ─── */
 .about-layout {
   display: flex;
