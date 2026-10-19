@@ -1,4 +1,4 @@
-// PM Gym — Application Logic
+// PM Gym, Application Logic
 
 const STORAGE_KEYS = {
   STREAK: 'pmgym_streak',
@@ -59,7 +59,7 @@ function loadState() {
 
     updateStreak();
   } catch (e) {
-    // Graceful fallback — storage might be blocked
+    // Graceful fallback, storage might be blocked
   }
 }
 
@@ -378,7 +378,7 @@ function renderLessonPanel(topic) {
     <button class="lesson-done-btn ${done ? 'completed' : ''}"
             id="lessonDoneBtn"
             onclick="markLessonDone('${topic.id}')">
-      ${done ? '✓ Lesson Completed' : 'Mark as Read — Take the Quiz →'}
+      ${done ? '✓ Lesson Completed' : 'Mark as Read, Take the Quiz →'}
     </button>`;
 }
 
@@ -513,7 +513,7 @@ function buildQuizResults(topic) {
     msg = "Good effort! Review the explanations and try again.";
     emoji = "📈";
   } else {
-    msg = "Keep studying — re-read the lesson and retake the quiz.";
+    msg = "Keep studying, re-read the lesson and retake the quiz.";
     emoji = "💪";
   }
 
@@ -535,7 +535,7 @@ function buildQuizResults(topic) {
         <div class="result-score-num">${correct}</div>
         <div class="result-score-denom">/ ${quiz.length}</div>
       </div>
-      <div class="result-title">${emoji} ${pct}% — ${pct >= 80 ? 'Excellent' : pct >= 60 ? 'Good' : 'Keep Practicing'}</div>
+      <div class="result-title">${emoji} ${pct}%, ${pct >= 80 ? 'Excellent' : pct >= 60 ? 'Good' : 'Keep Practicing'}</div>
       <div class="result-desc">${msg}</div>
       ${weakAreas.length > 0 ? `
         <div style="text-align: left; margin-bottom: 1.5rem; padding: 1rem; background: var(--bg-subtle); border-radius: 8px;">
@@ -572,7 +572,7 @@ function markLessonDone(topicId) {
     btn.classList.add('completed');
   }
 
-  showToast('📖 Lesson marked complete — take the quiz to finish!');
+  showToast('📖 Lesson marked complete, take the quiz to finish!');
 
   // Auto-switch to quiz tab after a moment
   setTimeout(() => switchTab('quiz'), 1200);
@@ -827,10 +827,10 @@ function renderAbout() {
           <p class="about-role">Data &amp; Analytics Professional · Transitioning to APM / PM</p>
           <p class="about-location">📍 Berlin, Germany · 7+ years in data &amp; analytics</p>
           <p class="about-text">
-            Most recently at <strong>KNIME GmbH</strong> in Berlin — started as a Data Analyst owning content marketing analytics end-to-end, then moved to Data Scientist building agentic AI workflows with LLM tool-calling. Before that: consulting in insurance operations at Syntel (India), and a Master's in Data &amp; Knowledge Engineering at Otto von Guericke Universität Magdeburg.
+            Most recently at <strong>KNIME GmbH</strong> in Berlin, started as a Data Analyst owning content marketing analytics end-to-end, then moved to Data Scientist building agentic AI workflows with LLM tool-calling. Before that: consulting in insurance operations at Syntel (India), and a Master's in Data &amp; Knowledge Engineering at Otto von Guericke Universität Magdeburg.
           </p>
           <p class="about-text">
-            I built PM Gym because I'm making the same transition I'm helping you prepare for. Everything here is what I personally read, practiced, and found valuable — nothing padded, nothing paywalled.
+            I built PM Gym because I'm making the same transition I'm helping you prepare for. Everything here is what I personally read, practiced, and found valuable, nothing padded, nothing paywalled.
           </p>
           <div class="about-links">
             <a href="https://www.linkedin.com/in/sanket-joshi-897961102/" target="_blank" rel="noopener" class="about-link">LinkedIn ↗</a>
@@ -841,7 +841,7 @@ function renderAbout() {
 
       <div class="about-contribute">
         <h3>🤝 This is a Community Project</h3>
-        <p>PM Gym is fully open source. If you know a resource that should be here, a case study that would help, or a topic that's missing — pull requests are welcome.</p>
+        <p>PM Gym is fully open source. If you know a resource that should be here, a case study that would help, or a topic that's missing, pull requests are welcome.</p>
         <p>You don't need to know how to code. If you can edit a text file and write clearly, you can contribute a topic, a quiz question, or a resource.</p>
         <div class="about-contribute-actions">
           <a href="https://tally.so/r/rDyLDR" target="_blank" rel="noopener" class="btn-primary">Share a PM Scenario ↗</a>

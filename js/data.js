@@ -14,7 +14,7 @@ const PM_GYM_DATA = {
           lesson: {
             title: "What Does a Product Manager Do?",
             content: `
-              <p>A Product Manager (PM) sits at the intersection of business, technology, and user experience. Their job is to figure out <strong>what to build, why to build it, and whether it worked</strong> — without directly managing the engineers, designers, or data scientists who do the building.</p>
+              <p>A Product Manager (PM) sits at the intersection of business, technology, and user experience. Their job is to figure out <strong>what to build, why to build it, and whether it worked</strong>, without directly managing the engineers, designers, or data scientists who do the building.</p>
 
               <h3>The Core Job</h3>
               <p>Think of a PM as the CEO of their product area. They own the "what" and "why," while engineering owns the "how." A PM working on Spotify's search feature, for example, is responsible for:</p>
@@ -26,22 +26,22 @@ const PM_GYM_DATA = {
               </ul>
 
               <h3>What a PM's Week Actually Looks Like</h3>
-              <p><strong>Monday:</strong> Review last week's metrics — did the new feature move the needle? Write up findings for the team.</p>
-              <p><strong>Tuesday:</strong> User research session — interview 3 users to understand why they're abandoning the onboarding flow.</p>
-              <p><strong>Wednesday:</strong> Sprint planning — work with engineers to scope what's feasible for the next two weeks.</p>
+              <p><strong>Monday:</strong> Review last week's metrics, did the new feature move the needle? Write up findings for the team.</p>
+              <p><strong>Tuesday:</strong> User research session, interview 3 users to understand why they're abandoning the onboarding flow.</p>
+              <p><strong>Wednesday:</strong> Sprint planning, work with engineers to scope what's feasible for the next two weeks.</p>
               <p><strong>Thursday:</strong> Write a PRD (Product Requirements Document) for the next feature.</p>
-              <p><strong>Friday:</strong> Stakeholder sync — align with Marketing on the launch plan, align with Legal on compliance.</p>
+              <p><strong>Friday:</strong> Stakeholder sync, align with Marketing on the launch plan, align with Legal on compliance.</p>
 
               <h3>PM vs Other Roles</h3>
               <p><strong>PM vs Project Manager:</strong> A Project Manager ensures things get done on time. A PM decides <em>what</em> things should get done at all. PMs set direction; PjMs keep the train on schedule.</p>
-              <p><strong>PM vs Designer:</strong> A Designer owns the look, feel, and usability of a product. A PM works with designers but owns the business goals and user outcomes — the "why," not just the "how it looks."</p>
+              <p><strong>PM vs Designer:</strong> A Designer owns the look, feel, and usability of a product. A PM works with designers but owns the business goals and user outcomes, the "why," not just the "how it looks."</p>
               <p><strong>PM vs Engineer:</strong> Engineers build the product. PMs define what needs to be built and why. Great PMs earn engineers' trust by writing precise specs and shielding them from scope creep.</p>
 
               <h3>The "Without Authority" Problem</h3>
-              <p>PMs influence without authority — they lead teams they don't manage. This means PMs win through <strong>clarity, credibility, and communication</strong>. When a PM says "we should build X," the engineers, designers, and stakeholders need a reason to believe them. That reason is usually: clear data, a deep understanding of users, and a logical argument.</p>
+              <p>PMs influence without authority, they lead teams they don't manage. This means PMs win through <strong>clarity, credibility, and communication</strong>. When a PM says "we should build X," the engineers, designers, and stakeholders need a reason to believe them. That reason is usually: clear data, a deep understanding of users, and a logical argument.</p>
 
               <h3>Real Example: Instagram Stories</h3>
-              <p>When Instagram's PM team saw Snapchat's Stories feature gaining traction, they had to make a hard call: copy the format or innovate. They chose to build Stories directly into Instagram. The PM's job was to define the exact feature scope (what makes a Story?), align Design and Engineering, and measure success post-launch. Stories now drives more engagement than the main feed — that's PM impact.</p>
+              <p>When Instagram's PM team saw Snapchat's Stories feature gaining traction, they had to make a hard call: copy the format or innovate. They chose to build Stories directly into Instagram. The PM's job was to define the exact feature scope (what makes a Story?), align Design and Engineering, and measure success post-launch. Stories now drives more engagement than the main feed, that's PM impact.</p>
             `
           },
           quiz: [
@@ -54,7 +54,7 @@ const PM_GYM_DATA = {
                 "They manage the budget for the product team"
               ],
               correct: 1,
-              explanation: "PMs 'own' the product in the sense of accountability for outcomes, but they have no direct authority over engineers or designers. They must lead through credibility, data, and clear communication — hence the 'influence without authority' challenge."
+              explanation: "PMs 'own' the product in the sense of accountability for outcomes, but they have no direct authority over engineers or designers. They must lead through credibility, data, and clear communication, hence the 'influence without authority' challenge."
             },
             {
               question: "Which of the following best describes the difference between a Product Manager and a Project Manager?",
@@ -62,7 +62,7 @@ const PM_GYM_DATA = {
                 "Product Managers focus on technical implementation; Project Managers focus on user needs",
                 "Product Managers decide what to build and why; Project Managers ensure it gets delivered on time",
                 "Product Managers work at startups; Project Managers work at enterprises",
-                "There is no real difference — the titles are used interchangeably"
+                "There is no real difference, the titles are used interchangeably"
               ],
               correct: 1,
               explanation: "A PM sets product direction (what and why). A Project Manager (PjM) manages timelines, resources, and delivery (when and how it gets done). In many companies both roles exist; in startups, one person often does both."
@@ -72,7 +72,7 @@ const PM_GYM_DATA = {
               options: [
                 "Immediately redesign the post-order experience to add more features",
                 "Ask engineers to optimize the app's loading speed",
-                "Investigate why users are dropping off — through data analysis and user research",
+                "Investigate why users are dropping off, through data analysis and user research",
                 "Launch a push notification campaign to bring users back"
               ],
               correct: 2,
@@ -87,35 +87,35 @@ const PM_GYM_DATA = {
                 "Escalate to the VP of Product to resolve the disagreement"
               ],
               correct: 2,
-              explanation: "PMs lead through transparency and reasoning, not authority. Sharing your logic — user data, business goals — invites genuine debate and often surfaces better ideas. Overriding or ignoring silences talented teammates and erodes trust."
+              explanation: "PMs lead through transparency and reasoning, not authority. Sharing your logic, user data, business goals, invites genuine debate and often surfaces better ideas. Overriding or ignoring silences talented teammates and erodes trust."
             },
             {
               question: "Instagram's PM decided to add Stories to the main Instagram app rather than building a separate app. What PM skill does this best illustrate?",
               options: [
                 "Technical architecture planning",
-                "Strategic product judgment — deciding what to build and where to build it",
-                "Project management — coordinating a cross-functional team",
+                "Strategic product judgment, deciding what to build and where to build it",
+                "Project management, coordinating a cross-functional team",
                 "User interface design"
               ],
               correct: 1,
-              explanation: "The decision to add Stories to Instagram (not a new app) was a strategic product call: leverage existing distribution, user habit, and trust rather than starting from zero. That's PM judgment — picking the right problem, right scope, right approach."
+              explanation: "The decision to add Stories to Instagram (not a new app) was a strategic product call: leverage existing distribution, user habit, and trust rather than starting from zero. That's PM judgment, picking the right problem, right scope, right approach."
             }
           ],
           resources: [
             {
-              title: "Exponent — PM Interview Prep (YouTube Channel)",
+              title: "Exponent, PM Interview Prep (YouTube Channel)",
               url: "https://www.youtube.com/@tryexponent",
-              description: "The best free PM content on YouTube — role breakdowns, mock interviews, and framework walkthroughs. Browse the channel for intro videos."
+              description: "The best free PM content on YouTube, role breakdowns, mock interviews, and framework walkthroughs. Browse the channel for intro videos."
             },
             {
               title: "Lenny Rachitsky: The Jobs of a Product Manager",
               url: "https://www.lennysnewsletter.com/p/jobs-of-product-manager",
-              description: "A clear breakdown of the three core jobs every PM owns — directly from one of the most-read PM writers."
+              description: "A clear breakdown of the three core jobs every PM owns, directly from one of the most-read PM writers."
             },
             {
               title: "Ken Norton: How to Hire a Product Manager",
               url: "https://www.bringthedonuts.com/essays/productmanager.html",
-              description: "The classic essay on what separates great PMs from good ones — still the most-cited PM piece ever written."
+              description: "The classic essay on what separates great PMs from good ones, still the most-cited PM piece ever written."
             }
           ]
         },
@@ -130,45 +130,45 @@ const PM_GYM_DATA = {
 
               <h3>The Four Categories of Product Metrics</h3>
 
-              <p><strong>1. Acquisition</strong> — How are users finding you?</p>
+              <p><strong>1. Acquisition</strong>, How are users finding you?</p>
               <ul>
                 <li>Signups per day, cost per acquisition (CPA), traffic by channel</li>
                 <li>Example: "300 new users signed up today, 60% from organic search"</li>
               </ul>
 
-              <p><strong>2. Activation</strong> — Are new users getting value quickly?</p>
+              <p><strong>2. Activation</strong>, Are new users getting value quickly?</p>
               <ul>
                 <li>Onboarding completion rate, time-to-first-value</li>
                 <li>Example: "Users who complete onboarding within 24 hours are 3x more likely to return"</li>
               </ul>
 
-              <p><strong>3. Retention</strong> — Are users coming back?</p>
+              <p><strong>3. Retention</strong>, Are users coming back?</p>
               <ul>
                 <li>Day-7 retention, Monthly Active Users (MAU), churn rate</li>
-                <li>Example: "We have 80% D1 retention but only 20% D30 — something's wrong in weeks 2-4"</li>
+                <li>Example: "We have 80% D1 retention but only 20% D30, something's wrong in weeks 2-4"</li>
               </ul>
 
-              <p><strong>4. Revenue</strong> — Are you making money?</p>
+              <p><strong>4. Revenue</strong>, Are you making money?</p>
               <ul>
                 <li>Monthly Recurring Revenue (MRR), Average Revenue Per User (ARPU), conversion rate</li>
-                <li>Example: "Our free-to-paid conversion rate is 3% — industry average is 5%"</li>
+                <li>Example: "Our free-to-paid conversion rate is 3%, industry average is 5%"</li>
               </ul>
 
               <h3>Vanity Metrics vs. Actionable Metrics</h3>
-              <p>A <strong>vanity metric</strong> looks good but doesn't drive decisions. Total app downloads is a vanity metric — it only goes up and doesn't tell you if users are getting value.</p>
+              <p>A <strong>vanity metric</strong> looks good but doesn't drive decisions. Total app downloads is a vanity metric, it only goes up and doesn't tell you if users are getting value.</p>
               <p>An <strong>actionable metric</strong> connects to behavior and informs decisions. Daily Active Users (DAU) ÷ Monthly Active Users (MAU) = a "stickiness ratio" that tells you if users actually come back regularly.</p>
 
               <p><strong>Example:</strong></p>
               <ul>
                 <li>Vanity: "We hit 1 million downloads!" ← says nothing about value</li>
-                <li>Actionable: "Our 30-day retention is 15%, down from 22% — we're losing users in week 2" ← tells you exactly where to look</li>
+                <li>Actionable: "Our 30-day retention is 15%, down from 22%, we're losing users in week 2" ← tells you exactly where to look</li>
               </ul>
 
               <h3>The Counter-Metric</h3>
-              <p>Every metric needs a counter-metric — a guardrail to prevent gaming. If you optimize purely for "messages sent," users might spam each other. So you also track "message reply rate" (quality) and "report/block rate" (spam). Counter-metrics keep you honest.</p>
+              <p>Every metric needs a counter-metric, a guardrail to prevent gaming. If you optimize purely for "messages sent," users might spam each other. So you also track "message reply rate" (quality) and "report/block rate" (spam). Counter-metrics keep you honest.</p>
 
               <h3>Real Example: Duolingo</h3>
-              <p>Duolingo's PM team discovered that "daily active users" was misleading — users would open the app, do one lesson, and leave. The more meaningful metric was "learning sessions completed per user per week." That shift changed what features they built: streaks, smarter lesson length, and social accountability — all targeting meaningful engagement, not just opens.</p>
+              <p>Duolingo's PM team discovered that "daily active users" was misleading, users would open the app, do one lesson, and leave. The more meaningful metric was "learning sessions completed per user per week." That shift changed what features they built: streaks, smarter lesson length, and social accountability, all targeting meaningful engagement, not just opens.</p>
             `
           },
           quiz: [
@@ -176,7 +176,7 @@ const PM_GYM_DATA = {
               question: "A mobile app celebrates reaching '10 million downloads.' Why might a PM push back on using this as a key success metric?",
               options: [
                 "Downloads are too hard to track accurately",
-                "Downloads only go up — they don't reveal whether users are getting value or returning",
+                "Downloads only go up, they don't reveal whether users are getting value or returning",
                 "Downloads aren't tracked by Apple or Google accurately",
                 "This metric is only useful for consumer apps, not B2B apps"
               ],
@@ -192,14 +192,14 @@ const PM_GYM_DATA = {
                 "App store rating"
               ],
               correct: 1,
-              explanation: "Activation rate measures whether new users complete a key action that signals they've found value — like posting their first photo, sending their first message, or completing onboarding. It's the bridge between acquisition and retention."
+              explanation: "Activation rate measures whether new users complete a key action that signals they've found value, like posting their first photo, sending their first message, or completing onboarding. It's the bridge between acquisition and retention."
             },
             {
               question: "Your app's MAU is 500,000 and DAU is 50,000. What is the DAU/MAU ratio and what does it tell you?",
               options: [
-                "10% — the average user opens the app about 3 days per month",
-                "90% — most monthly users are also daily users",
-                "50% — exactly half of users are active every day",
+                "10%, the average user opens the app about 3 days per month",
+                "90%, most monthly users are also daily users",
+                "50%, exactly half of users are active every day",
                 "The ratio cannot be calculated without knowing weekly actives"
               ],
               correct: 0,
@@ -237,7 +237,7 @@ const PM_GYM_DATA = {
             {
               title: "Andrew Chen: Why DAU/MAU is the key stickiness ratio",
               url: "https://andrewchen.com/dau-mau-is-an-important-metric/",
-              description: "Andrew Chen breaks down the stickiness ratio that top consumer PMs live by — with examples from social and gaming products."
+              description: "Andrew Chen breaks down the stickiness ratio that top consumer PMs live by, with examples from social and gaming products."
             },
             {
               title: "Andrew Chen: 5 Steps to a Metrics-Driven Business",
@@ -253,7 +253,7 @@ const PM_GYM_DATA = {
           lesson: {
             title: "Frameworks PMs Use to Structure Thinking",
             content: `
-              <p>Frameworks are mental shortcuts — they help PMs structure ambiguous problems, communicate clearly, and avoid forgetting important angles. You don't use frameworks to sound smart; you use them to think more completely.</p>
+              <p>Frameworks are mental shortcuts, they help PMs structure ambiguous problems, communicate clearly, and avoid forgetting important angles. You don't use frameworks to sound smart; you use them to think more completely.</p>
 
               <h3>1. The Problem Space vs. Solution Space</h3>
               <p>New PMs often jump straight to solutions ("we should build a notification!") before fully understanding the problem ("why are users not returning?"). The discipline is: <strong>spend more time in the problem space</strong> before entering the solution space.</p>
@@ -267,22 +267,22 @@ const PM_GYM_DATA = {
               <p>User stories keep requirements grounded in real user needs instead of arbitrary feature ideas.</p>
 
               <h3>3. The Jobs-to-be-Done Framework</h3>
-              <p>Clayton Christensen's framework: users don't buy products — they "hire" products to do a job. People don't buy a quarter-inch drill; they hire it to make a quarter-inch hole.</p>
-              <p>Example: People don't use Spotify to stream music; they hire Spotify to soundtrack their workout, manage their mood, or discover something new. These are different "jobs" — and Spotify should build features for each one.</p>
+              <p>Clayton Christensen's framework: users don't buy products, they "hire" products to do a job. People don't buy a quarter-inch drill; they hire it to make a quarter-inch hole.</p>
+              <p>Example: People don't use Spotify to stream music; they hire Spotify to soundtrack their workout, manage their mood, or discover something new. These are different "jobs", and Spotify should build features for each one.</p>
 
               <h3>4. The CIRCLES Method (for PM interviews)</h3>
               <p>A structured way to answer "design a product for X" questions:</p>
               <ul>
-                <li><strong>C</strong>omprehend the situation — clarify constraints and goals</li>
-                <li><strong>I</strong>dentify the customer — who is the user?</li>
-                <li><strong>R</strong>eport the customer's needs — what are they trying to do?</li>
-                <li><strong>C</strong>ut through prioritization — which needs matter most?</li>
-                <li><strong>L</strong>ist solutions — brainstorm features</li>
-                <li><strong>E</strong>valuate tradeoffs — pros, cons, risks</li>
+                <li><strong>C</strong>omprehend the situation, clarify constraints and goals</li>
+                <li><strong>I</strong>dentify the customer, who is the user?</li>
+                <li><strong>R</strong>eport the customer's needs, what are they trying to do?</li>
+                <li><strong>C</strong>ut through prioritization, which needs matter most?</li>
+                <li><strong>L</strong>ist solutions, brainstorm features</li>
+                <li><strong>E</strong>valuate tradeoffs, pros, cons, risks</li>
                 <li><strong>S</strong>ummarize your recommendation</li>
               </ul>
 
-              <h3>5. PRDs — Product Requirements Documents</h3>
+              <h3>5. PRDs, Product Requirements Documents</h3>
               <p>A PRD is the source of truth for what you're building. A good PRD includes:</p>
               <ul>
                 <li><strong>Problem statement:</strong> Why are we building this?</li>
@@ -291,14 +291,14 @@ const PM_GYM_DATA = {
                 <li><strong>Out of scope:</strong> What are we explicitly NOT building?</li>
                 <li><strong>Open questions:</strong> What's still unknown?</li>
               </ul>
-              <p>The "out of scope" section is often the most important — it prevents scope creep and forces honest conversations.</p>
+              <p>The "out of scope" section is often the most important, it prevents scope creep and forces honest conversations.</p>
             `
           },
           quiz: [
             {
               question: "A PM says: 'We should add in-app chat because our competitor has it.' What PM principle are they violating?",
               options: [
-                "They're skipping the problem space — they haven't established that users actually need this",
+                "They're skipping the problem space, they haven't established that users actually need this",
                 "They're not using a formal framework like CIRCLES to evaluate the idea",
                 "They're failing to write a proper PRD before proposing the feature",
                 "They're prioritizing without a scoring model like RICE"
@@ -315,7 +315,7 @@ const PM_GYM_DATA = {
                 "'Dark mode should be added in the next sprint'"
               ],
               correct: 1,
-              explanation: "A proper user story follows: 'As a [user], I want [action], so that [benefit].' It grounds the requirement in a real user context and a clear reason — which makes it much easier to decide what to build and how to measure success."
+              explanation: "A proper user story follows: 'As a [user], I want [action], so that [benefit].' It grounds the requirement in a real user context and a clear reason, which makes it much easier to decide what to build and how to measure success."
             },
             {
               question: "According to the Jobs-to-be-Done framework, why do people actually use Instagram?",
@@ -326,13 +326,13 @@ const PM_GYM_DATA = {
                 "To access a social media feed"
               ],
               correct: 1,
-              explanation: "JTBD reframes user motivation: people hire Instagram for specific emotional or functional jobs — feeling connected, getting attention, being entertained. Each 'job' has different requirements and should influence different feature decisions."
+              explanation: "JTBD reframes user motivation: people hire Instagram for specific emotional or functional jobs, feeling connected, getting attention, being entertained. Each 'job' has different requirements and should influence different feature decisions."
             },
             {
               question: "In a PM interview, you're asked: 'Design a product for elderly users to manage their medications.' What should you do FIRST?",
               options: [
                 "List features: reminders, dosage tracking, doctor integration",
-                "Clarify the goal — what does success look like? What constraints exist?",
+                "Clarify the goal, what does success look like? What constraints exist?",
                 "Jump to the recommendation to show confidence",
                 "Ask about the tech stack and platform constraints"
               ],
@@ -344,7 +344,7 @@ const PM_GYM_DATA = {
               options: [
                 "It doesn't include mockups or wireframes",
                 "It's missing the problem statement, success metrics, and out-of-scope section",
-                "The features listed are too broad — they need to be broken into tasks",
+                "The features listed are too broad, they need to be broken into tasks",
                 "It hasn't been reviewed by engineering and design"
               ],
               correct: 1,
@@ -365,7 +365,7 @@ const PM_GYM_DATA = {
             {
               title: "Mind the Product: Mental Models for PMs",
               url: "https://www.mindtheproduct.com/mental-models-product-managers",
-              description: "A clear guide to the mental models PMs use to structure ambiguous problems — written for practitioners, not academics."
+              description: "A clear guide to the mental models PMs use to structure ambiguous problems, written for practitioners, not academics."
             }
           ]
         }
@@ -385,35 +385,35 @@ const PM_GYM_DATA = {
           lesson: {
             title: "Finding the One Metric That Captures Everything",
             content: `
-              <p>A North Star Metric (NSM) is the single number that best captures whether your product is delivering value to users. It's not your revenue number (that's a lagging indicator) — it's the metric that, if it goes up, you're confident both users and the business are winning.</p>
+              <p>A North Star Metric (NSM) is the single number that best captures whether your product is delivering value to users. It's not your revenue number (that's a lagging indicator), it's the metric that, if it goes up, you're confident both users and the business are winning.</p>
 
               <h3>What Makes a Good North Star Metric?</h3>
               <p>A strong NSM has three properties:</p>
               <ul>
-                <li><strong>It reflects user value</strong> — it measures whether users are actually getting something out of your product</li>
-                <li><strong>It predicts long-term revenue</strong> — if this number grows, revenue will follow</li>
-                <li><strong>It can be influenced by your team</strong> — your features and decisions can move it</li>
+                <li><strong>It reflects user value</strong>, it measures whether users are actually getting something out of your product</li>
+                <li><strong>It predicts long-term revenue</strong>, if this number grows, revenue will follow</li>
+                <li><strong>It can be influenced by your team</strong>, your features and decisions can move it</li>
               </ul>
 
               <h3>Famous North Star Metrics</h3>
-              <p><strong>Airbnb:</strong> Nights booked — captures both host and guest value in one number</p>
-              <p><strong>Spotify:</strong> Time spent listening — the more you listen, the more value you're getting</p>
-              <p><strong>Slack:</strong> Messages sent by org per day — signals active team collaboration</p>
-              <p><strong>Facebook:</strong> Daily Active Users — measures whether users are returning (debated, but widely cited)</p>
-              <p><strong>Duolingo:</strong> Daily Active Users completing at least one lesson — measures actual learning, not just presence</p>
-              <p><strong>Uber:</strong> Trips per day — captures both rider and driver value simultaneously</p>
+              <p><strong>Airbnb:</strong> Nights booked, captures both host and guest value in one number</p>
+              <p><strong>Spotify:</strong> Time spent listening, the more you listen, the more value you're getting</p>
+              <p><strong>Slack:</strong> Messages sent by org per day, signals active team collaboration</p>
+              <p><strong>Facebook:</strong> Daily Active Users, measures whether users are returning (debated, but widely cited)</p>
+              <p><strong>Duolingo:</strong> Daily Active Users completing at least one lesson, measures actual learning, not just presence</p>
+              <p><strong>Uber:</strong> Trips per day, captures both rider and driver value simultaneously</p>
 
               <h3>NSM vs. Input Metrics</h3>
-              <p>The NSM lives at the top. Below it are "input metrics" — the levers your team can actually pull. If your NSM is "nights booked," your inputs might be: search-to-booking conversion rate, listing quality score, and pricing competitiveness. Input metrics are what teams optimize daily; the NSM is what you track monthly to see if everything is working.</p>
+              <p>The NSM lives at the top. Below it are "input metrics", the levers your team can actually pull. If your NSM is "nights booked," your inputs might be: search-to-booking conversion rate, listing quality score, and pricing competitiveness. Input metrics are what teams optimize daily; the NSM is what you track monthly to see if everything is working.</p>
 
               <h3>The Input Metric Tree (AARRR)</h3>
               <p>AARRR (Pirate Metrics) is a framework for mapping inputs:</p>
               <ul>
-                <li><strong>A</strong>cquisition — how users find you</li>
-                <li><strong>A</strong>ctivation — first experience of value</li>
-                <li><strong>R</strong>etention — do they come back?</li>
-                <li><strong>R</strong>eferral — do they tell others?</li>
-                <li><strong>R</strong>evenue — do you make money?</li>
+                <li><strong>A</strong>cquisition, how users find you</li>
+                <li><strong>A</strong>ctivation, first experience of value</li>
+                <li><strong>R</strong>etention, do they come back?</li>
+                <li><strong>R</strong>eferral, do they tell others?</li>
+                <li><strong>R</strong>evenue, do you make money?</li>
               </ul>
 
               <h3>Common Mistakes</h3>
@@ -427,7 +427,7 @@ const PM_GYM_DATA = {
               question: "Why is 'Monthly Revenue' generally a poor choice for a North Star Metric?",
               options: [
                 "It's too difficult to track accurately across different currencies",
-                "It's a lagging business outcome — it doesn't directly measure whether users are getting value",
+                "It's a lagging business outcome, it doesn't directly measure whether users are getting value",
                 "Revenue metrics should be tracked weekly, not monthly",
                 "It combines too many product lines into a single number"
               ],
@@ -443,18 +443,18 @@ const PM_GYM_DATA = {
                 "It's aligned with how email metrics are tracked, making it easier to benchmark"
               ],
               correct: 1,
-              explanation: "Slack's value is team communication. If teams are sending messages daily, they're actively collaborating — that's genuine product value. This metric also predicts retention (active teams keep paying) and is directly influenced by product improvements."
+              explanation: "Slack's value is team communication. If teams are sending messages daily, they're actively collaborating, that's genuine product value. This metric also predicts retention (active teams keep paying) and is directly influenced by product improvements."
             },
             {
               question: "A PM at a recipe app has two candidate NSMs: (A) 'recipes viewed per week' and (B) 'recipes cooked per week.' Which is better and why?",
               options: [
-                "A is better — it's easier to track and includes more user touchpoints",
-                "B is better — it measures actual value delivery (cooking a meal), not just browsing behavior",
-                "A is better — viewing more recipes indicates stronger intent to cook",
+                "A is better, it's easier to track and includes more user touchpoints",
+                "B is better, it measures actual value delivery (cooking a meal), not just browsing behavior",
+                "A is better, viewing more recipes indicates stronger intent to cook",
                 "Both are equally valid as co-North Star metrics"
               ],
               correct: 1,
-              explanation: "'Recipes cooked' is the actual value the app delivers — helping people cook meals. 'Recipes viewed' is a proxy that could include aimless browsing. NSMs should measure value delivered, not just activity. The gap between viewed and cooked would also reveal activation problems."
+              explanation: "'Recipes cooked' is the actual value the app delivers, helping people cook meals. 'Recipes viewed' is a proxy that could include aimless browsing. NSMs should measure value delivered, not just activity. The gap between viewed and cooked would also reveal activation problems."
             },
             {
               question: "In the AARRR framework, the 'Activation' stage refers to:",
@@ -465,25 +465,25 @@ const PM_GYM_DATA = {
                 "The moment a user refers a friend"
               ],
               correct: 1,
-              explanation: "Activation is about the 'aha moment' — when a new user first experiences why your product is valuable. For Dropbox, it's when you sync your first file across devices. For Twitter, it was following 30 people in your first week. Poor activation is why many apps have great downloads but poor retention."
+              explanation: "Activation is about the 'aha moment', when a new user first experiences why your product is valuable. For Dropbox, it's when you sync your first file across devices. For Twitter, it was following 30 people in your first week. Poor activation is why many apps have great downloads but poor retention."
             },
             {
               question: "What is the relationship between a North Star Metric and input metrics?",
               options: [
-                "They are the same thing — input metrics is just another term for NSM",
+                "They are the same thing, input metrics is just another term for NSM",
                 "The NSM is the top-level outcome; input metrics are the specific levers teams optimize to move it",
                 "Input metrics measure user acquisition; the NSM measures long-term retention",
                 "Input metrics are only used during growth phases; NSMs are used during maturity"
               ],
               correct: 1,
-              explanation: "The NSM is the company-wide measure of value. Input metrics are the specific, actionable levers below it — like search conversion rate, onboarding completion, or feature adoption — that teams work on daily. Moving the inputs should move the NSM."
+              explanation: "The NSM is the company-wide measure of value. Input metrics are the specific, actionable levers below it, like search conversion rate, onboarding completion, or feature adoption, that teams work on daily. Moving the inputs should move the NSM."
             }
           ],
           resources: [
             {
               title: "Amplitude North Star Playbook",
               url: "https://amplitude.com/north-star",
-              description: "The definitive free guide to North Star Metrics — with worksheets and real company examples."
+              description: "The definitive free guide to North Star Metrics, with worksheets and real company examples."
             },
             {
               title: "Sean Ellis: The Metric that Matters",
@@ -493,7 +493,7 @@ const PM_GYM_DATA = {
             {
               title: "Amplitude: Every Product Needs a North Star Metric",
               url: "https://amplitude.com/blog/product-north-star-metric",
-              description: "Amplitude's blog post on how to define your North Star Metric — free, practical, with real company examples."
+              description: "Amplitude's blog post on how to define your North Star Metric, free, practical, with real company examples."
             }
           ]
         },
@@ -513,7 +513,7 @@ const PM_GYM_DATA = {
               <p><strong>Step 1: Form a hypothesis.</strong> "We believe that changing the CTA button from blue to green will increase signup rate because green signals 'go' and stands out more on our navy background."</p>
               <p><strong>Step 2: Define your success metric.</strong> What one number will tell you if the experiment worked? (e.g., "signup rate within 24 hours of landing")</p>
               <p><strong>Step 3: Calculate required sample size.</strong> You need enough users in each group to detect a meaningful difference. Underpowered tests produce unreliable results.</p>
-              <p><strong>Step 4: Run the experiment.</strong> Split traffic randomly. Don't peek at results early — it inflates false positives.</p>
+              <p><strong>Step 4: Run the experiment.</strong> Split traffic randomly. Don't peek at results early, it inflates false positives.</p>
               <p><strong>Step 5: Analyze results.</strong> Is the difference statistically significant? Is the effect size meaningful?</p>
 
               <h3>Statistical Significance</h3>
@@ -521,23 +521,23 @@ const PM_GYM_DATA = {
               <p><strong>Critical: significance ≠ importance.</strong> A 0.01% improvement can be statistically significant with a billion users but meaningless in practice. Always check effect size, not just significance.</p>
 
               <h3>Common A/B Testing Mistakes</h3>
-              <p><strong>Mistake 1: Stopping early.</strong> If you stop an experiment as soon as it looks significant, you're "peeking" — this inflates your false positive rate. Let the test run for the planned duration.</p>
+              <p><strong>Mistake 1: Stopping early.</strong> If you stop an experiment as soon as it looks significant, you're "peeking", this inflates your false positive rate. Let the test run for the planned duration.</p>
               <p><strong>Mistake 2: Testing too many things at once.</strong> If you change the headline, button color, AND image simultaneously, you can't tell which change drove the result.</p>
               <p><strong>Mistake 3: Novelty effects.</strong> Sometimes a new experience gets engagement just because it's new. A/B tests need to run long enough for novelty to wear off.</p>
               <p><strong>Mistake 4: Not considering secondary metrics.</strong> Your CTA might get more clicks, but if users who clicked convert at half the rate, you've lost ground overall.</p>
 
               <h3>When NOT to A/B Test</h3>
-              <p>A/B testing requires traffic volume and time. If you have fewer than 1,000 users, tests take too long to reach significance. Also, qualitative changes (a redesign, a new product direction) shouldn't be A/B tested first — use user research and judgment, then validate with metrics post-launch.</p>
+              <p>A/B testing requires traffic volume and time. If you have fewer than 1,000 users, tests take too long to reach significance. Also, qualitative changes (a redesign, a new product direction) shouldn't be A/B tested first, use user research and judgment, then validate with metrics post-launch.</p>
             `
           },
           quiz: [
             {
               question: "Your team runs an A/B test on a new checkout flow. After 3 days, the variant is showing +8% conversion. Should you ship it?",
               options: [
-                "Yes — an 8% improvement is significant and you should move fast",
-                "No — you should wait for statistical significance and the pre-determined sample size before concluding",
-                "Yes — 3 days is enough time to account for weekly user behavior patterns",
-                "No — any change to checkout requires a minimum 30-day test by industry standard"
+                "Yes, an 8% improvement is significant and you should move fast",
+                "No, you should wait for statistical significance and the pre-determined sample size before concluding",
+                "Yes, 3 days is enough time to account for weekly user behavior patterns",
+                "No, any change to checkout requires a minimum 30-day test by industry standard"
               ],
               correct: 1,
               explanation: "Stopping early ('peeking') is one of the most common A/B testing mistakes. Results after 3 days may not be statistically significant, and early positive signals often regress. Always run tests for the pre-determined duration and required sample size."
@@ -551,15 +551,15 @@ const PM_GYM_DATA = {
                 "The variant improved the metric by 3%"
               ],
               correct: 1,
-              explanation: "A p-value of 0.03 means: if the null hypothesis (no real difference) were true, you'd only observe a difference this large by random chance 3% of the time. At a 0.05 threshold, this is statistically significant — but remember, significance doesn't equal practical importance."
+              explanation: "A p-value of 0.03 means: if the null hypothesis (no real difference) were true, you'd only observe a difference this large by random chance 3% of the time. At a 0.05 threshold, this is statistically significant, but remember, significance doesn't equal practical importance."
             },
             {
               question: "You change the button text, color, AND position all at once in an A/B test, and the variant wins. What's the problem?",
               options: [
                 "You violated statistical independence by changing three variables",
-                "You can't determine which specific change caused the improvement — it could be any of the three",
+                "You can't determine which specific change caused the improvement, it could be any of the three",
                 "The test will be considered invalid by most analysis tools",
-                "There is no problem — the variant won, so ship it"
+                "There is no problem, the variant won, so ship it"
               ],
               correct: 1,
               explanation: "Changing multiple variables at once is a multivariate test, not a clean A/B test. You can't isolate which variable drove the result. If you want to learn what works (not just win this one test), change one variable at a time."
@@ -567,13 +567,13 @@ const PM_GYM_DATA = {
             {
               question: "A new feature gets +40% engagement in its first week, then drops back to baseline in week 3. This is most likely:",
               options: [
-                "A successful test — the feature worked and then users normalized",
-                "A novelty effect — users engaged with something new, but it didn't provide lasting value",
-                "Statistical noise — the initial result was a false positive",
+                "A successful test, the feature worked and then users normalized",
+                "A novelty effect, users engaged with something new, but it didn't provide lasting value",
+                "Statistical noise, the initial result was a false positive",
                 "A sign the feature needs more users to achieve significance"
               ],
               correct: 1,
-              explanation: "The novelty effect is real: users engage with new things just because they're new, not because they're valuable. This is why A/B tests should run long enough for novelty to wear off — typically 2-4 weeks for most consumer products."
+              explanation: "The novelty effect is real: users engage with new things just because they're new, not because they're valuable. This is why A/B tests should run long enough for novelty to wear off, typically 2-4 weeks for most consumer products."
             },
             {
               question: "A PM wants to test whether a 20% price increase affects conversion. The current monthly traffic is 500 users. What's the key concern?",
@@ -584,7 +584,7 @@ const PM_GYM_DATA = {
                 "The test should be run for exactly 14 days to avoid novelty effects"
               ],
               correct: 1,
-              explanation: "Statistical power requires sufficient sample size. With 500 monthly users, detecting a meaningful change in conversion rate (say 5%) would require many months of testing — far too slow to be practical. Small-volume products should use qualitative methods (user interviews, surveys) rather than A/B tests."
+              explanation: "Statistical power requires sufficient sample size. With 500 monthly users, detecting a meaningful change in conversion rate (say 5%) would require many months of testing, far too slow to be practical. Small-volume products should use qualitative methods (user interviews, surveys) rather than A/B tests."
             }
           ],
           resources: [
@@ -596,12 +596,12 @@ const PM_GYM_DATA = {
             {
               title: "Ronny Kohavi: Trustworthy Online Controlled Experiments",
               url: "https://www.amazon.com/Trustworthy-Online-Controlled-Experiments-Practical/dp/1108724264",
-              description: "The definitive book on A/B testing by Microsoft's former experimentation head — the industry bible."
+              description: "The definitive book on A/B testing by Microsoft's former experimentation head, the industry bible."
             },
             {
               title: "Netflix: Experimentation at Scale",
               url: "https://netflixtechblog.com/its-all-a-bout-testing-the-netflix-experimentation-platform-4e1ca458c15b",
-              description: "Netflix's engineering blog on how they run thousands of A/B tests simultaneously — great for understanding scale."
+              description: "Netflix's engineering blog on how they run thousands of A/B tests simultaneously, great for understanding scale."
             }
           ]
         },
@@ -612,47 +612,47 @@ const PM_GYM_DATA = {
           lesson: {
             title: "How PMs Decide What to Build Next",
             content: `
-              <p>Prioritization is arguably the hardest PM skill. Every team has more ideas than time, and every stakeholder is convinced their request is the most important. Frameworks give you a defensible, structured way to make decisions — and to explain them.</p>
+              <p>Prioritization is arguably the hardest PM skill. Every team has more ideas than time, and every stakeholder is convinced their request is the most important. Frameworks give you a defensible, structured way to make decisions, and to explain them.</p>
 
               <h3>1. RICE Scoring</h3>
               <p>RICE is a quantitative framework developed at Intercom. Score each feature on four dimensions:</p>
               <ul>
-                <li><strong>R</strong>each — how many users will this affect per period? (e.g., 2,000 users/month)</li>
-                <li><strong>I</strong>mpact — how much will it improve each user's experience? (0.25 = minimal, 0.5 = low, 1 = medium, 2 = high, 3 = massive)</li>
-                <li><strong>C</strong>onfidence — how sure are you? (80% = medium, 100% = high, 50% = low)</li>
-                <li><strong>E</strong>ffort — how many person-months will it take?</li>
+                <li><strong>R</strong>each, how many users will this affect per period? (e.g., 2,000 users/month)</li>
+                <li><strong>I</strong>mpact, how much will it improve each user's experience? (0.25 = minimal, 0.5 = low, 1 = medium, 2 = high, 3 = massive)</li>
+                <li><strong>C</strong>onfidence, how sure are you? (80% = medium, 100% = high, 50% = low)</li>
+                <li><strong>E</strong>ffort, how many person-months will it take?</li>
               </ul>
               <p><strong>RICE Score = (Reach × Impact × Confidence) / Effort</strong></p>
               <p>Example: A feature affecting 5,000 users/month, medium impact (1), 80% confidence, taking 2 months: RICE = (5,000 × 1 × 0.8) / 2 = 2,000</p>
 
               <h3>2. HEART Framework (Google)</h3>
-              <p>HEART is a qualitative framework for evaluating UX quality — good for understanding the "why" behind prioritization:</p>
+              <p>HEART is a qualitative framework for evaluating UX quality, good for understanding the "why" behind prioritization:</p>
               <ul>
-                <li><strong>H</strong>appiness — user satisfaction, NPS</li>
-                <li><strong>E</strong>ngagement — depth of interaction</li>
-                <li><strong>A</strong>doption — new users using the feature</li>
-                <li><strong>R</strong>etention — users returning over time</li>
-                <li><strong>T</strong>ask Success — users completing key actions</li>
+                <li><strong>H</strong>appiness, user satisfaction, NPS</li>
+                <li><strong>E</strong>ngagement, depth of interaction</li>
+                <li><strong>A</strong>doption, new users using the feature</li>
+                <li><strong>R</strong>etention, users returning over time</li>
+                <li><strong>T</strong>ask Success, users completing key actions</li>
               </ul>
               <p>HEART is most useful when defining what to measure, not just what to build.</p>
 
               <h3>3. MoSCoW Method</h3>
               <p>A simple framework for sprint or release planning:</p>
               <ul>
-                <li><strong>M</strong>ust Have — essential for launch</li>
-                <li><strong>S</strong>hould Have — important but not critical</li>
-                <li><strong>C</strong>ould Have — nice-to-have if time allows</li>
-                <li><strong>W</strong>on't Have (this time) — explicitly deferred</li>
+                <li><strong>M</strong>ust Have, essential for launch</li>
+                <li><strong>S</strong>hould Have, important but not critical</li>
+                <li><strong>C</strong>ould Have, nice-to-have if time allows</li>
+                <li><strong>W</strong>on't Have (this time), explicitly deferred</li>
               </ul>
-              <p>The most important category is "Won't Have" — it forces explicit decisions about what you're NOT doing, which prevents scope creep.</p>
+              <p>The most important category is "Won't Have", it forces explicit decisions about what you're NOT doing, which prevents scope creep.</p>
 
               <h3>4. The 2×2 Impact/Effort Matrix</h3>
               <p>Plot features on a 2×2 grid: high/low impact on Y-axis, high/low effort on X-axis.</p>
               <ul>
-                <li><strong>High impact, low effort</strong> → Quick wins — do these first</li>
-                <li><strong>High impact, high effort</strong> → Big bets — plan these carefully</li>
-                <li><strong>Low impact, low effort</strong> → Fill-ins — do when nothing else is urgent</li>
-                <li><strong>Low impact, high effort</strong> → Avoid — rarely worth it</li>
+                <li><strong>High impact, low effort</strong> → Quick wins, do these first</li>
+                <li><strong>High impact, high effort</strong> → Big bets, plan these carefully</li>
+                <li><strong>Low impact, low effort</strong> → Fill-ins, do when nothing else is urgent</li>
+                <li><strong>Low impact, high effort</strong> → Avoid, rarely worth it</li>
               </ul>
 
               <h3>When to Use What</h3>
@@ -663,9 +663,9 @@ const PM_GYM_DATA = {
             {
               question: "Feature A has: Reach=1,000/month, Impact=2, Confidence=80%, Effort=1 month. Feature B has: Reach=500/month, Impact=3, Confidence=100%, Effort=2 months. Which has a higher RICE score?",
               options: [
-                "Feature A — RICE = 1,600; Feature B — RICE = 750",
-                "Feature B — it has higher impact and confidence",
-                "Feature A — RICE = 1,600; Feature B — RICE = 750, so Feature A wins",
+                "Feature A, RICE = 1,600; Feature B, RICE = 750",
+                "Feature B, it has higher impact and confidence",
+                "Feature A, RICE = 1,600; Feature B, RICE = 750, so Feature A wins",
                 "Both are equal when rounded to the nearest hundred"
               ],
               correct: 0,
@@ -674,24 +674,24 @@ const PM_GYM_DATA = {
             {
               question: "A stakeholder insists that a niche feature should be 'Must Have' in MoSCoW because it's important to one key client. What should a PM do?",
               options: [
-                "Agree — customer requests should always be Must Have",
+                "Agree, customer requests should always be Must Have",
                 "Push back by asking whether this is truly essential for the product to function or for broader user value",
                 "Accept it as Must Have but add extra time to the sprint",
                 "Escalate to the CEO to decide"
               ],
               correct: 1,
-              explanation: "'Must Have' should mean 'the product cannot launch or function without this' — not 'this is important to someone.' A niche request from one client is typically a Should Have or Could Have. MoSCoW only works if Must Haves are kept to a genuine minimum."
+              explanation: "'Must Have' should mean 'the product cannot launch or function without this', not 'this is important to someone.' A niche request from one client is typically a Should Have or Could Have. MoSCoW only works if Must Haves are kept to a genuine minimum."
             },
             {
               question: "A team uses a 2×2 Impact/Effort matrix and identifies a 'low impact, low effort' feature. What should they do?",
               options: [
-                "Build it immediately — low effort means low risk",
-                "Make it a stretch goal — do it if bandwidth allows, but don't prioritize it",
-                "Discard it entirely — low impact work should never be done",
+                "Build it immediately, low effort means low risk",
+                "Make it a stretch goal, do it if bandwidth allows, but don't prioritize it",
+                "Discard it entirely, low impact work should never be done",
                 "Move it to 'Must Have' since it won't take long"
               ],
               correct: 1,
-              explanation: "Low impact, low effort features are 'fill-ins' — fine to build when there's truly nothing more important, but they shouldn't displace high-impact work. They're not worth zero, but they shouldn't be prioritized over quick wins or big bets."
+              explanation: "Low impact, low effort features are 'fill-ins', fine to build when there's truly nothing more important, but they shouldn't displace high-impact work. They're not worth zero, but they shouldn't be prioritized over quick wins or big bets."
             },
             {
               question: "What is the primary weakness of the RICE scoring framework?",
@@ -720,17 +720,17 @@ const PM_GYM_DATA = {
             {
               title: "Intercom: Introducing RICE Scoring",
               url: "https://www.intercom.com/blog/rice-simple-prioritization-for-product-managers/",
-              description: "The original RICE framework post from Intercom's product team — clear and practical."
+              description: "The original RICE framework post from Intercom's product team, clear and practical."
             },
             {
               title: "Google HEART Framework",
               url: "https://research.google/pubs/pub36299/",
-              description: "Google's research paper introducing HEART — the standard for UX quality measurement."
+              description: "Google's research paper introducing HEART, the standard for UX quality measurement."
             },
             {
               title: "Reforge: Prioritization in Practice",
               url: "https://www.reforge.com/blog/prioritization-frameworks",
-              description: "Reforge's analysis of when to use different prioritization frameworks — with real startup examples."
+              description: "Reforge's analysis of when to use different prioritization frameworks, with real startup examples."
             }
           ]
         }
@@ -750,7 +750,7 @@ const PM_GYM_DATA = {
           isCaseStudy: true,
           scenario: {
             title: "Spotify Discover Weekly Engagement Drops 15%",
-            context: `Spotify's Discover Weekly playlist — a personalized weekly playlist delivered every Monday — has seen a 15% drop in "full listen-through rate" (users listening to at least 80% of the playlist) over the past 8 weeks. Your team owns Discover Weekly. The head of product asks you to diagnose what's happening and propose next steps.`,
+            context: `Spotify's Discover Weekly playlist, a personalized weekly playlist delivered every Monday, has seen a 15% drop in "full listen-through rate" (users listening to at least 80% of the playlist) over the past 8 weeks. Your team owns Discover Weekly. The head of product asks you to diagnose what's happening and propose next steps.`,
             prompt: `In your answer, address the following:
 1. What are the possible root causes of this drop? (Structure your investigation across user, product, and external factors)
 2. What data would you pull to narrow down the cause?
@@ -769,7 +769,7 @@ const PM_GYM_DATA = {
               },
               {
                 dimension: "Root Cause Hypothesis",
-                strong: "Identifies a specific, testable hypothesis (e.g., 'Algorithm quality degraded after a model update — tracks are less personalized, causing users to skip more and abandon'). Mentions seasonal listening patterns as a confounder to rule out.",
+                strong: "Identifies a specific, testable hypothesis (e.g., 'Algorithm quality degraded after a model update, tracks are less personalized, causing users to skip more and abandon'). Mentions seasonal listening patterns as a confounder to rule out.",
                 weak: "Vague hypothesis that doesn't point to a specific cause or test."
               },
               {
@@ -786,7 +786,7 @@ const PM_GYM_DATA = {
             modelAnswer: `
               <h3>1. Root Cause Framework</h3>
               <p>I'd start by structuring possible causes into three buckets:</p>
-              <p><strong>Product-side changes:</strong> Did we ship any algorithm updates, model retrains, or data pipeline changes in the past 8 weeks? Even small changes to Discover Weekly's ranking model can meaningfully shift track quality. Also — did the playlist length change?</p>
+              <p><strong>Product-side changes:</strong> Did we ship any algorithm updates, model retrains, or data pipeline changes in the past 8 weeks? Even small changes to Discover Weekly's ranking model can meaningfully shift track quality. Also, did the playlist length change?</p>
               <p><strong>User-side shifts:</strong> Did listening context change? (e.g., summer vs. fall commute behavior). Are specific user cohorts driving the drop (new users who haven't built listening history vs. long-tenured users)? Did we change anything in how users access the playlist?</p>
               <p><strong>External factors:</strong> Did a major music release dominate listening and reduce Discover Weekly plays? Did a competitor launch a competing feature? Are there any app-level issues (crashes, slow loads for this specific feature)?</p>
 
@@ -800,7 +800,7 @@ const PM_GYM_DATA = {
               </ul>
 
               <h3>3. Primary Hypothesis</h3>
-              <p>My hypothesis: <em>A model update 8–9 weeks ago reduced personalization quality, causing the first 1-3 tracks to feel mismatched to recent listening behavior — leading to early abandonment.</em></p>
+              <p>My hypothesis: <em>A model update 8–9 weeks ago reduced personalization quality, causing the first 1-3 tracks to feel mismatched to recent listening behavior, leading to early abandonment.</em></p>
               <p>This would show up as: higher skip rates on tracks 1-3, a corresponding drop in save rate, no seasonal explanation, and a changelog entry near week -8.</p>
               <p><strong>Experiment:</strong> Create a holdback group that receives Discover Weekly built from the pre-update model. Compare listen-through rate between the old and new model over 2 weeks. If the old model outperforms, we have our cause.</p>
 
@@ -822,7 +822,7 @@ const PM_GYM_DATA = {
           isCaseStudy: true,
           scenario: {
             title: "Design a Feature for LinkedIn to Help Job Seekers",
-            context: `LinkedIn has 900M+ members. The vast majority of LinkedIn's revenue comes from recruiters (LinkedIn Recruiter tool) — not from job seekers. Yet job seekers are what make the platform valuable to recruiters. Internal data shows that job seekers who are actively searching "go dark" — they stop engaging with LinkedIn content — about 3 weeks into their search. LinkedIn leadership wants to improve this.`,
+            context: `LinkedIn has 900M+ members. The vast majority of LinkedIn's revenue comes from recruiters (LinkedIn Recruiter tool), not from job seekers. Yet job seekers are what make the platform valuable to recruiters. Internal data shows that job seekers who are actively searching "go dark", they stop engaging with LinkedIn content, about 3 weeks into their search. LinkedIn leadership wants to improve this.`,
             prompt: `In your answer, address the following:
 1. What is the core problem you're solving, and for whom?
 2. What are 3 distinct feature ideas that could help? For each, explain the user value and any risks.
@@ -831,7 +831,7 @@ const PM_GYM_DATA = {
             rubric: [
               {
                 dimension: "Problem Framing",
-                strong: "Identifies the double-sided marketplace dynamic: LinkedIn needs engaged job seekers to serve recruiters. Going dark is bad for both. Frames the problem as 'job seekers disengage because job searching is isolating, opaque, and discouraging — they need progress signals and a supportive community.'",
+                strong: "Identifies the double-sided marketplace dynamic: LinkedIn needs engaged job seekers to serve recruiters. Going dark is bad for both. Frames the problem as 'job seekers disengage because job searching is isolating, opaque, and discouraging, they need progress signals and a supportive community.'",
                 weak: "Treats it as a simple engagement problem without understanding why users disengage."
               },
               {
@@ -857,15 +857,15 @@ const PM_GYM_DATA = {
             ],
             modelAnswer: `
               <h3>1. Core Problem</h3>
-              <p>The core problem: <em>Active job seekers disengage from LinkedIn 3 weeks into their search because the process feels isolating, opaque, and discouraging — applications go into a void, rejections are silent, and there's no visible progress.</em></p>
+              <p>The core problem: <em>Active job seekers disengage from LinkedIn 3 weeks into their search because the process feels isolating, opaque, and discouraging, applications go into a void, rejections are silent, and there's no visible progress.</em></p>
               <p>This matters for LinkedIn because job seekers are the "supply" that makes LinkedIn Recruiter valuable. If seekers disengage, they update profiles less, are less discoverable, and the network becomes less valuable. It's a structural threat to LinkedIn's business model.</p>
 
               <h3>2. Three Feature Ideas</h3>
               <p><strong>Feature 1: Job Search Dashboard (private)</strong></p>
-              <p>A private dashboard showing the job seeker's application pipeline — status of each application, how many profile views they received, and where they stand in any active processes. <em>User value:</em> eliminates the "void" feeling by creating visibility. <em>Risk:</em> LinkedIn currently doesn't have application status data for most jobs (only for Easy Apply jobs). Limited data coverage could make the dashboard feel incomplete.</p>
+              <p>A private dashboard showing the job seeker's application pipeline, status of each application, how many profile views they received, and where they stand in any active processes. <em>User value:</em> eliminates the "void" feeling by creating visibility. <em>Risk:</em> LinkedIn currently doesn't have application status data for most jobs (only for Easy Apply jobs). Limited data coverage could make the dashboard feel incomplete.</p>
 
               <p><strong>Feature 2: Anonymous Job Seeker Community</strong></p>
-              <p>A separate, anonymous feed (like Blind or Reddit) for active job seekers to share experiences, ask questions, and get peer support — without it affecting their professional reputation. <em>User value:</em> combat the isolation and stigma of job searching. <em>Risk:</em> anonymous content is harder to moderate; could attract negativity or become a competitor complaint board. Also, building community is hard and slow.</p>
+              <p>A separate, anonymous feed (like Blind or Reddit) for active job seekers to share experiences, ask questions, and get peer support, without it affecting their professional reputation. <em>User value:</em> combat the isolation and stigma of job searching. <em>Risk:</em> anonymous content is harder to moderate; could attract negativity or become a competitor complaint board. Also, building community is hard and slow.</p>
 
               <p><strong>Feature 3: AI Application Coach</strong></p>
               <p>After applying to a job, an AI tool analyzes your resume and cover letter against the job description and provides a readiness score + specific suggestions. <em>User value:</em> turns rejections into learning; gives seekers a sense of control. <em>Risk:</em> raises false expectations; if the AI is wrong, it damages trust in LinkedIn's advice.</p>
@@ -873,14 +873,14 @@ const PM_GYM_DATA = {
               <h3>3. Prioritization</h3>
               <p>I'd prioritize <strong>Feature 3: AI Application Coach</strong> because:</p>
               <ul>
-                <li><strong>Feasibility:</strong> LinkedIn has all the data needed — job descriptions and member profiles. This is a natural extension of existing systems.</li>
+                <li><strong>Feasibility:</strong> LinkedIn has all the data needed, job descriptions and member profiles. This is a natural extension of existing systems.</li>
                 <li><strong>Differentiation:</strong> No other job platform provides post-application feedback. It's a genuine insight advantage.</li>
-                <li><strong>Engagement:</strong> It gives seekers a reason to return after applying — the exact behavior we want to change.</li>
+                <li><strong>Engagement:</strong> It gives seekers a reason to return after applying, the exact behavior we want to change.</li>
                 <li><strong>Revenue alignment:</strong> Better-prepared candidates = higher acceptance rates = more successful recruiter placements = happy recruiters.</li>
               </ul>
 
               <h3>4. MVP and Success Metrics</h3>
-              <p><strong>MVP:</strong> A post-application prompt (only for Easy Apply jobs) that shows a resume-job description match score and 3 specific suggestions to improve future applications. No AI coaching session, no real-time feedback — just a match score and suggestions after submission.</p>
+              <p><strong>MVP:</strong> A post-application prompt (only for Easy Apply jobs) that shows a resume-job description match score and 3 specific suggestions to improve future applications. No AI coaching session, no real-time feedback, just a match score and suggestions after submission.</p>
               <p><strong>Success metrics:</strong></p>
               <ul>
                 <li>Primary: Job seeker engagement rate at weeks 3-6 of active search (return visits, profile updates)</li>
@@ -897,8 +897,8 @@ const PM_GYM_DATA = {
           duration: "15–20 min",
           isCaseStudy: true,
           scenario: {
-            title: "Chess.com — Daily Puzzle Completions Drop 20%",
-            context: `Chess.com's Daily Puzzle is one of the platform's highest DAU drivers — millions of users open the app specifically to solve the daily puzzle. Over the past 30 days, puzzle completion rates have dropped 20%. You are the PM for the Daily Puzzle feature. The head of product asks you to diagnose what's happening and propose next steps.`,
+            title: "Chess.com, Daily Puzzle Completions Drop 20%",
+            context: `Chess.com's Daily Puzzle is one of the platform's highest DAU drivers, millions of users open the app specifically to solve the daily puzzle. Over the past 30 days, puzzle completion rates have dropped 20%. You are the PM for the Daily Puzzle feature. The head of product asks you to diagnose what's happening and propose next steps.`,
             prompt: `In your answer, address the following:
 1. What clarifying questions would you ask before investigating?
 2. What are your top hypotheses for the drop? Rank them by likelihood.
@@ -908,12 +908,12 @@ const PM_GYM_DATA = {
             rubric: [
               {
                 dimension: "Clarify Before Diagnosing",
-                strong: "Asks whether the 20% is a drop in completions per user, total users attempting, or both. Asks if anything changed in the product recently — UI update, difficulty algo, notification cadence. Asks if the drop is platform-specific (mobile vs web) or global.",
+                strong: "Asks whether the 20% is a drop in completions per user, total users attempting, or both. Asks if anything changed in the product recently, UI update, difficulty algo, notification cadence. Asks if the drop is platform-specific (mobile vs web) or global.",
                 weak: "Jumps straight into hypotheses without clarifying the scope or definition of the metric."
               },
               {
                 dimension: "Hypothesis Quality",
-                strong: "Generates multiple distinct hypotheses — difficulty spike, notification change, competing feature launch, seasonal effects (school exams, tournament season), technical bug — and ranks them by likelihood with reasoning.",
+                strong: "Generates multiple distinct hypotheses, difficulty spike, notification change, competing feature launch, seasonal effects (school exams, tournament season), technical bug, and ranks them by likelihood with reasoning.",
                 weak: "Proposes one hypothesis or lists generic causes without ranking or reasoning."
               },
               {
@@ -923,7 +923,7 @@ const PM_GYM_DATA = {
               },
               {
                 dimension: "Solution Tied to Root Cause",
-                strong: "Proposes a fix that directly follows from the top hypothesis — e.g., if difficulty spiked: recalibrate the difficulty algo; if notifications dropped: A/B test re-engagement push; if seasonal: monitor and accept. Does not propose a generic fix.",
+                strong: "Proposes a fix that directly follows from the top hypothesis, e.g., if difficulty spiked: recalibrate the difficulty algo; if notifications dropped: A/B test re-engagement push; if seasonal: monitor and accept. Does not propose a generic fix.",
                 weak: "Proposes a fix (e.g., 'send more notifications') without first establishing what caused the drop."
               },
               {
@@ -937,25 +937,25 @@ const PM_GYM_DATA = {
               <p>Before investigating, I'd ask:</p>
               <ul>
                 <li><strong>Metric definition:</strong> Is the 20% drop in completion rate per user, total completions, or unique users attempting? These point to different problems.</li>
-                <li><strong>Recency:</strong> Did anything change in the product 30 days ago — algo update, UI change, notification cadence, difficulty tuning?</li>
+                <li><strong>Recency:</strong> Did anything change in the product 30 days ago, algo update, UI change, notification cadence, difficulty tuning?</li>
                 <li><strong>Platform:</strong> Is the drop on mobile, web, or both?</li>
                 <li><strong>Geography:</strong> Is it global or concentrated in specific regions?</li>
               </ul>
 
               <h3>2. Hypotheses, Ranked by Likelihood</h3>
               <ol>
-                <li><strong>Difficulty spike</strong> — If the puzzle difficulty algorithm was updated, puzzles may be too hard for average users, causing abandonment. Most likely given the 30-day timeframe aligns with typical algo update cycles.</li>
-                <li><strong>Notification change</strong> — If push notification delivery dropped (OS permission change, frequency cap), fewer users are being reminded to open the puzzle.</li>
-                <li><strong>Competing feature</strong> — A new feature (e.g., a new game mode or live event) may be drawing attention away from Daily Puzzle.</li>
-                <li><strong>Seasonal</strong> — School exam periods or major chess tournament seasons can shift user behavior. Chess.com's audience skews younger and active tournament players.</li>
-                <li><strong>Technical bug</strong> — Puzzle failing to load, timer not working, or incorrect answer validation causing users to abandon.</li>
+                <li><strong>Difficulty spike</strong>, If the puzzle difficulty algorithm was updated, puzzles may be too hard for average users, causing abandonment. Most likely given the 30-day timeframe aligns with typical algo update cycles.</li>
+                <li><strong>Notification change</strong>, If push notification delivery dropped (OS permission change, frequency cap), fewer users are being reminded to open the puzzle.</li>
+                <li><strong>Competing feature</strong>, A new feature (e.g., a new game mode or live event) may be drawing attention away from Daily Puzzle.</li>
+                <li><strong>Seasonal</strong>, School exam periods or major chess tournament seasons can shift user behavior. Chess.com's audience skews younger and active tournament players.</li>
+                <li><strong>Technical bug</strong>, Puzzle failing to load, timer not working, or incorrect answer validation causing users to abandon.</li>
               </ol>
 
               <h3>3. Data to Pull</h3>
               <ul>
                 <li><strong>Completion rate by user segment:</strong> New vs returning users, free vs premium. A drop only among new users means something different than a universal drop.</li>
                 <li><strong>Puzzle difficulty rating vs completion rate over time:</strong> If difficulty went up and completion went down in lockstep, that's the cause.</li>
-                <li><strong>Abandon point analysis:</strong> Where do users quit — immediately on opening the puzzle, or after making a few moves? Early quit = puzzle feels too hard or loads slowly. Late quit = different problem.</li>
+                <li><strong>Abandon point analysis:</strong> Where do users quit, immediately on opening the puzzle, or after making a few moves? Early quit = puzzle feels too hard or loads slowly. Late quit = different problem.</li>
                 <li><strong>Notification delivery rate:</strong> Did the number of puzzle reminder notifications sent or opened change?</li>
                 <li><strong>Product changelog:</strong> Anything shipped in the last 30–35 days that touched the puzzle feature or difficulty engine?</li>
                 <li><strong>Seasonal baseline:</strong> Did completion rate drop at the same time last year? Rules out seasonal effects.</li>
@@ -964,9 +964,9 @@ const PM_GYM_DATA = {
               <h3>4. Proposed Fix (Top Hypothesis: Difficulty Spike)</h3>
               <p>Assuming the data shows difficulty increased and completion dropped in lockstep:</p>
               <ul>
-                <li>Recalibrate the difficulty distribution — target median puzzle at a rating where ~65–70% of attempting users complete it (up from the current lower rate).</li>
+                <li>Recalibrate the difficulty distribution, target median puzzle at a rating where ~65–70% of attempting users complete it (up from the current lower rate).</li>
                 <li>Add a difficulty indicator label (Easy / Medium / Hard) so users self-select and don't feel blindsided by a hard puzzle on a Tuesday morning.</li>
-                <li>A/B test a "Hint" option that doesn't affect the streak but helps users complete harder puzzles — preserves engagement without removing challenge.</li>
+                <li>A/B test a "Hint" option that doesn't affect the streak but helps users complete harder puzzles, preserves engagement without removing challenge.</li>
               </ul>
 
               <h3>5. Success Metrics</h3>
@@ -982,10 +982,10 @@ const PM_GYM_DATA = {
           duration: "15–20 min",
           isCaseStudy: true,
           scenario: {
-            title: "FotMob — Designing for Fans Who Only Show Up on Matchday",
-            context: `FotMob is a football scores and stats app used by millions of fans globally. Internal data shows that a large segment of users — casual fans — only open the app on matchdays to check live scores. Between games, this segment's DAU drops to near zero. FotMob wants to increase engagement between matchdays without alienating their core power users (die-hard fans who already use the app daily). You are the PM for user engagement. Design a feature to bring casual fans back between matches.`,
+            title: "FotMob, Designing for Fans Who Only Show Up on Matchday",
+            context: `FotMob is a football scores and stats app used by millions of fans globally. Internal data shows that a large segment of users, casual fans, only open the app on matchdays to check live scores. Between games, this segment's DAU drops to near zero. FotMob wants to increase engagement between matchdays without alienating their core power users (die-hard fans who already use the app daily). You are the PM for user engagement. Design a feature to bring casual fans back between matches.`,
             prompt: `In your answer, address the following:
-1. What do you know about the casual fan — their motivation, context, and what they care about?
+1. What do you know about the casual fan, their motivation, context, and what they care about?
 2. What are 3 distinct feature ideas to bring them back between matchdays? For each, describe the user value and the risk.
 3. Which one would you prioritise and why?
 4. What does your MVP look like?
@@ -993,12 +993,12 @@ const PM_GYM_DATA = {
             rubric: [
               {
                 dimension: "User Understanding",
-                strong: "Clearly distinguishes casual fans from power users. Casual fans are driven by match outcomes and their club — they don't want deep stats or tactical analysis. They want to feel connected to their team with minimal effort. Considers their context: busy, limited time, open the app out of habit on matchday.",
+                strong: "Clearly distinguishes casual fans from power users. Casual fans are driven by match outcomes and their club, they don't want deep stats or tactical analysis. They want to feel connected to their team with minimal effort. Considers their context: busy, limited time, open the app out of habit on matchday.",
                 weak: "Treats all FotMob users the same or proposes features better suited to power users (deep stats, tactical breakdowns)."
               },
               {
                 dimension: "Feature Breadth & Insight",
-                strong: "Three meaningfully different feature directions — e.g., (1) a personalised 'Your Club This Week' digest (news, training updates, injury reports), (2) a lightweight weekly prediction game ('Who wins this weekend's top match?'), (3) a social layer — see which of your friends also support the same club. Each solves a different angle of the between-game gap.",
+                strong: "Three meaningfully different feature directions, e.g., (1) a personalised 'Your Club This Week' digest (news, training updates, injury reports), (2) a lightweight weekly prediction game ('Who wins this weekend's top match?'), (3) a social layer, see which of your friends also support the same club. Each solves a different angle of the between-game gap.",
                 weak: "Features are too similar or repackage existing features. Pure notification ideas don't count as features."
               },
               {
@@ -1008,38 +1008,38 @@ const PM_GYM_DATA = {
               },
               {
                 dimension: "MVP Scoping",
-                strong: "Strips the chosen feature to its minimum testable version — e.g., a weekly push notification with 3 personalised club facts, before building a full in-app digest. Tests whether the hook works before investing in a full build.",
+                strong: "Strips the chosen feature to its minimum testable version, e.g., a weekly push notification with 3 personalised club facts, before building a full in-app digest. Tests whether the hook works before investing in a full build.",
                 weak: "MVP includes all features or is described as a full build rather than a minimal test."
               },
               {
                 dimension: "Success Metrics",
                 strong: "Primary metric: between-matchday DAU for the casual fan segment (not overall DAU, which would be dominated by power users). Secondary: D7 retention for casual users. Guardrail: power user engagement metrics must not decline.",
-                weak: "Uses overall DAU or MAU as the success metric — misses that the intervention targets a specific segment."
+                weak: "Uses overall DAU or MAU as the success metric, misses that the intervention targets a specific segment."
               }
             ],
             modelAnswer: `
               <h3>1. Understanding the Casual Fan</h3>
               <p>The casual fan's job-to-be-done is simple: <em>"I want to feel connected to my club and know what's happening, without it taking effort."</em></p>
-              <p>They open FotMob on matchday because the outcome matters to them. Between games, there's no urgency — so they don't open the app. The key insight: casual fans are motivated by their <strong>club</strong>, not by football broadly. A feature that surfaces Barcelona news won't work for a Manchester City fan. Personalisation by club is non-negotiable.</p>
-              <p>Context: they're busy, often check scores during a commute or break. Any between-game feature must be fast, low-effort, and feel relevant — not like homework.</p>
+              <p>They open FotMob on matchday because the outcome matters to them. Between games, there's no urgency, so they don't open the app. The key insight: casual fans are motivated by their <strong>club</strong>, not by football broadly. A feature that surfaces Barcelona news won't work for a Manchester City fan. Personalisation by club is non-negotiable.</p>
+              <p>Context: they're busy, often check scores during a commute or break. Any between-game feature must be fast, low-effort, and feel relevant, not like homework.</p>
 
               <h3>2. Three Feature Ideas</h3>
               <p><strong>Feature 1: "Your Club This Week" Digest</strong></p>
               <p>A weekly push notification + in-app card summarising the 3 most important things about your club: next match opponent and kickoff time, key injury updates, last result summary. <em>User value:</em> zero-effort way to stay informed. <em>Risk:</em> if the content feels generic or stale, users will disable notifications permanently.</p>
 
               <p><strong>Feature 2: Weekly Match Prediction Game</strong></p>
-              <p>A simple, lightweight game: each week, pick the winners of 5 upcoming matches. Points for correct predictions, a simple league table with friends. <em>User value:</em> creates a reason to open the app mid-week (to check predictions) and builds anticipation for the weekend's matches. <em>Risk:</em> low-investment users may not bother setting up predictions consistently. Needs to feel effortless — one tap per match, not a full form.</p>
+              <p>A simple, lightweight game: each week, pick the winners of 5 upcoming matches. Points for correct predictions, a simple league table with friends. <em>User value:</em> creates a reason to open the app mid-week (to check predictions) and builds anticipation for the weekend's matches. <em>Risk:</em> low-investment users may not bother setting up predictions consistently. Needs to feel effortless, one tap per match, not a full form.</p>
 
               <p><strong>Feature 3: Club Social Layer</strong></p>
-              <p>Show how many of your contacts also follow your club. Let users share match reactions or a weekly club mood (a single emoji). Creates a sense of shared identity. <em>User value:</em> taps into tribal identity — being a fan is social. <em>Risk:</em> social features are notoriously hard to bootstrap; needs critical mass to feel alive. Also, FotMob has no existing social graph to build on.</p>
+              <p>Show how many of your contacts also follow your club. Let users share match reactions or a weekly club mood (a single emoji). Creates a sense of shared identity. <em>User value:</em> taps into tribal identity, being a fan is social. <em>Risk:</em> social features are notoriously hard to bootstrap; needs critical mass to feel alive. Also, FotMob has no existing social graph to build on.</p>
 
               <h3>3. Prioritisation</h3>
               <p>I'd prioritise <strong>Feature 1: "Your Club This Week" Digest</strong> because:</p>
               <ul>
-                <li>FotMob already has all the data needed — match schedules, injury reports, results. No new data partnerships required.</li>
+                <li>FotMob already has all the data needed, match schedules, injury reports, results. No new data partnerships required.</li>
                 <li>It directly matches the casual fan's motivation: stay informed about their club with zero effort.</li>
                 <li>It's testable as a pure notification before any in-app build is needed.</li>
-                <li>It doesn't add complexity to the app UI — power users never see it if they don't need it.</li>
+                <li>It doesn't add complexity to the app UI, power users never see it if they don't need it.</li>
               </ul>
 
               <h3>4. MVP</h3>
@@ -1051,9 +1051,9 @@ const PM_GYM_DATA = {
               </ul>
 
               <h3>5. Success Metrics</h3>
-              <p><strong>Primary:</strong> Between-matchday DAU for the casual fan segment — baseline near zero, target 15–20% of casual fans opening the app at least once between matches within 4 weeks.</p>
+              <p><strong>Primary:</strong> Between-matchday DAU for the casual fan segment, baseline near zero, target 15–20% of casual fans opening the app at least once between matches within 4 weeks.</p>
               <p><strong>Secondary:</strong> D7 retention for casual users (do they keep coming back week over week?).</p>
-              <p><strong>Guardrail:</strong> Power user engagement metrics (daily session depth, match-day opens) must not decline — the feature should be additive, not a distraction.</p>
+              <p><strong>Guardrail:</strong> Power user engagement metrics (daily session depth, match-day opens) must not decline, the feature should be additive, not a distraction.</p>
             `
           }
         },
@@ -1063,11 +1063,11 @@ const PM_GYM_DATA = {
           duration: "15–20 min",
           isCaseStudy: true,
           scenario: {
-            title: "Cricbuzz — Three Features, One Engineering Team",
+            title: "Cricbuzz, Three Features, One Engineering Team",
             context: `Cricbuzz is India's largest cricket scores and news platform, with 50M+ monthly active users. Three internal teams have each proposed a feature for the next quarter, but there's only engineering capacity to ship one. The three proposals are:
 1. Live score widgets for smartwatches (Apple Watch + Wear OS)
-2. Fantasy cricket integration — allow users to build and track fantasy teams within Cricbuzz
-3. Vernacular language support — localise the app into 6 regional Indian languages (Hindi, Tamil, Telugu, Kannada, Bengali, Marathi)
+2. Fantasy cricket integration, allow users to build and track fantasy teams within Cricbuzz
+3. Vernacular language support, localise the app into 6 regional Indian languages (Hindi, Tamil, Telugu, Kannada, Bengali, Marathi)
 
 You are the CPO. Which do you ship and why?`,
             prompt: `In your answer, address the following:
@@ -1079,7 +1079,7 @@ You are the CPO. Which do you ship and why?`,
             rubric: [
               {
                 dimension: "Framework Clarity",
-                strong: "Defines explicit criteria before evaluating — e.g., user impact (how many users benefit), strategic alignment (does it strengthen Cricbuzz's core job-to-be-done), revenue potential, implementation complexity, and competitive differentiation. Applies the same criteria to all three options.",
+                strong: "Defines explicit criteria before evaluating, e.g., user impact (how many users benefit), strategic alignment (does it strengthen Cricbuzz's core job-to-be-done), revenue potential, implementation complexity, and competitive differentiation. Applies the same criteria to all three options.",
                 weak: "Jumps to a conclusion without a structured evaluation. Picks a favourite and works backwards."
               },
               {
@@ -1094,12 +1094,12 @@ You are the CPO. Which do you ship and why?`,
               },
               {
                 dimension: "Risk Identification",
-                strong: "Names specific risks for the chosen feature and mitigation for each. For vernacular: translation quality risk (mitigate with native speaker review + community feedback loop); content pipeline risk (sports news needs to be translated in near-real-time). For fantasy: scope creep risk (mitigate with a tight MVP — only track pre-existing fantasy leagues, don't build team selection logic).",
+                strong: "Names specific risks for the chosen feature and mitigation for each. For vernacular: translation quality risk (mitigate with native speaker review + community feedback loop); content pipeline risk (sports news needs to be translated in near-real-time). For fantasy: scope creep risk (mitigate with a tight MVP, only track pre-existing fantasy leagues, don't build team selection logic).",
                 weak: "Identifies generic risks ('it might not work') without specifics or mitigation."
               },
               {
                 dimension: "Success Metrics",
-                strong: "Defines success in terms of the specific user problem solved — for vernacular: new user activation rate in target language regions, D30 retention for vernacular users vs. English users, share of MAU from non-English sessions. For fantasy: daily fantasy interactions per active user, retention impact.",
+                strong: "Defines success in terms of the specific user problem solved, for vernacular: new user activation rate in target language regions, D30 retention for vernacular users vs. English users, share of MAU from non-English sessions. For fantasy: daily fantasy interactions per active user, retention impact.",
                 weak: "Uses a single vanity metric like 'downloads increase' without segment-specific or behaviour-specific measures."
               }
             ],
@@ -1117,31 +1117,31 @@ You are the CPO. Which do you ship and why?`,
               <h3>2. Evaluation</h3>
               <p><strong>Smartwatch widgets:</strong> Smartwatch penetration in India is low and skews premium urban. High delight for a small segment, but limited reach and no strategic leverage. Low complexity. Low priority.</p>
 
-              <p><strong>Fantasy cricket integration:</strong> High engagement potential — fantasy cricket (Dream11, MPL) is massive in India. Adding it within Cricbuzz could drive daily active usage, not just during matches. Revenue potential is real (commission, partnerships). However: high complexity, and it risks diluting Cricbuzz's identity as a neutral scores platform. Fantasy is inherently partisan — you root for individual players, not teams. Also requires a significant product investment to do well; a half-built fantasy feature is worse than none.</p>
+              <p><strong>Fantasy cricket integration:</strong> High engagement potential, fantasy cricket (Dream11, MPL) is massive in India. Adding it within Cricbuzz could drive daily active usage, not just during matches. Revenue potential is real (commission, partnerships). However: high complexity, and it risks diluting Cricbuzz's identity as a neutral scores platform. Fantasy is inherently partisan, you root for individual players, not teams. Also requires a significant product investment to do well; a half-built fantasy feature is worse than none.</p>
 
-              <p><strong>Vernacular language support:</strong> India has 22 scheduled languages. A huge proportion of cricket fans — particularly in Tier 2/3 cities and rural areas — consume content in regional languages but are currently underserved by Cricbuzz. This is the next-billion-user opportunity. High reach, strong strategic fit (cricket is India's shared language — regional languages make Cricbuzz India's cricket platform, not just urban India's). Once done well, translation infrastructure is a defensible moat. Complexity is real but scoped: UI localisation + content translation pipeline.</p>
+              <p><strong>Vernacular language support:</strong> India has 22 scheduled languages. A huge proportion of cricket fans, particularly in Tier 2/3 cities and rural areas, consume content in regional languages but are currently underserved by Cricbuzz. This is the next-billion-user opportunity. High reach, strong strategic fit (cricket is India's shared language, regional languages make Cricbuzz India's cricket platform, not just urban India's). Once done well, translation infrastructure is a defensible moat. Complexity is real but scoped: UI localisation + content translation pipeline.</p>
 
               <h3>3. Decision: Vernacular Language Support</h3>
               <p>I'd ship vernacular language support because:</p>
               <ul>
-                <li>Largest addressable audience — unlocks users who are currently excluded, not just improving experience for existing users.</li>
-                <li>Strategic moat — competitors who haven't invested in regional language infrastructure can't copy this overnight.</li>
-                <li>Aligns with India's consumption shift — WhatsApp and YouTube's growth in regional India is a clear signal that vernacular is the unlock for the next wave of internet users.</li>
+                <li>Largest addressable audience, unlocks users who are currently excluded, not just improving experience for existing users.</li>
+                <li>Strategic moat, competitors who haven't invested in regional language infrastructure can't copy this overnight.</li>
+                <li>Aligns with India's consumption shift, WhatsApp and YouTube's growth in regional India is a clear signal that vernacular is the unlock for the next wave of internet users.</li>
                 <li>Fantasy is appealing but carries identity risk and scope risk. I'd revisit it next quarter with a clearer MVP scope.</li>
               </ul>
 
               <h3>4. Risks and Mitigation</h3>
               <ul>
                 <li><strong>Translation quality:</strong> Machine translation of cricket commentary and match updates can feel unnatural. Mitigation: hire native-speaking editors per language for QA; use community feedback (report a translation) to improve over time.</li>
-                <li><strong>Real-time content pipeline:</strong> Live scores and match updates need near-real-time translation. Mitigation: prioritise structured data (scores, player names, match status) first — these are template-based and easier to translate accurately. Long-form news articles can lag by minutes.</li>
+                <li><strong>Real-time content pipeline:</strong> Live scores and match updates need near-real-time translation. Mitigation: prioritise structured data (scores, player names, match status) first, these are template-based and easier to translate accurately. Long-form news articles can lag by minutes.</li>
                 <li><strong>Which 6 languages first:</strong> Hindi, Tamil, Telugu, Kannada, Bengali, Marathi covers the major bases, but prioritise by user base size and competitive gap. Hindi and Bengali first (largest reach), then South Indian languages.</li>
               </ul>
 
               <h3>5. Success Metrics</h3>
-              <p><strong>Primary:</strong> % of MAU using a non-English language within 90 days of launch — target 15% of MAU.</p>
-              <p><strong>Secondary:</strong> D30 retention for vernacular users vs. English baseline — hypothesis: regional language users retain better because the product finally feels native to them.</p>
+              <p><strong>Primary:</strong> % of MAU using a non-English language within 90 days of launch, target 15% of MAU.</p>
+              <p><strong>Secondary:</strong> D30 retention for vernacular users vs. English baseline, hypothesis: regional language users retain better because the product finally feels native to them.</p>
               <p><strong>Leading indicator:</strong> Language selection rate during onboarding for new installs in target regions.</p>
-              <p><strong>Guardrail:</strong> English user experience metrics must not degrade — no regression in load time, scores accuracy, or existing feature reliability.</p>
+              <p><strong>Guardrail:</strong> English user experience metrics must not degrade, no regression in load time, scores accuracy, or existing feature reliability.</p>
             `
           }
         },
@@ -1152,11 +1152,11 @@ You are the CPO. Which do you ship and why?`,
           lesson: {
             title: "What Is Product Strategy and How Do You Write One?",
             content: `
-              <p>Product strategy answers three questions: <strong>Where are we going? Why does it matter? How will we get there?</strong> A strategy isn't a roadmap (that's tactics) — it's the logic behind why you're making the choices you're making.</p>
+              <p>Product strategy answers three questions: <strong>Where are we going? Why does it matter? How will we get there?</strong> A strategy isn't a roadmap (that's tactics), it's the logic behind why you're making the choices you're making.</p>
 
               <h3>The Three Levels of Strategy</h3>
               <p><strong>Company strategy:</strong> What market does the company operate in? What is its competitive advantage? (e.g., Amazon's strategy: be the lowest-cost, fastest-delivery marketplace by owning logistics infrastructure)</p>
-              <p><strong>Product strategy:</strong> What is the product's role in achieving company goals? Which users does it serve? What are the top 3-5 bets the product is making? (e.g., Spotify's product strategy: own audio, not just music — expand into podcasts and audiobooks to reduce dependency on record labels)</p>
+              <p><strong>Product strategy:</strong> What is the product's role in achieving company goals? Which users does it serve? What are the top 3-5 bets the product is making? (e.g., Spotify's product strategy: own audio, not just music, expand into podcasts and audiobooks to reduce dependency on record labels)</p>
               <p><strong>Roadmap:</strong> What specific things are you building this quarter to execute on the product strategy? This is tactical.</p>
 
               <h3>The "Good Strategy / Bad Strategy" Framework (Richard Rumelt)</h3>
@@ -1186,7 +1186,7 @@ You are the CPO. Which do you ship and why?`,
               question: "A product team's strategy statement reads: 'We will grow to $50M ARR by Q4 next year.' What is wrong with this?",
               options: [
                 "The target is too ambitious for a single year",
-                "This is a goal, not a strategy — it states where you want to go but not how or why",
+                "This is a goal, not a strategy, it states where you want to go but not how or why",
                 "ARR is a lagging metric that shouldn't appear in product strategy",
                 "Strategies should be set for 3-5 year horizons, not 12 months"
               ],
@@ -1209,11 +1209,11 @@ You are the CPO. Which do you ship and why?`,
               options: [
                 "Its user interface and design quality",
                 "Its brand recognition among job seekers",
-                "Network effects — the value of LinkedIn grows as more professionals join, making the data and connections increasingly irreplaceable",
+                "Network effects, the value of LinkedIn grows as more professionals join, making the data and connections increasingly irreplaceable",
                 "Its recommendation algorithm for job matching"
               ],
               correct: 2,
-              explanation: "LinkedIn's moat is its professional network — 900M+ profiles connected to their work history, skills, and professional relationships. No competitor can replicate this without getting professionals to add their entire career history again, which they won't do if everyone is already on LinkedIn."
+              explanation: "LinkedIn's moat is its professional network, 900M+ profiles connected to their work history, skills, and professional relationships. No competitor can replicate this without getting professionals to add their entire career history again, which they won't do if everyone is already on LinkedIn."
             },
             {
               question: "In Rumelt's strategy kernel, the 'Guiding Policy' element refers to:",
@@ -1224,10 +1224,10 @@ You are the CPO. Which do you ship and why?`,
                 "The compliance and legal policies that govern product decisions"
               ],
               correct: 1,
-              explanation: "The guiding policy is the bridge between diagnosis (what's the problem?) and coherent actions (what do we do?). It's the 'bet' — the broad approach the team is committing to. Example: 'We will win by being the cheapest option' or 'We will win by being the best for power users, not beginners.'"
+              explanation: "The guiding policy is the bridge between diagnosis (what's the problem?) and coherent actions (what do we do?). It's the 'bet', the broad approach the team is committing to. Example: 'We will win by being the cheapest option' or 'We will win by being the best for power users, not beginners.'"
             },
             {
-              question: "A PM says: 'Our product strategy is to build great features for all user types — enterprise, SMB, and consumers — with the best UX in the market.' What is the strategic problem here?",
+              question: "A PM says: 'Our product strategy is to build great features for all user types, enterprise, SMB, and consumers, with the best UX in the market.' What is the strategic problem here?",
               options: [
                 "The strategy is too expensive to execute",
                 "It tries to do everything, which means it makes no hard choices and offers no real direction",
@@ -1235,7 +1235,7 @@ You are the CPO. Which do you ship and why?`,
                 "UX should not be part of a product strategy"
               ],
               correct: 1,
-              explanation: "A strategy that tries to serve everyone equally, in every segment, with no focus, is actually no strategy — it's just a list of aspirations. Real strategy means choosing what you will NOT do. Trying to win with enterprise, SMB, and consumers simultaneously usually results in a mediocre product for all three."
+              explanation: "A strategy that tries to serve everyone equally, in every segment, with no focus, is actually no strategy, it's just a list of aspirations. Real strategy means choosing what you will NOT do. Trying to win with enterprise, SMB, and consumers simultaneously usually results in a mediocre product for all three."
             }
           ],
           resources: [
@@ -1247,12 +1247,12 @@ You are the CPO. Which do you ship and why?`,
             {
               title: "Stratechery by Ben Thompson",
               url: "https://stratechery.com",
-              description: "Weekly essays on tech company strategy — arguably the best public source for product strategy thinking in tech."
+              description: "Weekly essays on tech company strategy, arguably the best public source for product strategy thinking in tech."
             },
             {
               title: "Stratechery: The Aggregation Theory (Ben Thompson)",
               url: "https://stratechery.com/2015/aggregation-theory/",
-              description: "Ben Thompson's foundational free essay on how internet companies build strategic moats — essential product strategy reading."
+              description: "Ben Thompson's foundational free essay on how internet companies build strategic moats, essential product strategy reading."
             }
           ]
         }
@@ -1263,19 +1263,19 @@ You are the CPO. Which do you ship and why?`,
     {
       category: "Articles & Blogs",
       items: [
-        { title: "Lenny: Choosing Your North Star Metric", url: "https://www.lennysnewsletter.com/p/choosing-your-north-star-metric", description: "Lenny's breakdown of how to pick the right North Star Metric — with examples from Airbnb, Slack, and more." },
+        { title: "Lenny: Choosing Your North Star Metric", url: "https://www.lennysnewsletter.com/p/choosing-your-north-star-metric", description: "Lenny's breakdown of how to pick the right North Star Metric, with examples from Airbnb, Slack, and more." },
         { title: "Amplitude: The North Star Checklist", url: "https://amplitude.com/books/north-star/the-north-star-checklist", description: "A practical checklist from Amplitude's North Star Playbook to validate and refine your North Star Metric." },
         { title: "Stratechery: Aggregation Theory", url: "https://stratechery.com/2015/aggregation-theory/", description: "Ben Thompson's foundational free essay on how internet companies build lasting product advantages." },
-        { title: "Ken Norton: Leading Cross-Functional Teams", url: "https://www.bringthedonuts.com/essays/leading-cross-functional-teams.html", description: "How PMs lead teams they don't manage — by the author of the most-cited PM essay ever written." }
+        { title: "Ken Norton: Leading Cross-Functional Teams", url: "https://www.bringthedonuts.com/essays/leading-cross-functional-teams.html", description: "How PMs lead teams they don't manage, by the author of the most-cited PM essay ever written." }
       ]
     },
     {
       category: "Books",
       items: [
-        { title: "Inspired — Marty Cagan", url: "https://www.svpg.com/books/inspired-how-to-create-tech-products-customers-love-2nd-edition/", description: "The PM bible. Covers how top tech companies build products." },
-        { title: "Continuous Discovery Habits — Teresa Torres", url: "https://www.amazon.com/Continuous-Discovery-Habits-Discover-Products/dp/1736633309", description: "The modern framework for user research integrated into product development." },
-        { title: "Good Strategy Bad Strategy — Rumelt", url: "https://www.amazon.com/Good-Strategy-Bad-Difference-Matters/dp/0307886239", description: "The clearest book on what strategy actually is — and isn't." },
-        { title: "Agile Product Management with Scrum — Roman Pichler", url: "https://www.amazon.de/-/en/Agile-Product-Management-Scrum-Addison-Wesley/dp/0321605780", description: "How to apply Scrum as a Product Owner — practical and concise." }
+        { title: "Inspired, Marty Cagan", url: "https://www.svpg.com/books/inspired-how-to-create-tech-products-customers-love-2nd-edition/", description: "The PM bible. Covers how top tech companies build products." },
+        { title: "Continuous Discovery Habits, Teresa Torres", url: "https://www.amazon.com/Continuous-Discovery-Habits-Discover-Products/dp/1736633309", description: "The modern framework for user research integrated into product development." },
+        { title: "Good Strategy Bad Strategy, Rumelt", url: "https://www.amazon.com/Good-Strategy-Bad-Difference-Matters/dp/0307886239", description: "The clearest book on what strategy actually is, and isn't." },
+        { title: "Agile Product Management with Scrum, Roman Pichler", url: "https://www.amazon.de/-/en/Agile-Product-Management-Scrum-Addison-Wesley/dp/0321605780", description: "How to apply Scrum as a Product Owner, practical and concise." }
       ]
     }
   ]
