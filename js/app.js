@@ -280,9 +280,9 @@ function renderTopics(levelId) {
     <button class="back-btn" onclick="showView('levels')">← Back to Levels</button>
     <div class="level-header">
       <div class="level-header-top">
-        <div class="level-header-icon">${level.icon}</div>
         <div>
-          <h2>${level.title}</h2>
+          <span class="level-badge">LEVEL ${level.id === 'beginner' ? '01' : level.id === 'intermediate' ? '02' : '03'}</span>
+          <h2 style="margin-top: 0.35rem;">${level.title}</h2>
           <p>${level.description}</p>
         </div>
       </div>
@@ -301,7 +301,7 @@ function renderTopics(levelId) {
 
         let badges = `<span class="topic-badge badge-duration">${topic.duration}</span>`;
         if (done) badges += `<span class="topic-badge badge-done">✓ Completed</span>`;
-        if (isCaseStudy) badges += `<span class="topic-badge badge-case">📋 Case Study</span>`;
+        if (isCaseStudy) badges += `<span class="topic-badge badge-case">Case Study</span>`;
         if (score !== undefined && !isCaseStudy) {
           const pct = Math.round((score.correct / score.total) * 100);
           badges += `<span class="topic-badge badge-score">Quiz: ${score.correct}/${score.total}</span>`;
@@ -349,7 +349,7 @@ function renderModule(levelId, topicId) {
   state.quizState = { currentQ: 0, answers: [], answered: false };
 
   const tabs = ['lesson', 'quiz'];
-  const tabLabels = { lesson: '📖 Lesson', quiz: '🧠 Quiz' };
+  const tabLabels = { lesson: 'Lesson', quiz: 'Quiz' };
 
   container.innerHTML = `
     <button class="back-btn" onclick="showView('topics', {levelId: '${levelId}'})">← Back to ${level.title}</button>
@@ -535,7 +535,7 @@ function buildQuizResults(topic) {
         <div class="result-score-num">${correct}</div>
         <div class="result-score-denom">/ ${quiz.length}</div>
       </div>
-      <div class="result-title">${emoji} ${pct}%, ${pct >= 80 ? 'Excellent' : pct >= 60 ? 'Good' : 'Keep Practicing'}</div>
+      <div class="result-title">${pct}%, ${pct >= 80 ? 'Mastered' : pct >= 60 ? 'Passed' : 'Needs Practice'}</div>
       <div class="result-desc">${msg}</div>
       ${weakAreas.length > 0 ? `
         <div style="text-align: left; margin-bottom: 1.5rem; padding: 1rem; background: var(--bg-subtle); border-radius: 8px;">
@@ -572,7 +572,7 @@ function markLessonDone(topicId) {
     btn.classList.add('completed');
   }
 
-  showToast('📖 Lesson marked complete, take the quiz to finish!');
+  showToast('Lesson marked complete, take the quiz to finish!');
 
   // Auto-switch to quiz tab after a moment
   setTimeout(() => switchTab('quiz'), 1200);
@@ -589,7 +589,7 @@ function renderCaseStudy(container, topic, levelId) {
   container.innerHTML = `
     <button class="back-btn" onclick="showView('topics', {levelId: '${levelId}'})">← Back to ${level.title}</button>
     <div style="margin-bottom: 1.25rem;">
-      <span class="chip">📋 Case Study</span>
+      <span class="chip">Case Study</span>
       <span class="chip" style="margin-left: 0.5rem;">${topic.duration}</span>
     </div>
 
@@ -636,7 +636,7 @@ function renderCaseStudy(container, topic, levelId) {
       </div>
 
       <div class="model-answer">
-        <div class="model-answer-header">📝 Strong Model Answer</div>
+        <div class="model-answer-header">Model Answer</div>
         <div class="model-answer-body">
           ${scenario.modelAnswer}
         </div>
@@ -773,10 +773,10 @@ function renderLibrary() {
   if (!container) return;
 
   const categoryIcons = {
-    'Articles & Blogs': '📝',
-    'Newsletters': '📬',
-    'Books': '📚',
-    'Free Courses': '🎓',
+    'Articles & Blogs': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>',
+    'Newsletters': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>',
+    'Books': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10M6 10h10"/></svg>',
+    'Free Courses': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>',
   };
 
   container.innerHTML = `
@@ -785,17 +785,17 @@ function renderLibrary() {
       <p>Curated free resources organized by format</p>
     </div>
     <div class="library-disclaimer">
-      <span class="disclaimer-icon">💡</span>
+      <span class="disclaimer-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span>
       <span>These resources are curated based on what Sanket personally went through while transitioning into PM. Know something better? <a href="https://github.com/sanketjoshi2012/pm-gym" target="_blank" rel="noopener">Contribute to the repo ↗</a></span>
     </div>
     <div class="resource-categories">
       ${PM_GYM_DATA.resources.map(cat => `
         <div class="resource-category">
-          <h3>${categoryIcons[cat.category] || '🔗'} ${cat.category}</h3>
+          <h3 style="display:flex; align-items:center; gap:0.5rem;">${categoryIcons[cat.category] || ''} <span>${cat.category}</span></h3>
           <div class="category-grid">
             ${cat.items.map(item => `
               <a href="${item.url}" target="_blank" rel="noopener" class="resource-item">
-                <div class="resource-icon">${categoryIcons[cat.category] || '🔗'}</div>
+                <div class="resource-icon">${categoryIcons[cat.category] || '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>'}</div>
                 <div class="resource-info">
                   <div class="resource-title">${item.title}</div>
                   <div class="resource-desc">${item.description}</div>

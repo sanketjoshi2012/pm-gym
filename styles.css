@@ -1544,3 +1544,84 @@ html { scroll-behavior: smooth; }
   display: inline-block;
   vertical-align: middle;
 }
+
+
+/* ─── Refined UI Polish: Monospace, Hover States, Mobile SVGs, Quiz Feedback ─── */
+.progress-label,
+.result-score-num,
+.result-score-denom,
+.topic-badge.badge-duration,
+.topic-badge.badge-score {
+  font-family: var(--font-mono);
+}
+
+.level-card {
+  transition: border-color 0.18s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.18s cubic-bezier(0.16, 1, 0.3, 1), transform 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.level-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 12px 30px -8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-3px);
+}
+
+.topic-card {
+  transition: border-color 0.18s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.18s cubic-bezier(0.16, 1, 0.3, 1), transform 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.topic-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 6px 18px -3px rgba(0, 0, 0, 0.07);
+  transform: translateY(-2px);
+}
+
+.mobile-nav-icon {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+}
+.mobile-nav-icon svg {
+  width: 18px;
+  height: 18px;
+  stroke: var(--fg-3);
+  transition: stroke 0.15s ease, transform 0.15s ease;
+}
+.mobile-nav-btn.active .mobile-nav-icon svg {
+  stroke: var(--accent-text);
+  transform: scale(1.08);
+}
+
+.resource-icon {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  color: var(--fg-2);
+  flex-shrink: 0;
+  transition: color 0.15s, border-color 0.15s, background-color 0.15s;
+}
+.resource-item:hover .resource-icon {
+  color: var(--accent-text);
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.library-disclaimer .disclaimer-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+}
+
+.quiz-option.correct {
+  background: var(--success-bg) !important;
+  border-color: var(--success) !important;
+}
+.quiz-option.incorrect {
+  background: rgba(239, 68, 68, 0.08) !important;
+  border-color: var(--danger) !important;
+}
