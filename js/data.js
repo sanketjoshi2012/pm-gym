@@ -977,6 +977,175 @@ const PM_GYM_DATA = {
           }
         },
         {
+          id: "case-study-fotmob",
+          title: "Case Study: FotMob Between-Game Retention",
+          duration: "15–20 min",
+          isCaseStudy: true,
+          scenario: {
+            title: "FotMob — Designing for Fans Who Only Show Up on Matchday",
+            context: `FotMob is a football scores and stats app used by millions of fans globally. Internal data shows that a large segment of users — casual fans — only open the app on matchdays to check live scores. Between games, this segment's DAU drops to near zero. FotMob wants to increase engagement between matchdays without alienating their core power users (die-hard fans who already use the app daily). You are the PM for user engagement. Design a feature to bring casual fans back between matches.`,
+            prompt: `In your answer, address the following:
+1. What do you know about the casual fan — their motivation, context, and what they care about?
+2. What are 3 distinct feature ideas to bring them back between matchdays? For each, describe the user value and the risk.
+3. Which one would you prioritise and why?
+4. What does your MVP look like?
+5. How would you measure success?`,
+            rubric: [
+              {
+                dimension: "User Understanding",
+                strong: "Clearly distinguishes casual fans from power users. Casual fans are driven by match outcomes and their club — they don't want deep stats or tactical analysis. They want to feel connected to their team with minimal effort. Considers their context: busy, limited time, open the app out of habit on matchday.",
+                weak: "Treats all FotMob users the same or proposes features better suited to power users (deep stats, tactical breakdowns)."
+              },
+              {
+                dimension: "Feature Breadth & Insight",
+                strong: "Three meaningfully different feature directions — e.g., (1) a personalised 'Your Club This Week' digest (news, training updates, injury reports), (2) a lightweight weekly prediction game ('Who wins this weekend's top match?'), (3) a social layer — see which of your friends also support the same club. Each solves a different angle of the between-game gap.",
+                weak: "Features are too similar or repackage existing features. Pure notification ideas don't count as features."
+              },
+              {
+                dimension: "Prioritisation Reasoning",
+                strong: "Selects one feature with clear reasoning tied to: casual fan motivation, low implementation complexity, FotMob's existing data advantage (match/player data), and differentiation from competitors. Acknowledges the guardrail: don't bloat the app for power users.",
+                weak: "Picks a feature without justifying it against the others or against the user's actual motivation."
+              },
+              {
+                dimension: "MVP Scoping",
+                strong: "Strips the chosen feature to its minimum testable version — e.g., a weekly push notification with 3 personalised club facts, before building a full in-app digest. Tests whether the hook works before investing in a full build.",
+                weak: "MVP includes all features or is described as a full build rather than a minimal test."
+              },
+              {
+                dimension: "Success Metrics",
+                strong: "Primary metric: between-matchday DAU for the casual fan segment (not overall DAU, which would be dominated by power users). Secondary: D7 retention for casual users. Guardrail: power user engagement metrics must not decline.",
+                weak: "Uses overall DAU or MAU as the success metric — misses that the intervention targets a specific segment."
+              }
+            ],
+            modelAnswer: `
+              <h3>1. Understanding the Casual Fan</h3>
+              <p>The casual fan's job-to-be-done is simple: <em>"I want to feel connected to my club and know what's happening, without it taking effort."</em></p>
+              <p>They open FotMob on matchday because the outcome matters to them. Between games, there's no urgency — so they don't open the app. The key insight: casual fans are motivated by their <strong>club</strong>, not by football broadly. A feature that surfaces Barcelona news won't work for a Manchester City fan. Personalisation by club is non-negotiable.</p>
+              <p>Context: they're busy, often check scores during a commute or break. Any between-game feature must be fast, low-effort, and feel relevant — not like homework.</p>
+
+              <h3>2. Three Feature Ideas</h3>
+              <p><strong>Feature 1: "Your Club This Week" Digest</strong></p>
+              <p>A weekly push notification + in-app card summarising the 3 most important things about your club: next match opponent and kickoff time, key injury updates, last result summary. <em>User value:</em> zero-effort way to stay informed. <em>Risk:</em> if the content feels generic or stale, users will disable notifications permanently.</p>
+
+              <p><strong>Feature 2: Weekly Match Prediction Game</strong></p>
+              <p>A simple, lightweight game: each week, pick the winners of 5 upcoming matches. Points for correct predictions, a simple league table with friends. <em>User value:</em> creates a reason to open the app mid-week (to check predictions) and builds anticipation for the weekend's matches. <em>Risk:</em> low-investment users may not bother setting up predictions consistently. Needs to feel effortless — one tap per match, not a full form.</p>
+
+              <p><strong>Feature 3: Club Social Layer</strong></p>
+              <p>Show how many of your contacts also follow your club. Let users share match reactions or a weekly club mood (a single emoji). Creates a sense of shared identity. <em>User value:</em> taps into tribal identity — being a fan is social. <em>Risk:</em> social features are notoriously hard to bootstrap; needs critical mass to feel alive. Also, FotMob has no existing social graph to build on.</p>
+
+              <h3>3. Prioritisation</h3>
+              <p>I'd prioritise <strong>Feature 1: "Your Club This Week" Digest</strong> because:</p>
+              <ul>
+                <li>FotMob already has all the data needed — match schedules, injury reports, results. No new data partnerships required.</li>
+                <li>It directly matches the casual fan's motivation: stay informed about their club with zero effort.</li>
+                <li>It's testable as a pure notification before any in-app build is needed.</li>
+                <li>It doesn't add complexity to the app UI — power users never see it if they don't need it.</li>
+              </ul>
+
+              <h3>4. MVP</h3>
+              <p>Before building an in-app digest, test whether the hook works via notification alone:</p>
+              <ul>
+                <li>Send a mid-week push to casual fan segment (users with fewer than 2 non-matchday opens per week): "Your [Club] update: [Next opponent] on [day], [key injury player] doubtful."</li>
+                <li>Measure click-through rate and whether those users open the app again before matchday.</li>
+                <li>If CTR and follow-on opens are strong, invest in an in-app digest card. If weak, the content or timing needs rethinking before building.</li>
+              </ul>
+
+              <h3>5. Success Metrics</h3>
+              <p><strong>Primary:</strong> Between-matchday DAU for the casual fan segment — baseline near zero, target 15–20% of casual fans opening the app at least once between matches within 4 weeks.</p>
+              <p><strong>Secondary:</strong> D7 retention for casual users (do they keep coming back week over week?).</p>
+              <p><strong>Guardrail:</strong> Power user engagement metrics (daily session depth, match-day opens) must not decline — the feature should be additive, not a distraction.</p>
+            `
+          }
+        },
+        {
+          id: "case-study-cricbuzz",
+          title: "Case Study: Cricbuzz Feature Prioritisation",
+          duration: "15–20 min",
+          isCaseStudy: true,
+          scenario: {
+            title: "Cricbuzz — Three Features, One Engineering Team",
+            context: `Cricbuzz is India's largest cricket scores and news platform, with 50M+ monthly active users. Three internal teams have each proposed a feature for the next quarter, but there's only engineering capacity to ship one. The three proposals are:
+1. Live score widgets for smartwatches (Apple Watch + Wear OS)
+2. Fantasy cricket integration — allow users to build and track fantasy teams within Cricbuzz
+3. Vernacular language support — localise the app into 6 regional Indian languages (Hindi, Tamil, Telugu, Kannada, Bengali, Marathi)
+
+You are the CPO. Which do you ship and why?`,
+            prompt: `In your answer, address the following:
+1. What framework or criteria would you use to evaluate these three options?
+2. Walk through your evaluation of each feature against those criteria.
+3. Which feature do you choose, and what is your reasoning?
+4. What are the risks of your choice, and how would you mitigate them?
+5. What does success look like?`,
+            rubric: [
+              {
+                dimension: "Framework Clarity",
+                strong: "Defines explicit criteria before evaluating — e.g., user impact (how many users benefit), strategic alignment (does it strengthen Cricbuzz's core job-to-be-done), revenue potential, implementation complexity, and competitive differentiation. Applies the same criteria to all three options.",
+                weak: "Jumps to a conclusion without a structured evaluation. Picks a favourite and works backwards."
+              },
+              {
+                dimension: "Feature Evaluation Depth",
+                strong: "For smartwatch widgets: niche audience, high delight for a small segment, low strategic leverage. For fantasy: high engagement + monetisation potential but raises a 'does this dilute Cricbuzz's identity as a scores platform?' question; also high build complexity. For vernacular: massive underserved audience, aligns with India's next-billion-user opportunity, defensible moat, relatively lower complexity vs. fantasy.",
+                weak: "Treats all three as equally plausible without real differentiation or acknowledges obvious winner without evaluating trade-offs."
+              },
+              {
+                dimension: "Decision & Reasoning",
+                strong: "Chooses vernacular (or makes a well-reasoned case for fantasy) with clear reasoning: largest addressable user segment, strategic moat (hard to copy once done well), aligns with how India actually consumes content. If choosing fantasy: strong revenue argument + engagement depth argument with a clear scope for an MVP that doesn't turn Cricbuzz into a full fantasy platform.",
+                weak: "Chooses smartwatch widgets without a strong strategic argument, or picks fantasy without addressing the identity/complexity risks."
+              },
+              {
+                dimension: "Risk Identification",
+                strong: "Names specific risks for the chosen feature and mitigation for each. For vernacular: translation quality risk (mitigate with native speaker review + community feedback loop); content pipeline risk (sports news needs to be translated in near-real-time). For fantasy: scope creep risk (mitigate with a tight MVP — only track pre-existing fantasy leagues, don't build team selection logic).",
+                weak: "Identifies generic risks ('it might not work') without specifics or mitigation."
+              },
+              {
+                dimension: "Success Metrics",
+                strong: "Defines success in terms of the specific user problem solved — for vernacular: new user activation rate in target language regions, D30 retention for vernacular users vs. English users, share of MAU from non-English sessions. For fantasy: daily fantasy interactions per active user, retention impact.",
+                weak: "Uses a single vanity metric like 'downloads increase' without segment-specific or behaviour-specific measures."
+              }
+            ],
+            modelAnswer: `
+              <h3>1. Evaluation Framework</h3>
+              <p>I'd evaluate each feature across five criteria:</p>
+              <ul>
+                <li><strong>User reach:</strong> How many existing and potential users does this benefit?</li>
+                <li><strong>Strategic fit:</strong> Does this strengthen Cricbuzz's core value proposition (the go-to place for cricket)?</li>
+                <li><strong>Revenue potential:</strong> Does this open or strengthen a monetisation path?</li>
+                <li><strong>Defensibility:</strong> Does this create a moat that's hard for competitors to replicate?</li>
+                <li><strong>Implementation complexity:</strong> What's the realistic cost and timeline?</li>
+              </ul>
+
+              <h3>2. Evaluation</h3>
+              <p><strong>Smartwatch widgets:</strong> Smartwatch penetration in India is low and skews premium urban. High delight for a small segment, but limited reach and no strategic leverage. Low complexity. Low priority.</p>
+
+              <p><strong>Fantasy cricket integration:</strong> High engagement potential — fantasy cricket (Dream11, MPL) is massive in India. Adding it within Cricbuzz could drive daily active usage, not just during matches. Revenue potential is real (commission, partnerships). However: high complexity, and it risks diluting Cricbuzz's identity as a neutral scores platform. Fantasy is inherently partisan — you root for individual players, not teams. Also requires a significant product investment to do well; a half-built fantasy feature is worse than none.</p>
+
+              <p><strong>Vernacular language support:</strong> India has 22 scheduled languages. A huge proportion of cricket fans — particularly in Tier 2/3 cities and rural areas — consume content in regional languages but are currently underserved by Cricbuzz. This is the next-billion-user opportunity. High reach, strong strategic fit (cricket is India's shared language — regional languages make Cricbuzz India's cricket platform, not just urban India's). Once done well, translation infrastructure is a defensible moat. Complexity is real but scoped: UI localisation + content translation pipeline.</p>
+
+              <h3>3. Decision: Vernacular Language Support</h3>
+              <p>I'd ship vernacular language support because:</p>
+              <ul>
+                <li>Largest addressable audience — unlocks users who are currently excluded, not just improving experience for existing users.</li>
+                <li>Strategic moat — competitors who haven't invested in regional language infrastructure can't copy this overnight.</li>
+                <li>Aligns with India's consumption shift — WhatsApp and YouTube's growth in regional India is a clear signal that vernacular is the unlock for the next wave of internet users.</li>
+                <li>Fantasy is appealing but carries identity risk and scope risk. I'd revisit it next quarter with a clearer MVP scope.</li>
+              </ul>
+
+              <h3>4. Risks and Mitigation</h3>
+              <ul>
+                <li><strong>Translation quality:</strong> Machine translation of cricket commentary and match updates can feel unnatural. Mitigation: hire native-speaking editors per language for QA; use community feedback (report a translation) to improve over time.</li>
+                <li><strong>Real-time content pipeline:</strong> Live scores and match updates need near-real-time translation. Mitigation: prioritise structured data (scores, player names, match status) first — these are template-based and easier to translate accurately. Long-form news articles can lag by minutes.</li>
+                <li><strong>Which 6 languages first:</strong> Hindi, Tamil, Telugu, Kannada, Bengali, Marathi covers the major bases, but prioritise by user base size and competitive gap. Hindi and Bengali first (largest reach), then South Indian languages.</li>
+              </ul>
+
+              <h3>5. Success Metrics</h3>
+              <p><strong>Primary:</strong> % of MAU using a non-English language within 90 days of launch — target 15% of MAU.</p>
+              <p><strong>Secondary:</strong> D30 retention for vernacular users vs. English baseline — hypothesis: regional language users retain better because the product finally feels native to them.</p>
+              <p><strong>Leading indicator:</strong> Language selection rate during onboarding for new installs in target regions.</p>
+              <p><strong>Guardrail:</strong> English user experience metrics must not degrade — no regression in load time, scores accuracy, or existing feature reliability.</p>
+            `
+          }
+        },
+        {
           id: "product-strategy",
           title: "Product Strategy Fundamentals",
           duration: "4 min read",
