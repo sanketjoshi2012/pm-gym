@@ -221,13 +221,27 @@ function renderLevelCards() {
     const doneCount = level.topics.filter(t => state.completedTopics.has(t.id)).length;
     const pct = topicCount ? Math.round((doneCount / topicCount) * 100) : 0;
 
-    const topicsHTML = level.topics.map(t => {
+    const caseStudies = level.topics.filter(t => t.isCaseStudy);
+    const nonCaseStudies = level.topics.filter(t => !t.isCaseStudy);
+    const caseStudyDone = caseStudies.filter(t => state.completedTopics.has(t.id)).length;
+
+    const topicItems = nonCaseStudies.map(t => {
       const done = state.completedTopics.has(t.id);
       return `<div class="level-topic-item ${done ? 'done' : ''}">
         <div class="topic-dot"></div>
         ${t.title}
       </div>`;
-    }).join('');
+    });
+
+    if (caseStudies.length > 0) {
+      const allDone = caseStudyDone === caseStudies.length;
+      topicItems.push(`<div class="level-topic-item ${allDone ? 'done' : ''}">
+        <div class="topic-dot"></div>
+        Case Studies (${caseStudies.length})
+      </div>`);
+    }
+
+    const topicsHTML = topicItems.join('');
 
     return `
       <div class="level-card" onclick="showView('topics', {levelId: '${level.id}'})">
