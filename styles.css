@@ -906,7 +906,7 @@ img { max-width: 100%; }
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.875rem 1.75rem;
+  padding: 0.7rem 1.75rem;
   background: var(--accent);
   color: #fff;
   border: none;
@@ -916,7 +916,6 @@ img { max-width: 100%; }
   font-weight: 600;
   cursor: pointer;
   transition: background 0.15s, transform 0.15s;
-  margin-bottom: 1.5rem;
 }
 .reveal-btn:hover { background: var(--accent-hover); transform: translateY(-1px); }
 

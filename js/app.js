@@ -610,7 +610,7 @@ function renderCaseStudy(container, topic, levelId) {
       placeholder="Write your answer here... Think through the problem systematically before revealing the model answer."
       >${savedAnswer}</textarea>
 
-    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
+    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1.5rem; align-items: center;">
       <button class="btn-secondary" onclick="saveCaseAnswer('${topic.id}')">💾 Save Draft</button>
       <button class="reveal-btn" onclick="toggleModelAnswer('${topic.id}')">
         <span id="revealBtnText">👁 Reveal Model Answer</span>
