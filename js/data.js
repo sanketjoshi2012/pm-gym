@@ -892,6 +892,91 @@ const PM_GYM_DATA = {
           }
         },
         {
+          id: "case-study-chess",
+          title: "Case Study: Chess.com Puzzle Drop",
+          duration: "15–20 min",
+          isCaseStudy: true,
+          scenario: {
+            title: "Chess.com — Daily Puzzle Completions Drop 20%",
+            context: `Chess.com's Daily Puzzle is one of the platform's highest DAU drivers — millions of users open the app specifically to solve the daily puzzle. Over the past 30 days, puzzle completion rates have dropped 20%. You are the PM for the Daily Puzzle feature. The head of product asks you to diagnose what's happening and propose next steps.`,
+            prompt: `In your answer, address the following:
+1. What clarifying questions would you ask before investigating?
+2. What are your top hypotheses for the drop? Rank them by likelihood.
+3. What data would you pull to validate or rule out each hypothesis?
+4. Based on your most likely hypothesis, what fix would you propose?
+5. How would you define success?`,
+            rubric: [
+              {
+                dimension: "Clarify Before Diagnosing",
+                strong: "Asks whether the 20% is a drop in completions per user, total users attempting, or both. Asks if anything changed in the product recently — UI update, difficulty algo, notification cadence. Asks if the drop is platform-specific (mobile vs web) or global.",
+                weak: "Jumps straight into hypotheses without clarifying the scope or definition of the metric."
+              },
+              {
+                dimension: "Hypothesis Quality",
+                strong: "Generates multiple distinct hypotheses — difficulty spike, notification change, competing feature launch, seasonal effects (school exams, tournament season), technical bug — and ranks them by likelihood with reasoning.",
+                weak: "Proposes one hypothesis or lists generic causes without ranking or reasoning."
+              },
+              {
+                dimension: "Data-Driven Investigation",
+                strong: "Names specific data cuts: completion rate by user segment (new vs returning, free vs paid), skip/abandon rate by puzzle step, correlation with product changelog, platform breakdown, and seasonal comparison (same period last year).",
+                weak: "Says 'look at analytics' without specifying what to look for or how to segment."
+              },
+              {
+                dimension: "Solution Tied to Root Cause",
+                strong: "Proposes a fix that directly follows from the top hypothesis — e.g., if difficulty spiked: recalibrate the difficulty algo; if notifications dropped: A/B test re-engagement push; if seasonal: monitor and accept. Does not propose a generic fix.",
+                weak: "Proposes a fix (e.g., 'send more notifications') without first establishing what caused the drop."
+              },
+              {
+                dimension: "Success Definition",
+                strong: "Defines success as puzzle completion rate returning to the 30-day pre-drop baseline, with a specific timeframe and a leading indicator (e.g., daily attempt rate stabilising first).",
+                weak: "Vague success definition like 'completions go back up' with no baseline or timeframe."
+              }
+            ],
+            modelAnswer: `
+              <h3>1. Clarifying Questions</h3>
+              <p>Before investigating, I'd ask:</p>
+              <ul>
+                <li><strong>Metric definition:</strong> Is the 20% drop in completion rate per user, total completions, or unique users attempting? These point to different problems.</li>
+                <li><strong>Recency:</strong> Did anything change in the product 30 days ago — algo update, UI change, notification cadence, difficulty tuning?</li>
+                <li><strong>Platform:</strong> Is the drop on mobile, web, or both?</li>
+                <li><strong>Geography:</strong> Is it global or concentrated in specific regions?</li>
+              </ul>
+
+              <h3>2. Hypotheses, Ranked by Likelihood</h3>
+              <ol>
+                <li><strong>Difficulty spike</strong> — If the puzzle difficulty algorithm was updated, puzzles may be too hard for average users, causing abandonment. Most likely given the 30-day timeframe aligns with typical algo update cycles.</li>
+                <li><strong>Notification change</strong> — If push notification delivery dropped (OS permission change, frequency cap), fewer users are being reminded to open the puzzle.</li>
+                <li><strong>Competing feature</strong> — A new feature (e.g., a new game mode or live event) may be drawing attention away from Daily Puzzle.</li>
+                <li><strong>Seasonal</strong> — School exam periods or major chess tournament seasons can shift user behavior. Chess.com's audience skews younger and active tournament players.</li>
+                <li><strong>Technical bug</strong> — Puzzle failing to load, timer not working, or incorrect answer validation causing users to abandon.</li>
+              </ol>
+
+              <h3>3. Data to Pull</h3>
+              <ul>
+                <li><strong>Completion rate by user segment:</strong> New vs returning users, free vs premium. A drop only among new users means something different than a universal drop.</li>
+                <li><strong>Puzzle difficulty rating vs completion rate over time:</strong> If difficulty went up and completion went down in lockstep, that's the cause.</li>
+                <li><strong>Abandon point analysis:</strong> Where do users quit — immediately on opening the puzzle, or after making a few moves? Early quit = puzzle feels too hard or loads slowly. Late quit = different problem.</li>
+                <li><strong>Notification delivery rate:</strong> Did the number of puzzle reminder notifications sent or opened change?</li>
+                <li><strong>Product changelog:</strong> Anything shipped in the last 30–35 days that touched the puzzle feature or difficulty engine?</li>
+                <li><strong>Seasonal baseline:</strong> Did completion rate drop at the same time last year? Rules out seasonal effects.</li>
+              </ul>
+
+              <h3>4. Proposed Fix (Top Hypothesis: Difficulty Spike)</h3>
+              <p>Assuming the data shows difficulty increased and completion dropped in lockstep:</p>
+              <ul>
+                <li>Recalibrate the difficulty distribution — target median puzzle at a rating where ~65–70% of attempting users complete it (up from the current lower rate).</li>
+                <li>Add a difficulty indicator label (Easy / Medium / Hard) so users self-select and don't feel blindsided by a hard puzzle on a Tuesday morning.</li>
+                <li>A/B test a "Hint" option that doesn't affect the streak but helps users complete harder puzzles — preserves engagement without removing challenge.</li>
+              </ul>
+
+              <h3>5. Success Metrics</h3>
+              <p><strong>Primary:</strong> Puzzle completion rate returns to 30-day pre-drop baseline within 2 weeks of fix.</p>
+              <p><strong>Leading indicator:</strong> Daily puzzle attempt rate stabilises first (users opening the puzzle), then completion rate follows.</p>
+              <p><strong>Guardrail:</strong> Average puzzle difficulty rating does not drop so far that power users find puzzles too easy (track completion rate among top-rated users separately).</p>
+            `
+          }
+        },
+        {
           id: "product-strategy",
           title: "Product Strategy Fundamentals",
           duration: "4 min read",
