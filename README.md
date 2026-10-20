@@ -36,16 +36,29 @@ Built for career switchers — analysts, engineers, designers, and consultants w
 
 ## Run Locally
 
-No build step. No dependencies. Just a browser.
+No build step. No package installs. Just a browser.
 
 ```bash
-git clone https://github.com/sanketjoshi/pm-gym.git
+git clone https://github.com/sanketjoshi2012/pm-gym.git
 cd pm-gym
+```
+
+Then pick whichever option fits:
+
+**Option 1: Node (recommended if you have Node installed)**
+```bash
+npx serve .
+# Open http://localhost:3000
+```
+
+**Option 2: Python (if you have Python 3 installed)**
+```bash
 python3 -m http.server 4321
 # Open http://localhost:4321
 ```
 
-Or just open `index.html` directly in your browser.
+**Option 3: No server needed**
+Just open `index.html` directly in your browser. Most things work fine without a server.
 
 ---
 
