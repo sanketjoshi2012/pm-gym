@@ -842,7 +842,7 @@ function renderAbout() {
       <div class="about-contribute">
         <h3>🤝 This is a Community Project</h3>
         <p>PM Gym is fully open source. If you know a resource that should be here, a case study that would help, or a topic that's missing, pull requests are welcome.</p>
-        <p>You don't need to know how to code. If you can edit a text file and write clearly, you can contribute a topic, a quiz question, or a resource.</p>
+        <p>Have a real PM scenario from your work? Describe the problem, how you tackled it, and what the outcome was. The best submissions get featured as practice scenarios. We credit you by name.</p>
         <div class="about-contribute-actions">
           <a href="https://tally.so/r/rDyLDR" target="_blank" rel="noopener" class="btn-primary">Share a PM Scenario ↗</a>
           <a href="https://github.com/sanketjoshi2012/pm-gym" target="_blank" rel="noopener" class="btn-secondary">View on GitHub ↗</a>
