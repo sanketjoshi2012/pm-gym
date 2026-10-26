@@ -1146,6 +1146,439 @@ You are the CPO. Which do you ship and why?`,
           }
         },
         {
+          id: "case-study-flipkart",
+          title: "Case Study: Flipkart Success Metrics",
+          duration: "15-20 min",
+          isCaseStudy: true,
+          scenario: {
+            title: "Flipkart: How Would You Define and Measure Success?",
+            context: `Flipkart is India's largest e-commerce marketplace with over 400 million registered users. It operates as a two-sided marketplace, creating value for customers who buy products and sellers who list and fulfil orders. You have just joined as a senior PM. In your first week, the CPO asks you: "How would you define success for Flipkart, and what metrics would you track?"`,
+            prompt: `In your answer, address the following:
+1. Start with a clarifying question. Is this about Flipkart as a whole business or a specific product area?
+2. Frame Flipkart's business model and who the key stakeholders are.
+3. Define a North Star Metric and explain why you chose it.
+4. List the supporting metrics across customer growth, seller health, revenue, and operations.
+5. Map the buyer journey and identify key leading indicators at each stage.
+6. Identify guardrail metrics you would monitor to avoid optimising the wrong thing.
+7. Discuss at least two trade-offs you would consider when making product decisions.`,
+            rubric: [
+              {
+                dimension: "Clarifying Question",
+                strong: "Asks whether the question is about overall business success or a specific feature or initiative before diving in. This shows structured thinking and avoids answering the wrong question.",
+                weak: "Jumps straight into metrics without establishing scope."
+              },
+              {
+                dimension: "Business Model Framing",
+                strong: "Identifies Flipkart as a two-sided marketplace with three stakeholders: customers (discover and buy products), sellers (access buyers and fulfilment infrastructure), and Flipkart (sustainable revenue and trust). States that success means all three grow together.",
+                weak: "Treats Flipkart as a simple retail site without acknowledging the marketplace dynamics and seller side."
+              },
+              {
+                dimension: "North Star Metric",
+                strong: "Chooses Successful Orders Delivered and explains why: it captures value for all three stakeholders at once. A successful delivery means the customer found the right product, trusted the platform, the seller fulfilled it, and logistics worked. It is a leading indicator of revenue and a lagging indicator of platform health.",
+                weak: "Chooses GMV or revenue as the North Star, which are business outcomes not user value metrics, or picks DAU which does not reflect whether Flipkart is actually delivering value."
+              },
+              {
+                dimension: "Metric Coverage",
+                strong: "Covers all five areas: customer growth (MAU, repeat purchase rate, retention), seller health (active sellers, seller retention, fulfilment success rate), revenue (GMV, contribution margin), operations (on-time delivery rate, product availability, COD success rate), and customer experience (CSAT, NPS).",
+                weak: "Only covers customer-side metrics and ignores seller health or operational efficiency."
+              },
+              {
+                dimension: "Buyer Funnel and Leading Metrics",
+                strong: "Maps the buyer journey step by step (open app, search, listing page, product detail, add to cart, checkout, payment, delivery) and identifies a leading metric at each step: search success rate, listing to detail CTR, add-to-cart rate, checkout completion rate, payment success rate, delivery success rate.",
+                weak: "Lists metrics without connecting them to the funnel or explaining why they are leading indicators."
+              },
+              {
+                dimension: "Guardrail Metrics",
+                strong: "Identifies at least three guardrail metrics that prevent optimising one thing at the cost of another: return rate and refund rate (customer trust), order cancellation rate and late delivery rate (delivery quality), payment failure rate (platform health).",
+                weak: "Does not identify guardrails, or identifies only one without explaining what it guards against."
+              },
+              {
+                dimension: "Trade-offs",
+                strong: "Discusses real trade-offs: if GMV grows through aggressive discounting but contribution margin falls, prioritise profitability; if faster delivery increases damaged goods or return rates, prioritise quality over speed; if seller acquisition grows but catalog quality falls, prioritise high-quality sellers over volume.",
+                weak: "States generic trade-offs without grounding them in Flipkart's specific business context."
+              }
+            ],
+            modelAnswer: `
+              <h3>1. Clarifying Question</h3>
+              <p>Before I define success, I want to clarify: are we evaluating Flipkart as an overall business, or are we evaluating the success of a specific product area or initiative? This changes what metrics matter most.</p>
+              <p>For this answer, I will assume we are evaluating overall business success.</p>
+
+              <h3>2. Business Model and Stakeholders</h3>
+              <p>Flipkart is a two-sided marketplace. It creates value for three groups:</p>
+              <ul>
+                <li><strong>Customers:</strong> discover and purchase products conveniently.</li>
+                <li><strong>Sellers:</strong> access millions of buyers along with payment, logistics, and fulfilment infrastructure.</li>
+                <li><strong>Flipkart:</strong> generates sustainable revenue while maintaining customer trust.</li>
+              </ul>
+              <p>I would define success only when all three stakeholders grow together. Optimising for one at the cost of another is not sustainable.</p>
+
+              <h3>3. North Star Metric: Successful Orders Delivered</h3>
+              <p>I would choose Successful Orders Delivered as the North Star because it reflects value delivered to all three stakeholders at once. A successful delivery means the customer found the right product and trusted Flipkart enough to buy, the seller fulfilled the order, and the logistics network delivered it on time. It predicts long-term revenue without being a revenue metric itself.</p>
+
+              <h3>4. Supporting Metrics</h3>
+              <p><strong>Customer Growth:</strong> Monthly Active Customers, Repeat Purchase Rate, Customer Retention Rate.</p>
+              <p><strong>Seller Health:</strong> Monthly Active Sellers, Seller Retention Rate, Seller Fulfilment Success Rate.</p>
+              <p><strong>Revenue:</strong> Gross Merchandise Value (GMV), Contribution Margin.</p>
+              <p><strong>Operations:</strong> On-Time Delivery Rate, Product Availability Rate, Cash on Delivery Success Rate.</p>
+              <p><strong>Customer Experience:</strong> CSAT, NPS.</p>
+
+              <h3>5. Buyer Journey and Leading Metrics</h3>
+              <p>Open App → Search → Product Listing Page → Product Detail Page → Add to Cart → Checkout → Payment → Order Confirmation → Delivery.</p>
+              <p>Key leading metrics at each stage: Search Success Rate, Listing to Detail CTR, Add-to-Cart Rate, Checkout Completion Rate, Payment Success Rate, Delivery Success Rate. These tell me where customers are dropping off before the North Star Metric is impacted.</p>
+
+              <h3>6. Guardrail Metrics</h3>
+              <p><strong>Customer trust:</strong> Return Rate, Refund Rate, Wrong or Damaged Product Rate.</p>
+              <p><strong>Delivery quality:</strong> Order Cancellation Rate, Late Delivery Rate.</p>
+              <p><strong>Platform health:</strong> Payment Failure Rate, Customer Support Resolution Time.</p>
+              <p>These ensure that improvements in one area do not silently damage the customer experience.</p>
+
+              <h3>7. Trade-offs</h3>
+              <ul>
+                <li>If GMV grows through aggressive discounting but Contribution Margin falls significantly, prioritise sustainable profitability over short-term GMV.</li>
+                <li>If faster delivery increases damaged goods or return rates, prioritise delivery quality before adding more speed.</li>
+                <li>If seller acquisition grows rapidly but catalog quality falls, prioritise high-quality sellers over volume.</li>
+              </ul>
+              <p>The goal is not to maximise a single metric but to build a healthy marketplace where customers receive value, sellers grow successfully, and Flipkart achieves sustainable growth.</p>
+            `
+          }
+        },
+        {
+          id: "case-study-swiggy",
+          title: "Case Study: Swiggy Order Cancellations Spike",
+          duration: "15-20 min",
+          isCaseStudy: true,
+          scenario: {
+            title: "Swiggy: Order Cancellation Rate Spiked 25% in Two Weeks",
+            context: `Swiggy is one of India's largest food delivery platforms, operating in 500+ cities. Last week, your data team flagged that the order cancellation rate has increased by 25% over the past two weeks, from 8% to 10%. This is now the highest it has been in 18 months. You are the PM for the consumer experience team. The Head of Product wants your analysis and a plan by end of week.`,
+            prompt: `In your answer, address the following:
+1. What clarifying questions would you ask before investigating?
+2. What are your top hypotheses for the spike? Rank them by likelihood.
+3. What data would you pull to validate or rule out each hypothesis?
+4. How would you segment the data to narrow down the cause?
+5. Based on your most likely hypothesis, what fix would you propose?
+6. How would you define success after the fix?`,
+            rubric: [
+              {
+                dimension: "Clarifying Questions",
+                strong: "Asks: Is the cancellation happening before or after the restaurant accepts the order? Is it customer-initiated or system-initiated (auto-cancel)? Is it concentrated in specific cities, restaurant types, or times of day? Did anything change in the product or operations in the last two weeks?",
+                weak: "Dives into hypotheses without establishing when in the order journey cancellations are happening or who is initiating them."
+              },
+              {
+                dimension: "Hypothesis Quality",
+                strong: "Generates hypotheses across multiple categories: product changes (new cancellation flow is too easy to trigger accidentally), restaurant supply issues (restaurants declining orders at higher rates, leading to auto-cancel), delivery partner shortage (estimated delivery time has increased, making customers cancel), payment issues (payment failures being logged as cancellations), or external factors (festival season, bad weather, competitor promotion driving comparison shopping).",
+                weak: "Only generates one or two hypotheses or lists generic causes without thinking through the order journey."
+              },
+              {
+                dimension: "Data Investigation",
+                strong: "Specifies exactly what to pull: cancellation rate broken down by stage (pre-accept, post-accept, post-pickup), by city tier, by time of day, by restaurant category, by delivery time estimate. Also looks at the product changelog and ops logs for the same two-week window.",
+                weak: "Says look at the data without specifying what cuts or breakdowns would reveal the root cause."
+              },
+              {
+                dimension: "Segmentation Depth",
+                strong: "Segments by: cancellation stage (customer before restaurant accepts vs. after), user cohort (new vs. returning customers), geography (metro vs. Tier 2), device (Android vs. iOS), order type (standard vs. scheduled), and restaurant type (cloud kitchen vs. dine-in restaurant). Each segment either confirms or rules out a hypothesis.",
+                weak: "Looks at overall cancellation rate without breaking it down into segments that would isolate the cause."
+              },
+              {
+                dimension: "Fix Quality",
+                strong: "Fix is specific to the root cause. If delivery time spikes are the cause: work with ops to improve restaurant assignment algorithm or add transparency to ETA. If the cancellation UI changed: A/B test reverting the change. If restaurants are declining more: create an incentive for restaurants to maintain acceptance rate above a threshold.",
+                weak: "Proposes a generic fix such as reducing cancellation rate without linking it to the specific root cause identified."
+              },
+              {
+                dimension: "Success Definition",
+                strong: "Cancellation rate returns to the 18-month baseline of 8% within a defined timeframe (e.g., 2 weeks post-fix). Leading indicator: pre-accept cancellation rate stabilises first. Guardrail: customer satisfaction score and restaurant NPS must not deteriorate.",
+                weak: "Vague success definition like cancellations go down with no baseline, timeframe, or guardrail metric."
+              }
+            ],
+            modelAnswer: `
+              <h3>1. Clarifying Questions</h3>
+              <ul>
+                <li><strong>Where in the journey?</strong> Is the spike in cancellations before the restaurant accepts, after acceptance, or after pickup? Each stage points to a different cause.</li>
+                <li><strong>Who is cancelling?</strong> Are these customer-initiated cancellations or system-initiated auto-cancels (e.g., restaurant not responding in time)?</li>
+                <li><strong>Where is it concentrated?</strong> Specific cities, times of day, restaurant categories, or device types?</li>
+                <li><strong>What changed?</strong> Any product releases, restaurant partner changes, or operational changes in the last two weeks?</li>
+              </ul>
+
+              <h3>2. Hypotheses, Ranked by Likelihood</h3>
+              <ol>
+                <li><strong>Delivery time estimates increased</strong> — if ETA went up (due to driver shortage or traffic), customers are more likely to cancel after seeing the wait time. Most common cause of cancellation spikes.</li>
+                <li><strong>Restaurant acceptance rate dropped</strong> — if restaurants are declining more orders (due to high demand, staffing issues, or a policy change), auto-cancels increase.</li>
+                <li><strong>UI change made cancellation easier</strong> — if a recent release changed the cancellation flow, users may be triggering it accidentally.</li>
+                <li><strong>Payment failure being logged as cancellation</strong> — a technical bug where failed payments appear as cancellations in the data.</li>
+                <li><strong>External factor</strong> — festival season or competitor discount driving comparison shopping and cancel-and-reorder behaviour.</li>
+              </ol>
+
+              <h3>3. Data to Pull</h3>
+              <ul>
+                <li>Cancellation rate broken down by stage: pre-accept, post-accept, post-pickup.</li>
+                <li>Average delivery time estimate over the same two-week window vs. the prior period.</li>
+                <li>Restaurant acceptance rate over the same window.</li>
+                <li>Product changelog: any releases in the last two weeks that touched the order flow or cancellation UI.</li>
+                <li>Payment failure rate: has it changed in the same window?</li>
+              </ul>
+
+              <h3>4. Segmentation</h3>
+              <p>Break the 25% spike down by: city (metro vs. Tier 2), time of day (lunch vs. dinner peak), restaurant type (cloud kitchen vs. dine-in), user type (new vs. returning), and device (Android vs. iOS). If the spike is concentrated in one segment, the root cause is almost certainly specific to that segment.</p>
+
+              <h3>5. Fix (Top Hypothesis: ETA Spike)</h3>
+              <p>If data shows delivery time estimates increased and pre-accept cancellations are driving the spike:</p>
+              <ul>
+                <li>Work with the supply ops team to improve restaurant-to-driver assignment in high-demand periods to reduce ETA.</li>
+                <li>Add a real-time ETA confidence indicator so customers know if the estimate is likely to improve once a driver is assigned.</li>
+                <li>A/B test showing customers a range (30-40 min) rather than a single number, which research shows reduces cancellations when the number feels uncertain.</li>
+              </ul>
+
+              <h3>6. Success Definition</h3>
+              <p><strong>Primary:</strong> Cancellation rate returns to 8% (18-month baseline) within two weeks of fix deployment.</p>
+              <p><strong>Leading indicator:</strong> Pre-accept cancellation rate stabilises within 3 days of fix.</p>
+              <p><strong>Guardrail:</strong> Customer CSAT and restaurant NPS must not deteriorate. Average order value must not fall (indicating customers are not downgrading to cheaper, faster options).</p>
+            `
+          }
+        },
+        {
+          id: "case-study-notion",
+          title: "Case Study: Notion Onboarding Drop-off",
+          duration: "15-20 min",
+          isCaseStudy: true,
+          scenario: {
+            title: "Notion: New Users Are Not Returning After Day 1",
+            context: `Notion is an all-in-one workspace tool used by individuals and teams for notes, wikis, project management, and databases. Despite strong top-of-funnel growth (driven by word of mouth and social media), the data team has flagged that D7 retention for new users is at 18%, significantly below the industry benchmark of 35% for productivity tools. Users sign up, spend time exploring Notion on Day 0, but most do not return by Day 7. You are the PM for the new user experience. Design a solution.`,
+            prompt: `In your answer, address the following:
+1. What do you think is the core user problem driving the drop-off?
+2. How would you validate your hypothesis before building anything?
+3. What are three distinct feature or experience changes you would consider to improve D7 retention?
+4. Which one would you prioritise and why?
+5. What does your MVP look like and how would you measure success?`,
+            rubric: [
+              {
+                dimension: "Problem Diagnosis",
+                strong: "Identifies the core issue: Notion is a blank canvas. It is infinitely powerful but that power creates paralysis. New users do not know what to build first, spend time exploring rather than completing a meaningful task, and leave without experiencing a moment of value. The insight is that the problem is not feature-related but activation-related: users need to reach their first aha moment faster.",
+                weak: "Identifies the problem as Notion being too complex without digging into why that leads to drop-off, or assumes users need more features rather than a better path to existing ones."
+              },
+              {
+                dimension: "Validation Approach",
+                strong: "Before building, talks to churned users (why did you stop using Notion after Day 1?), looks at session recordings for new users on Day 0 (where do they spend time, where do they drop off?), and analyses what actions the 18% who return actually complete on Day 0 that the 82% who churn do not. The goal is to find the activation event that predicts retention.",
+                weak: "Proposes building immediately without validating the hypothesis, or proposes a survey alone without looking at behavioural data."
+              },
+              {
+                dimension: "Solution Breadth",
+                strong: "Three meaningfully different directions: (1) use-case based onboarding that asks users what they want to do and drops them into a pre-built template relevant to that goal; (2) a guided first task that walks new users through completing one meaningful action (e.g., moving a to-do list from another tool) before letting them explore freely; (3) a personal AI setup assistant that asks 3 questions and generates a starter workspace for the user.",
+                weak: "Three solutions are too similar (all are variations of a tutorial or tooltip overlay) or are too complex (a full redesign of the editor) without scoping to what would actually move D7 retention."
+              },
+              {
+                dimension: "Prioritisation",
+                strong: "Prioritises the use-case based onboarding with templates because: templates solve the blank canvas problem immediately without requiring the user to learn Notion's system; templates are already a Notion strength (thousands exist); it is low implementation risk (existing infrastructure); and it directly creates the first moment of value, which is the most important factor for Day 1 retention.",
+                weak: "Picks a solution without explaining why it addresses the root cause better than the alternatives, or picks the most technically complex option without justification."
+              },
+              {
+                dimension: "MVP and Metrics",
+                strong: "MVP: a 3-question onboarding flow (What do you want to use Notion for? Are you using it for work, personal, or both? Have you used a tool like Notion before?) that routes users to one of five starter templates and prompts them to edit one thing in the template before they can freely explore. No AI, no complex personalisation. Just routing to a template and a guided first edit. Success metric: D7 retention for users who go through the new flow vs. control. Leading indicator: percentage of new users who make their first edit within 10 minutes of signing up.",
+                weak: "MVP is too large (full redesign) or too small (just a tooltip), or success is defined as sign-up rate rather than retention."
+              }
+            ],
+            modelAnswer: `
+              <h3>1. Core User Problem</h3>
+              <p>Notion is a blank canvas. That is its strength and its biggest onboarding problem. New users sign up because they heard Notion can do everything. They open the app and see... nothing. No structure, no starting point, no clear first task. The natural response is to explore, get overwhelmed, and leave before reaching any meaningful value.</p>
+              <p>The core problem is not that Notion is too complex. It is that users cannot find their first moment of value quickly enough. The gap between "signing up" and "this is useful to me" is too wide.</p>
+
+              <h3>2. Validation Before Building</h3>
+              <ul>
+                <li><strong>Talk to churned users:</strong> interview 10 people who signed up in the last 30 days and did not return. Ask: what did you do on Day 0? What were you hoping Notion would help you with? What made you stop?</li>
+                <li><strong>Session recordings:</strong> watch new user sessions on Day 0. Where do they spend their time? Where do they abandon?</li>
+                <li><strong>Activation event analysis:</strong> find the one action that the 18% who return on Day 7 complete on Day 0 that the 82% who churn do not. That action is the activation event to optimise for.</li>
+              </ul>
+
+              <h3>3. Three Feature Ideas</h3>
+              <p><strong>Option 1: Use-case based onboarding with templates</strong></p>
+              <p>Ask users 3 questions at signup (What do you want to use Notion for? Work or personal? Have you used a similar tool?). Route them to a relevant starter template. They start with a pre-built structure and customise it rather than starting from nothing.</p>
+
+              <p><strong>Option 2: Guided first task</strong></p>
+              <p>After signup, show a single guided task: "Add your first to-do list." Walk the user through completing one concrete task step by step before letting them explore freely. Forces them to experience a moment of value before they can leave.</p>
+
+              <p><strong>Option 3: AI setup assistant</strong></p>
+              <p>A conversational setup flow where users describe what they want in plain language ("I want to track my job applications") and Notion generates a starter workspace for them automatically. High delight but higher implementation complexity.</p>
+
+              <h3>4. Prioritisation: Option 1</h3>
+              <p>Use-case based onboarding with templates is the right first bet because:</p>
+              <ul>
+                <li>Templates solve the blank canvas problem immediately without users needing to learn Notion's system first.</li>
+                <li>Notion already has thousands of templates. The infrastructure exists.</li>
+                <li>Low implementation risk: the change is in the onboarding routing logic, not the core product.</li>
+                <li>Directly drives the activation event: a user who edits a template has experienced value. One who looked at the editor and closed it has not.</li>
+              </ul>
+
+              <h3>5. MVP and Success Metrics</h3>
+              <p><strong>MVP:</strong> a 3-question onboarding screen that routes new users to one of five starter templates (Personal tasks, Team project, Note-taking, Job search tracker, Study notes). After landing on the template, users are prompted to make one edit before they can explore freely. No AI, no personalisation engine. Just smart routing and a guided first edit.</p>
+              <p><strong>Primary metric:</strong> D7 retention for users who go through the new flow vs. a control group on the old blank canvas experience.</p>
+              <p><strong>Leading indicator:</strong> percentage of new users who make their first edit within 10 minutes of signup (the activation event).</p>
+              <p><strong>Guardrail:</strong> time to first edit should not increase (the new flow must not add friction for users who already know what they want to do).</p>
+            `
+          }
+        },
+        {
+          id: "case-study-revolut",
+          title: "Case Study: Revolut Feature Prioritisation",
+          duration: "15-20 min",
+          isCaseStudy: true,
+          scenario: {
+            title: "Revolut: Three Features, One Quarter",
+            context: `Revolut is a UK-based fintech super-app with 45 million customers across Europe and globally. It offers banking, currency exchange, stock trading, crypto, and insurance. Three product teams have each proposed a major feature for Q1. Engineering capacity allows only one to be shipped. The three proposals are:
+1. Savings Vaults 2.0: allow users to create multiple savings goals with automatic round-up contributions and interest on each vault separately.
+2. Shared Expenses: a bill-splitting feature integrated into the app, letting groups of friends track shared spending (similar to Splitwise but native to Revolut).
+3. Credit Score Monitoring: show users their credit score within the app, updated monthly, with tips to improve it.
+You are the CPO. Which do you ship and why?`,
+            prompt: `In your answer, address the following:
+1. What framework or criteria would you use to evaluate these options?
+2. Walk through your evaluation of each feature.
+3. Which feature do you choose and what is your reasoning?
+4. What are the risks of your choice and how would you mitigate them?
+5. What does success look like?`,
+            rubric: [
+              {
+                dimension: "Framework",
+                strong: "Defines explicit criteria before evaluating: strategic fit (does this strengthen Revolut's core proposition of being a financial super-app?), user impact (how many users benefit and how often?), revenue potential (does this drive premium subscriptions or reduce churn?), defensibility (is this hard to copy?), and implementation risk.",
+                weak: "Picks a favourite without a structured evaluation framework, or uses a framework that does not fit a fintech context."
+              },
+              {
+                dimension: "Feature Evaluation",
+                strong: "Savings Vaults 2.0: high engagement for existing users, strengthens the savings habit loop, but marginal improvement on an existing feature rather than a new user segment. Shared Expenses: high social virality potential, could drive acquisition (non-Revolut users get invited), but Splitwise already has strong network effects and this is a new product category for Revolut. Credit Score Monitoring: high awareness and utility, especially in markets like UK where credit scores are opaque, drives daily habit and trust, low complexity, and creates a clear upsell path to Revolut's credit products.",
+                weak: "Evaluates features without considering Revolut's strategic position, existing competition, or the frequency with which users would engage with each feature."
+              },
+              {
+                dimension: "Decision and Reasoning",
+                strong: "Chooses Credit Score Monitoring (or makes a strong case for Shared Expenses with a clear virality argument). For Credit Score: it requires only a data partnership with credit bureaus, drives a daily or weekly habit (users check their score regularly), creates a natural entry point for Revolut's credit products, and builds trust in a category (financial health) where Revolut has no strong competitor inside the app. It is also the lowest implementation risk of the three.",
+                weak: "Chooses Shared Expenses without addressing the Splitwise network effect problem, or chooses Savings Vaults 2.0 without explaining how it grows the user base rather than just improving existing users' experience."
+              },
+              {
+                dimension: "Risk and Mitigation",
+                strong: "Names specific risks for the chosen feature. For Credit Score: data partnership risk (credit bureaus are slow to integrate, mitigate by starting with one bureau and expanding); accuracy risk (a wrong score damages user trust, mitigate by showing the bureau source and a clear disclaimer); engagement risk (users check once and forget, mitigate by adding monthly score change notifications and personalised improvement tips to drive repeat opens).",
+                weak: "Names generic risks without specific mitigation strategies tied to the fintech context."
+              },
+              {
+                dimension: "Success Metrics",
+                strong: "Primary: weekly active users of the Credit Score feature within 90 days of launch, targeting 30% of eligible users. Secondary: conversion rate from Credit Score screen to Revolut credit product pages. Guardrail: overall app session frequency must not decrease (credit score monitoring should add a reason to open the app, not replace other habits).",
+                weak: "Uses sign-up rate or downloads as the success metric, which do not capture whether the feature is actually being used or whether it is driving the intended behaviour."
+              }
+            ],
+            modelAnswer: `
+              <h3>1. Evaluation Framework</h3>
+              <p>I would evaluate each feature across five criteria: strategic fit with Revolut's super-app vision, user reach and engagement frequency, revenue or retention impact, defensibility, and implementation risk.</p>
+
+              <h3>2. Feature Evaluation</h3>
+              <p><strong>Savings Vaults 2.0:</strong> Good for existing users who already use vaults, strengthens the savings habit loop. But it is an improvement to an existing feature rather than a new capability. It does not attract new users or open a new revenue stream. Medium impact, low risk.</p>
+
+              <p><strong>Shared Expenses:</strong> High virality potential. When one Revolut user invites five friends to split a bill, non-Revolut users get exposed to the product. But Splitwise has strong network effects and a loyal user base. Building a competing product from scratch in a category where the incumbent has years of trust is a high-risk bet. It would also require significant product investment to match Splitwise's feature depth. High potential, high risk.</p>
+
+              <p><strong>Credit Score Monitoring:</strong> In most European markets, users have almost no visibility into their credit score. Bringing this into Revolut creates a weekly or monthly habit (users check their score and its changes), builds trust in the financial health category, and creates a natural upsell path to Revolut's own credit and loan products. It requires a data partnership with credit bureaus rather than a complex product build. Low implementation risk, high strategic value.</p>
+
+              <h3>3. Decision: Credit Score Monitoring</h3>
+              <ul>
+                <li>It solves a real, frequent user need (understanding financial health) where no competitor inside Revolut's app currently exists.</li>
+                <li>It drives weekly engagement rather than one-off use.</li>
+                <li>It creates a direct path to Revolut's premium subscription tiers and credit products.</li>
+                <li>It is the lowest implementation risk of the three: the main dependency is a credit bureau API, not a complex new product category.</li>
+              </ul>
+
+              <h3>4. Risks and Mitigation</h3>
+              <ul>
+                <li><strong>Data partnership risk:</strong> credit bureau integrations can be slow. Mitigate by starting with one bureau and building the product to be bureau-agnostic so we can add more over time.</li>
+                <li><strong>Accuracy risk:</strong> a wrong credit score damages user trust significantly in a financial context. Mitigate by always showing the bureau source, a last-updated date, and a clear disclaimer that this is informational.</li>
+                <li><strong>Engagement drop-off:</strong> users check once and forget. Mitigate by adding monthly score change notifications and personalised tips to improve the score, creating a reason to return each month.</li>
+              </ul>
+
+              <h3>5. Success Metrics</h3>
+              <p><strong>Primary:</strong> 30% of eligible users actively using the Credit Score feature within 90 days of launch (defined as opening the feature at least once per month).</p>
+              <p><strong>Secondary:</strong> conversion rate from the Credit Score screen to Revolut credit product pages.</p>
+              <p><strong>Guardrail:</strong> overall app session frequency must not decrease. Credit Score Monitoring should add a reason to open the app, not replace other habits.</p>
+            `
+          }
+        },
+        {
+          id: "case-study-zalando",
+          title: "Case Study: Zalando Responds to a New Competitor",
+          duration: "15-20 min",
+          isCaseStudy: true,
+          scenario: {
+            title: "Zalando: A Fast Fashion Competitor Has Entered Your Market",
+            context: `Zalando is Europe's largest online fashion platform, operating in 25 European markets with 50 million active customers. It positions itself as a premium fashion destination with strong brand partnerships, a wide assortment, and a high-quality customer experience (free returns, fast delivery, personal styling features). A new ultra-fast-fashion competitor (think Shein-style) has just launched aggressively in Zalando's core markets, targeting younger demographics with extremely low prices, heavy social media marketing, and a broad but low-cost product range. Internal data shows that Zalando's customer acquisition cost has increased 15% and conversion rate among 18-24 year olds has dropped 8% in the past quarter. You are the Chief Product Officer. What do you do?`,
+            prompt: `In your answer, address the following:
+1. How do you frame the competitive threat? Is this a crisis, a signal, or a distraction?
+2. What data would you gather before deciding on a response strategy?
+3. What are the strategic options available to Zalando? Evaluate at least three.
+4. What is your recommended response and why?
+5. What product changes would you prioritise in the next 90 days?
+6. How would you define success?`,
+            rubric: [
+              {
+                dimension: "Threat Framing",
+                strong: "Frames it as a real but manageable signal rather than an existential crisis. The competitor is winning on price with a younger demographic. Zalando's core strength is curation, brand trust, and returns policy. The question is whether Zalando should compete on price (which it cannot win) or double down on what it does better. Recognises that the 18-24 segment is important for long-term customer lifetime value but is not Zalando's most profitable segment today.",
+                weak: "Either dismisses the threat entirely or panics and recommends Zalando try to compete directly on price, which plays into the competitor's strength."
+              },
+              {
+                dimension: "Data Gathering",
+                strong: "Before deciding, gathers: which 18-24 users are leaving (new customers or returning?), where they are going (exit surveys, attribution data), what they are buying on the competitor (is it overlapping product categories or purely the low-price segment?), and whether brand partners are also seeing pressure. Also looks at whether the conversion drop is across all categories or specific ones (casual wear vs. premium brands).",
+                weak: "Makes strategic recommendations without specifying what data is needed to validate the diagnosis first."
+              },
+              {
+                dimension: "Strategic Options",
+                strong: "Evaluates at least three distinct options: (1) compete on price in selected categories (risky, damages brand perception, hard to win against a lower-cost operator); (2) double down on Zalando's differentiation (curation, sustainability, brand partnerships, returns, styling features) and accept losing the ultra-price-sensitive segment; (3) create a separate brand or sub-platform targeting younger, price-sensitive users without cannibalising the main brand. Also considers: accelerate loyalty programme to improve retention among at-risk users.",
+                weak: "Only considers one or two options, or all options are variations of the same strategy (e.g., all price-based)."
+              },
+              {
+                dimension: "Recommended Response",
+                strong: "Recommends doubling down on differentiation rather than competing on price. Zalando cannot win a price war against a vertically integrated ultra-fast-fashion competitor. Instead, invest in the features that make Zalando worth paying more for: better discovery (personalisation, trend curation), sustainability signals that resonate with value-conscious younger Europeans, a stronger loyalty programme that rewards repeat purchase, and a social/community layer that creates belonging rather than just transactions.",
+                weak: "Recommends price matching or discounting without acknowledging that this destroys Zalando's margin and brand positioning."
+              },
+              {
+                dimension: "90-Day Product Priorities",
+                strong: "Specific and sequenced: (1) launch or improve a sustainability filter and badge system (resonates with European 18-24 consumers who care about ethics alongside price); (2) improve the personalisation and discovery experience for the 18-24 segment specifically (they are driven by trends, not brand names); (3) run a retention campaign for at-risk 18-24 users already in the database before they fully switch. All three are achievable in 90 days without a platform rebuild.",
+                weak: "90-day priorities are either too high-level (improve the product) or too ambitious (rebuild the entire mobile experience)."
+              },
+              {
+                dimension: "Success Metrics",
+                strong: "Primary: conversion rate recovery among 18-24 year olds back to pre-competitor baseline within two quarters. Secondary: repeat purchase rate among 18-24 users (retention, not just acquisition). Guardrail: average order value and brand partner satisfaction scores must not deteriorate (Zalando's premium positioning must remain intact).",
+                weak: "Defines success as market share or gross revenue, which are lagging indicators that would not tell Zalando quickly enough whether the response is working."
+              }
+            ],
+            modelAnswer: `
+              <h3>1. Framing the Threat</h3>
+              <p>This is a real signal but not an existential crisis. The competitor is winning on price with a demographic that is inherently price-sensitive. Zalando's strength is curation, brand trust, returns, and the experience of shopping for fashion you feel good about. The mistake would be to try to compete on the competitor's terms. Zalando cannot win a price war against a vertically integrated low-cost operator without destroying its margins and damaging its brand partnerships.</p>
+              <p>The 8% conversion drop among 18-24 year olds is a warning, not a catastrophe. This age group has the lowest lifetime value today but the highest potential for the future. The question is how to retain them without compromising what makes Zalando valuable to its core customers.</p>
+
+              <h3>2. Data to Gather First</h3>
+              <ul>
+                <li>Are the 18-24 users leaving new customers or returning ones? Losing new customers is a different problem from losing loyal ones.</li>
+                <li>Exit survey or attribution data: where are these users going? Is it directly to the competitor or are they just not converting anywhere?</li>
+                <li>Which product categories are affected? Is the drop in casual everyday wear (where price matters most) or across all categories including premium brands?</li>
+                <li>Are brand partners reporting pressure from the same competitor?</li>
+              </ul>
+
+              <h3>3. Strategic Options</h3>
+              <p><strong>Option 1: Compete on price in selected categories.</strong> Match or approach the competitor's prices in high-volume casual categories. Risk: destroys margin, sends a confusing signal to brand partners, and Zalando structurally cannot be the cheapest due to its cost base. Not recommended.</p>
+
+              <p><strong>Option 2: Double down on differentiation.</strong> Accept that Zalando will not win the ultra-price-sensitive segment. Invest in what makes Zalando worth more: better curation, sustainability, brand partnerships, returns, and a more personalised experience. Risk: Zalando cedes the 18-24 volume segment in the short term. Recommended.</p>
+
+              <p><strong>Option 3: Create a separate value sub-brand.</strong> Launch a separate, clearly distinct value platform targeting younger and more price-sensitive users, without cannibalising the main Zalando brand. Risk: operationally complex and expensive. Consider for a later phase if Option 2 does not slow the decline.</p>
+
+              <p><strong>Option 4: Accelerate loyalty programme.</strong> Invest in retaining the 18-24 users already in the Zalando ecosystem before they switch. Upgrade rewards, introduce early access to drops and exclusive collections, and personalise offers to this cohort. This is complementary to Option 2.</p>
+
+              <h3>4. Recommended Response</h3>
+              <p>Double down on differentiation (Option 2) combined with a targeted loyalty push (Option 4). Zalando's moat is trust, curation, and the experience of shopping for fashion that feels considered rather than disposable. These values actually resonate with European 18-24 year olds who are increasingly concerned about sustainability and conscious consumption, even while they are price-sensitive. The response is to make those values more visible and actionable inside the product.</p>
+
+              <h3>5. 90-Day Product Priorities</h3>
+              <ol>
+                <li><strong>Sustainability filter and badge system:</strong> make it easy for users to filter by certified sustainable brands and show sustainability credentials on product cards. Resonates with European Gen Z values and differentiates from the competitor, which has a poor sustainability reputation.</li>
+                <li><strong>Improved trend discovery for 18-24 users:</strong> this segment is driven by trends and social signals, not brand names. Improve the personalisation algorithm and add a trend-led discovery surface (what is popular this week in your city, style inspiration from real people).</li>
+                <li><strong>Retention push for at-risk 18-24 users:</strong> identify users in this cohort who have not purchased in the last 60 days and run a targeted retention campaign with personalised recommendations and a first-order-back incentive.</li>
+              </ol>
+
+              <h3>6. Success Metrics</h3>
+              <p><strong>Primary:</strong> conversion rate among 18-24 year olds recovers to the pre-competitor baseline within two quarters.</p>
+              <p><strong>Secondary:</strong> repeat purchase rate among 18-24 users (we want retention, not just a one-time conversion).</p>
+              <p><strong>Guardrail:</strong> average order value and brand partner satisfaction scores must not deteriorate. Zalando's premium positioning must remain intact even as we work to win back the younger segment.</p>
+            `
+          }
+        },
+        {
           id: "product-strategy",
           title: "Product Strategy Fundamentals",
           duration: "4 min read",

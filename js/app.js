@@ -872,10 +872,18 @@ function showToast(msg) {
 
 // ─── Init ─────────────────────────────────────────────────────────────────────
 
+function updateStats() {
+  const totalCaseStudies = PM_GYM_DATA.levels.reduce((sum, level) =>
+    sum + level.topics.filter(t => t.isCaseStudy).length, 0);
+  const el = document.getElementById('statCaseStudies');
+  if (el) el.textContent = totalCaseStudies;
+}
+
 function init() {
   loadState();
   renderStreakBadge();
   updateThemeIcon();
+  updateStats();
 
   // Navigate to hash on load, or landing if none
   navigateFromHash();
