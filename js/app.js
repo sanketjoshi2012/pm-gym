@@ -265,6 +265,26 @@ function renderLevelCards() {
 
 // ─── Render: Topics List ──────────────────────────────────────────────────────
 
+function filterCaseStudies(category, button) {
+  state.activeCaseCategory = category;
+  const container = document.getElementById('topicsContainer');
+  if (!container) return;
+
+  container.querySelectorAll('.case-study-filter').forEach(filter => {
+    const active = filter === button;
+    filter.classList.toggle('active', active);
+    filter.setAttribute('aria-pressed', String(active));
+  });
+
+  container.querySelectorAll('.topic-card[data-case-category]').forEach(card => {
+    card.hidden = card.dataset.caseCategory !== category;
+  });
+
+  const count = container.querySelectorAll('.topic-card[data-case-category]:not([hidden])').length;
+  const countEl = container.querySelector('#caseStudyResultCount');
+  if (countEl) countEl.textContent = `${count} case ${count === 1 ? 'study' : 'studies'}`;
+}
+
 function renderTopics(levelId) {
   const level = PM_GYM_DATA.levels.find(l => l.id === levelId);
   if (!level) return;
@@ -275,6 +295,60 @@ function renderTopics(levelId) {
 
   const doneCount = level.topics.filter(t => state.completedTopics.has(t.id)).length;
   const pct = level.topics.length ? Math.round((doneCount / level.topics.length) * 100) : 0;
+  const caseStudies = level.topics.filter(topic => topic.isCaseStudy);
+  const otherTopics = level.topics.filter(topic => !topic.isCaseStudy);
+
+  // Dynamically derive categories from data.js
+  const preferredOrder = ['Sports', 'Media & Entertainment', 'E-commerce & Fashion', 'Food Delivery', 'Work & Productivity', 'Fintech'];
+  const uniqueCategories = [...new Set(caseStudies.map(t => t.category).filter(Boolean))];
+  const categories = uniqueCategories.sort((a, b) => {
+    const idxA = preferredOrder.indexOf(a);
+    const idxB = preferredOrder.indexOf(b);
+    if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+    if (idxA !== -1) return -1;
+    if (idxB !== -1) return 1;
+    return a.localeCompare(b);
+  });
+
+  // Ensure active category is valid
+  if (!state.activeCaseCategory || !categories.includes(state.activeCaseCategory)) {
+    state.activeCaseCategory = categories[0] || '';
+  }
+
+  const renderTopicCard = topic => {
+    const done = state.completedTopics.has(topic.id);
+    const score = state.quizScores[topic.id];
+    const isCaseStudy = topic.isCaseStudy;
+    const category = topic.category || '';
+
+    let badges = `<span class="topic-badge badge-duration">${topic.duration}</span>`;
+    if (done) badges += `<span class="topic-badge badge-done">✓ Completed</span>`;
+    if (isCaseStudy) {
+      badges += `<span class="topic-badge badge-case">Case Study</span>`;
+      if (category) {
+        badges += `<span class="topic-badge badge-category">${category}</span>`;
+      }
+    }
+    if (score !== undefined && !isCaseStudy) {
+      const quizPct = Math.round((score.correct / score.total) * 100);
+      badges += `<span class="topic-badge badge-score">Quiz: ${score.correct}/${score.total}</span>`;
+    }
+
+    const isHidden = isCaseStudy && category !== state.activeCaseCategory;
+
+    return `
+      <div class="topic-card ${done ? 'completed' : ''} ${isCaseStudy ? 'case-study' : ''}"
+           ${isCaseStudy ? `data-case-category="${category}" ${isHidden ? 'hidden' : ''}` : ''}
+           onclick="showView('module', {levelId: '${levelId}', topicId: '${topic.id}'})">
+        <div class="topic-left">
+          <div class="topic-title">${topic.title}</div>
+          <div class="topic-meta">${badges}</div>
+        </div>
+        <div class="topic-arrow">→</div>
+      </div>`;
+  };
+
+  const activeCategoryCount = caseStudies.filter(t => t.category === state.activeCaseCategory).length;
 
   container.innerHTML = `
     <button class="back-btn" onclick="showView('levels')">← Back to Levels</button>
@@ -293,33 +367,32 @@ function renderTopics(levelId) {
         <div class="progress-label">${doneCount} / ${level.topics.length} completed</div>
       </div>
     </div>
-    <div class="topics-list">
-      ${level.topics.map(topic => {
-        const done = state.completedTopics.has(topic.id);
-        const score = state.quizScores[topic.id];
-        const isCaseStudy = topic.isCaseStudy;
-
-        let badges = `<span class="topic-badge badge-duration">${topic.duration}</span>`;
-        if (done) badges += `<span class="topic-badge badge-done">✓ Completed</span>`;
-        if (isCaseStudy) badges += `<span class="topic-badge badge-case">Case Study</span>`;
-        if (score !== undefined && !isCaseStudy) {
-          const pct = Math.round((score.correct / score.total) * 100);
-          badges += `<span class="topic-badge badge-score">Quiz: ${score.correct}/${score.total}</span>`;
-        }
-
-        return `
-          <div class="topic-card ${done ? 'completed' : ''} ${isCaseStudy ? 'case-study' : ''}"
-               onclick="showView('module', {levelId: '${levelId}', topicId: '${topic.id}'})">
-            <div class="topic-left">
-              <div class="topic-title">${topic.title}</div>
-              <div class="topic-meta">${badges}</div>
-            </div>
-            <div class="topic-arrow">→</div>
-          </div>`;
-      }).join('')}
-    </div>`;
+    ${caseStudies.length ? `
+      <section class="case-study-library" aria-labelledby="caseStudyHeading">
+        <div class="case-study-library-heading">
+          <div>
+            <h3 id="caseStudyHeading">Case studies</h3>
+            <p>Choose an industry to find a scenario to practice.</p>
+          </div>
+          <span id="caseStudyResultCount" class="case-study-result-count">${activeCategoryCount} case ${activeCategoryCount === 1 ? 'study' : 'studies'}</span>
+        </div>
+        <div class="case-study-filters" role="group" aria-label="Filter case studies by industry">
+          ${categories.map(category => {
+            const count = caseStudies.filter(topic => topic.category === category).length;
+            const isActive = state.activeCaseCategory === category;
+            return `<button type="button" class="case-study-filter ${isActive ? 'active' : ''}" aria-pressed="${isActive}" onclick="filterCaseStudies('${category}', this)">${category} <span>${count}</span></button>`;
+          }).join('')}
+        </div>
+        <div class="topics-list case-study-topics-list">
+          ${caseStudies.map(renderTopicCard).join('')}
+        </div>
+      </section>` : ''}
+    ${otherTopics.length ? `
+      <section class="other-topics-section">
+        <h3>More to explore</h3>
+        <div class="topics-list">${otherTopics.map(renderTopicCard).join('')}</div>
+      </section>` : ''}`;
 }
-
 // ─── Render: Module ────────────────────────────────────────────────────────────
 
 function renderModule(levelId, topicId) {

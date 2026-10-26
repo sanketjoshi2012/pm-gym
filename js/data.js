@@ -748,6 +748,7 @@ const PM_GYM_DATA = {
           title: "Case Study: Spotify Engagement Drop",
           duration: "15–20 min",
           isCaseStudy: true,
+          category: "Media & Entertainment",
           scenario: {
             title: "Spotify Discover Weekly Engagement Drops 15%",
             context: `Spotify's Discover Weekly playlist, a personalized weekly playlist delivered every Monday, has seen a 15% drop in "full listen-through rate" (users listening to at least 80% of the playlist) over the past 8 weeks. Your team owns Discover Weekly. The head of product asks you to diagnose what's happening and propose next steps.`,
@@ -820,6 +821,7 @@ const PM_GYM_DATA = {
           title: "Case Study: Design for LinkedIn Job Seekers",
           duration: "15–20 min",
           isCaseStudy: true,
+          category: "Work & Productivity",
           scenario: {
             title: "Design a Feature for LinkedIn to Help Job Seekers",
             context: `LinkedIn has 900M+ members. The vast majority of LinkedIn's revenue comes from recruiters (LinkedIn Recruiter tool), not from job seekers. Yet job seekers are what make the platform valuable to recruiters. Internal data shows that job seekers who are actively searching "go dark", they stop engaging with LinkedIn content, about 3 weeks into their search. LinkedIn leadership wants to improve this.`,
@@ -896,6 +898,7 @@ const PM_GYM_DATA = {
           title: "Case Study: Chess.com Puzzle Drop",
           duration: "15–20 min",
           isCaseStudy: true,
+          category: "Sports",
           scenario: {
             title: "Chess.com, Daily Puzzle Completions Drop 20%",
             context: `Chess.com's Daily Puzzle is one of the platform's highest DAU drivers, millions of users open the app specifically to solve the daily puzzle. Over the past 30 days, puzzle completion rates have dropped 20%. You are the PM for the Daily Puzzle feature. The head of product asks you to diagnose what's happening and propose next steps.`,
@@ -981,6 +984,7 @@ const PM_GYM_DATA = {
           title: "Case Study: FotMob Between-Game Retention",
           duration: "15–20 min",
           isCaseStudy: true,
+          category: "Sports",
           scenario: {
             title: "FotMob, Designing for Fans Who Only Show Up on Matchday",
             context: `FotMob is a football scores and stats app used by millions of fans globally. Internal data shows that a large segment of users, casual fans, only open the app on matchdays to check live scores. Between games, this segment's DAU drops to near zero. FotMob wants to increase engagement between matchdays without alienating their core power users (die-hard fans who already use the app daily). You are the PM for user engagement. Design a feature to bring casual fans back between matches.`,
@@ -1062,6 +1066,7 @@ const PM_GYM_DATA = {
           title: "Case Study: Cricbuzz Feature Prioritisation",
           duration: "15–20 min",
           isCaseStudy: true,
+          category: "Sports",
           scenario: {
             title: "Cricbuzz, Three Features, One Engineering Team",
             context: `Cricbuzz is India's largest cricket scores and news platform, with 50M+ monthly active users. Three internal teams have each proposed a feature for the next quarter, but there's only engineering capacity to ship one. The three proposals are:
@@ -1150,6 +1155,7 @@ You are the CPO. Which do you ship and why?`,
           title: "Case Study: Flipkart Success Metrics",
           duration: "15-20 min",
           isCaseStudy: true,
+          category: "E-commerce & Fashion",
           scenario: {
             title: "Flipkart: How Would You Define and Measure Success?",
             context: `Flipkart is India's largest e-commerce marketplace with over 400 million registered users. It operates as a two-sided marketplace, creating value for customers who buy products and sellers who list and fulfil orders. You have just joined as a senior PM. In your first week, the CPO asks you: "How would you define success for Flipkart, and what metrics would you track?"`,
@@ -1247,6 +1253,7 @@ You are the CPO. Which do you ship and why?`,
           title: "Case Study: Swiggy Order Cancellations Spike",
           duration: "15-20 min",
           isCaseStudy: true,
+          category: "Food Delivery",
           scenario: {
             title: "Swiggy: Order Cancellation Rate Spiked 25% in Two Weeks",
             context: `Swiggy is one of India's largest food delivery platforms, operating in 500+ cities. Last week, your data team flagged that the order cancellation rate has increased by 25% over the past two weeks, from 8% to 10%. This is now the highest it has been in 18 months. You are the PM for the consumer experience team. The Head of Product wants your analysis and a plan by end of week.`,
@@ -1339,6 +1346,7 @@ You are the CPO. Which do you ship and why?`,
           title: "Case Study: Notion Onboarding Drop-off",
           duration: "15-20 min",
           isCaseStudy: true,
+          category: "Work & Productivity",
           scenario: {
             title: "Notion: New Users Are Not Returning After Day 1",
             context: `Notion is an all-in-one workspace tool used by individuals and teams for notes, wikis, project management, and databases. Despite strong top-of-funnel growth (driven by word of mouth and social media), the data team has flagged that D7 retention for new users is at 18%, significantly below the industry benchmark of 35% for productivity tools. Users sign up, spend time exploring Notion on Day 0, but most do not return by Day 7. You are the PM for the new user experience. Design a solution.`,
@@ -1419,6 +1427,7 @@ You are the CPO. Which do you ship and why?`,
           title: "Case Study: Revolut Feature Prioritisation",
           duration: "15-20 min",
           isCaseStudy: true,
+          category: "Fintech",
           scenario: {
             title: "Revolut: Three Features, One Quarter",
             context: `Revolut is a UK-based fintech super-app with 45 million customers across Europe and globally. It offers banking, currency exchange, stock trading, crypto, and insurance. Three product teams have each proposed a major feature for Q1. Engineering capacity allows only one to be shipped. The three proposals are:
@@ -1497,6 +1506,7 @@ You are the CPO. Which do you ship and why?`,
           title: "Case Study: Zalando Responds to a New Competitor",
           duration: "15-20 min",
           isCaseStudy: true,
+          category: "E-commerce & Fashion",
           scenario: {
             title: "Zalando: A Fast Fashion Competitor Has Entered Your Market",
             context: `Zalando is Europe's largest online fashion platform, operating in 25 European markets with 50 million active customers. It positions itself as a premium fashion destination with strong brand partnerships, a wide assortment, and a high-quality customer experience (free returns, fast delivery, personal styling features). A new ultra-fast-fashion competitor (think Shein-style) has just launched aggressively in Zalando's core markets, targeting younger demographics with extremely low prices, heavy social media marketing, and a broad but low-cost product range. Internal data shows that Zalando's customer acquisition cost has increased 15% and conversion rate among 18-24 year olds has dropped 8% in the past quarter. You are the Chief Product Officer. What do you do?`,
