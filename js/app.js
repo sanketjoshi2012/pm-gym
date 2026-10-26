@@ -966,3 +966,20 @@ function init() {
 }
 
 document.addEventListener('DOMContentLoaded', init);
+
+document.addEventListener('keydown', function(e) {
+  const quizContent = document.getElementById('quizContent');
+  if (!quizContent) return;
+
+  const num = parseInt(e.key, 10);
+  if (num >= 1 && num <= 4) {
+    const buttons = quizContent.querySelectorAll('.option-btn:not([disabled])');
+    if (buttons[num - 1]) buttons[num - 1].click();
+    return;
+  }
+
+  if (e.key === 'Enter') {
+    const nextBtn = quizContent.querySelector('.btn-next:not([disabled])');
+    if (nextBtn) nextBtn.click();
+  }
+});
