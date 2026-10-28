@@ -657,8 +657,8 @@ function buildQuizResults(topic) {
       <div class="share-result-section">
         <div class="share-result-label">Share your result</div>
         <div class="share-result-row">
-          <span class="share-result-preview">Just scored ${pct}% on ${topic.title} on PM Gym. Free platform for anyone breaking into PM. Worth checking out if you're prepping for PM interviews: https://sanketjoshi2012.github.io/pm-gym/</span>
-          <input type="hidden" id="shareText" value="Just scored ${pct}% on ${topic.title} on PM Gym. Free platform for anyone breaking into PM. Worth checking out if you're prepping for PM interviews: https://sanketjoshi2012.github.io/pm-gym/">
+          <span class="share-result-preview">Just scored ${pct}% on "${topic.title}" on PM Gym. If you're transitioning into PM, this is worth 15 minutes of your time: https://sanketjoshi2012.github.io/pm-gym/</span>
+          <input type="hidden" id="shareText" value="Just scored ${pct}% on &quot;${topic.title}&quot; on PM Gym. If you're transitioning into PM, this is worth 15 minutes of your time: https://sanketjoshi2012.github.io/pm-gym/">
           <div class="share-result-actions">
             <button class="btn-secondary" onclick="copyShareText()">📋 Copy</button>
             <a class="btn-secondary" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fsanketjoshi2012.github.io%2Fpm-gym%2F" target="_blank" rel="noopener">Share on LinkedIn →</a>
