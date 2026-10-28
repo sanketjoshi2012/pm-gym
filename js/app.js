@@ -647,7 +647,7 @@ function buildQuizResults(topic) {
       ${weakAreas.length > 0 ? `
         <div style="text-align: left; margin-bottom: 1.5rem; padding: 1rem; background: var(--bg-subtle); border-radius: 8px;">
           <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--fg-3); margin-bottom: 0.5rem;">Review These:</div>
-          ${weakAreas.slice(0, 2).map(w => `<div style="font-size: 0.85rem; color: var(--fg-2); margin-bottom: 0.35rem;">• ${w.q.substring(0, 80)}...</div>`).join('')}
+          ${weakAreas.slice(0, 2).map(w => `<div style="font-size: 0.85rem; color: var(--fg-2); margin-bottom: 0.35rem;">• ${w.q.substring(0, 50)}…</div>`).join('')}
         </div>` : ''}
       <div class="result-actions">
         <button class="btn-secondary" onclick="retakeQuiz('${topic.id}')">↩ Retake Quiz</button>
@@ -656,10 +656,13 @@ function buildQuizResults(topic) {
       ${pct >= 60 ? `
       <div class="share-result-section">
         <div class="share-result-label">Share your result</div>
-        <textarea class="share-result-text" id="shareText" readonly>Just scored ${pct}% on ${topic.title} on PM Gym. Free platform for anyone breaking into PM. Worth checking out if you're prepping for PM interviews: https://sanketjoshi2012.github.io/pm-gym/</textarea>
-        <div class="share-result-actions">
-          <button class="btn-secondary" onclick="copyShareText()">📋 Copy text</button>
-          <a class="btn-secondary" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fsanketjoshi2012.github.io%2Fpm-gym%2F" target="_blank" rel="noopener">Share on LinkedIn →</a>
+        <div class="share-result-row">
+          <span class="share-result-preview">Just scored ${pct}% on ${topic.title} on PM Gym. Free platform for anyone breaking into PM. Worth checking out if you're prepping for PM interviews: https://sanketjoshi2012.github.io/pm-gym/</span>
+          <input type="hidden" id="shareText" value="Just scored ${pct}% on ${topic.title} on PM Gym. Free platform for anyone breaking into PM. Worth checking out if you're prepping for PM interviews: https://sanketjoshi2012.github.io/pm-gym/">
+          <div class="share-result-actions">
+            <button class="btn-secondary" onclick="copyShareText()">📋 Copy</button>
+            <a class="btn-secondary" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fsanketjoshi2012.github.io%2Fpm-gym%2F" target="_blank" rel="noopener">Share on LinkedIn →</a>
+          </div>
         </div>
       </div>` : ''}
     </div>`;
@@ -668,7 +671,7 @@ function buildQuizResults(topic) {
 function copyShareText() {
   const el = document.getElementById('shareText');
   if (!el) return;
-  navigator.clipboard.writeText(el.value).then(() => showToast('📋 Copied to clipboard'));
+  navigator.clipboard.writeText(el.value).then(() => showToast('📋 Copied to clipboard!'));
 }
 
 function retakeQuiz(topicId) {
