@@ -631,10 +631,10 @@ function buildQuizResults(topic) {
     showToast(`✓ "${topic.title}" completed!`);
   }
 
-  const weakAreas = answers.map((a, i) => ({
-    q: quiz[i].question,
-    correct: a === quiz[i].correct,
-  })).filter(a => !a.correct);
+  const level = PM_GYM_DATA.levels.find(l => l.id === state.currentLevel);
+  const nonCaseTopics = level ? level.topics.filter(t => !t.isCaseStudy) : [];
+  const currentIdx = nonCaseTopics.findIndex(t => t.id === topic.id);
+  const nextTopic = currentIdx >= 0 ? nonCaseTopics[currentIdx + 1] : null;
 
   return `
     <div class="quiz-results">
@@ -644,14 +644,12 @@ function buildQuizResults(topic) {
       </div>
       <div class="result-title">${pct}%, ${pct >= 80 ? 'Mastered' : pct >= 60 ? 'Passed' : 'Needs Practice'}</div>
       <div class="result-desc">${msg}</div>
-      ${weakAreas.length > 0 ? `
-        <div style="text-align: left; margin-bottom: 1.5rem; padding: 1rem; background: var(--bg-subtle); border-radius: 8px;">
-          <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--fg-3); margin-bottom: 0.5rem;">Review These:</div>
-          ${weakAreas.slice(0, 2).map(w => `<div style="font-size: 0.85rem; color: var(--fg-2); margin-bottom: 0.35rem;">• ${w.q.substring(0, 50)}…</div>`).join('')}
-        </div>` : ''}
       <div class="result-actions">
         <button class="btn-secondary" onclick="retakeQuiz('${topic.id}')">↩ Retake Quiz</button>
-        <button class="btn-next" onclick="showView('topics', {levelId: '${state.currentLevel}'})">Back to Topics →</button>
+        ${nextTopic
+          ? `<button class="btn-next" onclick="showView('module', {levelId: '${state.currentLevel}', topicId: '${nextTopic.id}'})">Next: ${nextTopic.title} →</button>`
+          : `<button class="btn-next" onclick="showView('topics', {levelId: '${state.currentLevel}'})">Back to Topics →</button>`
+        }
       </div>
       ${pct >= 60 ? `
       <div class="share-result-section">
