@@ -653,7 +653,22 @@ function buildQuizResults(topic) {
         <button class="btn-secondary" onclick="retakeQuiz('${topic.id}')">↩ Retake Quiz</button>
         <button class="btn-next" onclick="showView('topics', {levelId: '${state.currentLevel}'})">Back to Topics →</button>
       </div>
+      ${pct >= 60 ? `
+      <div class="share-result-section">
+        <div class="share-result-label">Share your result</div>
+        <textarea class="share-result-text" id="shareText" readonly>Just scored ${pct}% on ${topic.title} on PM Gym. Free platform for anyone breaking into PM. Worth checking out if you're prepping for PM interviews: https://sanketjoshi2012.github.io/pm-gym/</textarea>
+        <div class="share-result-actions">
+          <button class="btn-secondary" onclick="copyShareText()">📋 Copy text</button>
+          <a class="btn-secondary" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fsanketjoshi2012.github.io%2Fpm-gym%2F" target="_blank" rel="noopener">Share on LinkedIn →</a>
+        </div>
+      </div>` : ''}
     </div>`;
+}
+
+function copyShareText() {
+  const el = document.getElementById('shareText');
+  if (!el) return;
+  navigator.clipboard.writeText(el.value).then(() => showToast('📋 Copied to clipboard'));
 }
 
 function retakeQuiz(topicId) {
