@@ -639,8 +639,7 @@ function buildQuizResults(topic) {
   return `
     <div class="quiz-results">
       <div class="result-score-circle">
-        <div class="result-score-num">${correct}</div>
-        <div class="result-score-denom">/ ${quiz.length}</div>
+        <div class="result-score-num">${correct}<span class="result-score-denom">/${quiz.length}</span></div>
       </div>
       <div class="result-title">${pct}%, ${pct >= 80 ? 'Mastered' : pct >= 60 ? 'Passed' : 'Needs Practice'}</div>
       <div class="result-desc">${msg}</div>
