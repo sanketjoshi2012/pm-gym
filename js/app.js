@@ -1,5 +1,9 @@
 // PM Gym, Application Logic
 
+function mp(event, props) {
+  try { if (typeof mixpanel !== 'undefined') mixpanel.track(event, props); } catch (e) {}
+}
+
 const STORAGE_KEYS = {
   STREAK: 'pmgym_streak',
   LAST_ACTIVE: 'pmgym_last_active',
@@ -22,6 +26,8 @@ let state = {
     answers: [],
     answered: false,
   },
+  quizStartTime: null,
+  questionStartTime: null,
   completedTopics: new Set(),
   quizScores: {},
   lessonsDone: new Set(),
@@ -185,6 +191,8 @@ function showView(viewName, data = {}, { pushHash = true } = {}) {
   }
 
   window.scrollTo(0, 0);
+
+  if (viewName === 'landing') mp('landing_page_viewed');
 
   // Render content for view
   if (viewName === 'levels') renderLevelCards();
@@ -410,6 +418,7 @@ function renderModule(levelId, topicId) {
   if (!container) return;
 
   recordActivity();
+  mp('module_started', { module_id: topic.id, module_name: topic.title, level: levelId });
 
   const isCaseStudy = topic.isCaseStudy;
 
@@ -479,6 +488,11 @@ function switchTab(tab) {
   state.currentTab = tab;
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.id === `tab-${tab}`));
+  if (tab === 'quiz') {
+    state.quizStartTime = Date.now();
+    state.questionStartTime = Date.now();
+    mp('quiz_started', { module_id: state.currentTopic, level: state.currentLevel });
+  }
 }
 
 // ─── Quiz Logic ───────────────────────────────────────────────────────────────
@@ -554,6 +568,15 @@ function answerQuestion(topicId, qIndex, chosenIdx) {
   state.quizState.answers[qIndex] = chosenIdx;
   state.quizState.answered = true;
 
+  const isCorrect = chosenIdx === topic.quiz[qIndex].correct;
+  const responseTime = state.questionStartTime ? Math.round((Date.now() - state.questionStartTime) / 1000) : null;
+  mp('quiz_question_answered', {
+    module_id: topicId,
+    question_index: qIndex + 1,
+    is_correct: isCorrect,
+    ...(responseTime !== null && { response_time_seconds: responseTime }),
+  });
+
   const quizContent = document.getElementById('quizContent');
   if (quizContent) quizContent.innerHTML = buildQuizQuestion(topic, qIndex);
 }
@@ -564,6 +587,7 @@ function nextQuestion(topicId, nextIdx) {
   const topic = level.topics.find(t => t.id === topicId);
   if (!topic) return;
 
+  state.questionStartTime = Date.now();
   const quizContent = document.getElementById('quizContent');
   if (quizContent) quizContent.innerHTML = buildQuizQuestion(topic, nextIdx);
 }
@@ -577,6 +601,16 @@ function buildQuizResults(topic) {
   // Save score
   state.quizScores[topic.id] = { correct, total: quiz.length, pct };
   saveState();
+
+  const timeOnQuiz = state.quizStartTime ? Math.round((Date.now() - state.quizStartTime) / 1000) : null;
+  mp('quiz_completed', {
+    module_id: topic.id,
+    score_percent: pct,
+    correct_count: correct,
+    total_questions: quiz.length,
+    passed: pct >= 60,
+    ...(timeOnQuiz !== null && { time_on_quiz_seconds: timeOnQuiz }),
+  });
 
   let msg, emoji;
   if (pct >= 80) {
@@ -638,6 +672,7 @@ function retakeQuiz(topicId) {
 function markLessonDone(topicId) {
   state.lessonsDone.add(topicId);
   saveState();
+  mp('lesson_completed', { module_id: topicId, level: state.currentLevel });
 
   const btn = document.getElementById('lessonDoneBtn');
   if (btn) {
@@ -654,6 +689,7 @@ function markLessonDone(topicId) {
 // ─── Case Study ───────────────────────────────────────────────────────────────
 
 function renderCaseStudy(container, topic, levelId) {
+  mp('case_study_started', { case_study_id: topic.id, case_study_name: topic.title, level: levelId });
   const level = PM_GYM_DATA.levels.find(l => l.id === levelId);
   const scenario = topic.scenario;
   const savedAnswer = state.caseAnswers[topic.id] || '';
@@ -743,6 +779,7 @@ function toggleModelAnswer(topicId) {
 function markCaseComplete(topicId, levelId) {
   state.completedTopics.add(topicId);
   saveState();
+  mp('case_study_completed', { case_study_id: topicId, level: levelId });
   showToast('✓ Case study completed!');
   setTimeout(() => showView('topics', { levelId }), 1000);
 }
