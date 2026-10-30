@@ -735,7 +735,7 @@ function renderCaseStudy(container, topic, levelId) {
       class="case-textarea"
       id="caseTextarea"
       placeholder="Write your answer here... Think through the problem systematically before revealing the model answer."
-      >${savedAnswer}</textarea>
+      ></textarea>
 
     <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1.5rem; align-items: center;">
       <button class="btn-secondary" onclick="saveCaseAnswer('${topic.id}')">💾 Save Draft</button>
@@ -773,6 +773,10 @@ function renderCaseStudy(container, topic, levelId) {
         ✓ Mark as Completed
       </button>
     </div>`;
+
+  // Populate textarea via .value — never interpolate user content into innerHTML
+  const textarea = document.getElementById('caseTextarea');
+  if (textarea && savedAnswer) textarea.value = savedAnswer;
 }
 
 function saveCaseAnswer(topicId) {
