@@ -48,12 +48,12 @@ const PM_GYM_DATA = {
             {
               question: "A PM is often described as the 'CEO of the product.' What does this mean in practice?",
               options: [
-                "They have authority to hire and fire engineers on their team",
                 "They own the product vision and outcomes, but lead through influence rather than authority",
+                "They have authority to hire and fire engineers on their team",
                 "They report directly to the CEO and make all final product decisions",
                 "They manage the budget for the product team"
               ],
-              correct: 1,
+              correct: 0,
               explanation: "PMs 'own' the product in the sense of accountability for outcomes, but they have no direct authority over engineers or designers. They must lead through credibility, data, and clear communication, hence the 'influence without authority' challenge."
             },
             {
@@ -83,21 +83,21 @@ const PM_GYM_DATA = {
               options: [
                 "Override the designer since PMs have final say on product decisions",
                 "Defer entirely to the designer since they're the UX expert",
-                "Share the user data and business reasoning behind the decision, and listen to their concerns",
-                "Escalate to the VP of Product to resolve the disagreement"
+                "Escalate to the VP of Product to resolve the disagreement",
+                "Share the user data and business reasoning behind the decision, and listen to their concerns"
               ],
-              correct: 2,
+              correct: 3,
               explanation: "PMs lead through transparency and reasoning, not authority. Sharing your logic, user data, business goals, invites genuine debate and often surfaces better ideas. Overriding or ignoring silences talented teammates and erodes trust."
             },
             {
               question: "Instagram's PM decided to add Stories to the main Instagram app rather than building a separate app. What PM skill does this best illustrate?",
               options: [
-                "Technical architecture planning",
                 "Strategic product judgment, deciding what to build and where to build it",
+                "Technical architecture planning",
                 "Project management, coordinating a cross-functional team",
                 "User interface design"
               ],
-              correct: 1,
+              correct: 0,
               explanation: "The decision to add Stories to Instagram (not a new app) was a strategic product call: leverage existing distribution, user habit, and trust rather than starting from zero. That's PM judgment, picking the right problem, right scope, right approach."
             }
           ],
@@ -187,11 +187,11 @@ const PM_GYM_DATA = {
               question: "Which metric best measures whether new users are experiencing value quickly after signing up?",
               options: [
                 "Monthly Active Users (MAU)",
-                "Time-to-first-value / Activation rate",
                 "Total revenue",
+                "Time-to-first-value / Activation rate",
                 "App store rating"
               ],
-              correct: 1,
+              correct: 2,
               explanation: "Activation rate measures whether new users complete a key action that signals they've found value, like posting their first photo, sending their first message, or completing onboarding. It's the bridge between acquisition and retention."
             },
             {
@@ -209,11 +209,11 @@ const PM_GYM_DATA = {
               question: "A PM is optimizing for 'number of messages sent per user.' What counter-metric should they also watch?",
               options: [
                 "Number of users who signed up this month",
-                "Message reply rate and spam/block rate",
                 "Time spent in the app",
-                "App store download count"
+                "App store download count",
+                "Message reply rate and spam/block rate"
               ],
-              correct: 1,
+              correct: 3,
               explanation: "If you only optimize for messages sent, users might spam or send low-quality messages to inflate the number. Counter-metrics like reply rate (quality signal) and block/report rate (spam signal) prevent gaming and keep you focused on genuine engagement."
             },
             {
@@ -298,34 +298,34 @@ const PM_GYM_DATA = {
             {
               question: "A PM says: 'We should add in-app chat because our competitor has it.' What PM principle are they violating?",
               options: [
-                "They're skipping the problem space, they haven't established that users actually need this",
                 "They're not using a formal framework like CIRCLES to evaluate the idea",
                 "They're failing to write a proper PRD before proposing the feature",
-                "They're prioritizing without a scoring model like RICE"
+                "They're prioritizing without a scoring model like RICE",
+                "They're skipping the problem space, they haven't established that users actually need this"
               ],
-              correct: 0,
+              correct: 3,
               explanation: "Jumping to a solution (in-app chat) because a competitor has it skips the problem space entirely. The right question first is: 'Do our users have a communication need we're not meeting?' Competitor features are signals, not requirements."
             },
             {
               question: "Which user story is written correctly?",
               options: [
-                "'Build a dark mode for the app'",
                 "'As a late-night user, I want a dark mode, so that I can read without straining my eyes'",
+                "'Build a dark mode for the app'",
                 "'Users want dark mode because everyone else has it'",
                 "'Dark mode should be added in the next sprint'"
               ],
-              correct: 1,
+              correct: 0,
               explanation: "A proper user story follows: 'As a [user], I want [action], so that [benefit].' It grounds the requirement in a real user context and a clear reason, which makes it much easier to decide what to build and how to measure success."
             },
             {
               question: "According to the Jobs-to-be-Done framework, why do people actually use Instagram?",
               options: [
                 "To upload and store photos",
-                "To 'hire' the app for jobs like staying connected, getting validation, discovering trends, or building a personal brand",
                 "To view content from their favorite influencers",
+                "To 'hire' the app for jobs like staying connected, getting validation, discovering trends, or building a personal brand",
                 "To access a social media feed"
               ],
-              correct: 1,
+              correct: 2,
               explanation: "JTBD reframes user motivation: people hire Instagram for specific emotional or functional jobs, feeling connected, getting attention, being entertained. Each 'job' has different requirements and should influence different feature decisions."
             },
             {
@@ -343,11 +343,11 @@ const PM_GYM_DATA = {
               question: "A PM is writing a PRD and lists: 'User profile customization, friend recommendations, and in-app payments.' Why is this PRD incomplete?",
               options: [
                 "It doesn't include mockups or wireframes",
-                "It's missing the problem statement, success metrics, and out-of-scope section",
                 "The features listed are too broad, they need to be broken into tasks",
-                "It hasn't been reviewed by engineering and design"
+                "It hasn't been reviewed by engineering and design",
+                "It's missing the problem statement, success metrics, and out-of-scope section"
               ],
-              correct: 1,
+              correct: 3,
               explanation: "A feature list alone is an incomplete PRD. Without a problem statement (why?), success metrics (how will we know it worked?), and out-of-scope definition (what are we NOT building?), a team can't make good decisions or know when they're done."
             }
           ],
@@ -427,33 +427,33 @@ const PM_GYM_DATA = {
               question: "Why is 'Monthly Revenue' generally a poor choice for a North Star Metric?",
               options: [
                 "It's too difficult to track accurately across different currencies",
-                "It's a lagging business outcome, it doesn't directly measure whether users are getting value",
                 "Revenue metrics should be tracked weekly, not monthly",
+                "It's a lagging business outcome, it doesn't directly measure whether users are getting value",
                 "It combines too many product lines into a single number"
               ],
-              correct: 1,
+              correct: 2,
               explanation: "Revenue is a consequence of user value, not the value itself. A company can grow revenue short-term through pricing changes or discounts while its product actually gets worse. NSMs should measure user value that predicts long-term revenue health."
             },
             {
               question: "Slack's North Star Metric is 'messages sent per active organization per day.' Why is this a strong NSM?",
               options: [
-                "It's easy to manipulate and shows growth quickly",
                 "It measures actual team collaboration behavior, which directly reflects Slack's core value proposition",
+                "It's easy to manipulate and shows growth quickly",
                 "It's the metric investors care about most during fundraising",
                 "It's aligned with how email metrics are tracked, making it easier to benchmark"
               ],
-              correct: 1,
+              correct: 0,
               explanation: "Slack's value is team communication. If teams are sending messages daily, they're actively collaborating, that's genuine product value. This metric also predicts retention (active teams keep paying) and is directly influenced by product improvements."
             },
             {
               question: "A PM at a recipe app has two candidate NSMs: (A) 'recipes viewed per week' and (B) 'recipes cooked per week.' Which is better and why?",
               options: [
-                "A is better, it's easier to track and includes more user touchpoints",
-                "B is better, it measures actual value delivery (cooking a meal), not just browsing behavior",
-                "A is better, viewing more recipes indicates stronger intent to cook",
-                "Both are equally valid as co-North Star metrics"
+                "'Recipes viewed' is better — it's easier to track and includes more user touchpoints",
+                "'Recipes viewed' is better — viewing more recipes signals stronger intent to cook",
+                "Both are equally valid as co-North Star metrics",
+                "'Recipes cooked' is better — it measures actual value delivery (cooking a meal), not just browsing"
               ],
-              correct: 1,
+              correct: 3,
               explanation: "'Recipes cooked' is the actual value the app delivers, helping people cook meals. 'Recipes viewed' is a proxy that could include aimless browsing. NSMs should measure value delivered, not just activity. The gap between viewed and cooked would also reveal activation problems."
             },
             {
@@ -471,11 +471,11 @@ const PM_GYM_DATA = {
               question: "What is the relationship between a North Star Metric and input metrics?",
               options: [
                 "They are the same thing, input metrics is just another term for NSM",
-                "The NSM is the top-level outcome; input metrics are the specific levers teams optimize to move it",
                 "Input metrics measure user acquisition; the NSM measures long-term retention",
+                "The NSM is the top-level outcome; input metrics are the specific levers teams optimize to move it",
                 "Input metrics are only used during growth phases; NSMs are used during maturity"
               ],
-              correct: 1,
+              correct: 2,
               explanation: "The NSM is the company-wide measure of value. Input metrics are the specific, actionable levers below it, like search conversion rate, onboarding completion, or feature adoption, that teams work on daily. Moving the inputs should move the NSM."
             }
           ],
@@ -546,33 +546,33 @@ const PM_GYM_DATA = {
               question: "What does a p-value of 0.03 mean in an A/B test?",
               options: [
                 "There is a 3% chance the variant is better than the control",
-                "There is a 3% chance of seeing this result (or more extreme) if there were actually no difference",
                 "The test has 3% more statistical power than needed",
-                "The variant improved the metric by 3%"
+                "The variant improved the metric by 3%",
+                "There is a 3% chance of seeing this result (or more extreme) if there were actually no difference"
               ],
-              correct: 1,
+              correct: 3,
               explanation: "A p-value of 0.03 means: if the null hypothesis (no real difference) were true, you'd only observe a difference this large by random chance 3% of the time. At a 0.05 threshold, this is statistically significant, but remember, significance doesn't equal practical importance."
             },
             {
               question: "You change the button text, color, AND position all at once in an A/B test, and the variant wins. What's the problem?",
               options: [
-                "You violated statistical independence by changing three variables",
                 "You can't determine which specific change caused the improvement, it could be any of the three",
+                "You violated statistical independence by changing three variables",
                 "The test will be considered invalid by most analysis tools",
                 "There is no problem, the variant won, so ship it"
               ],
-              correct: 1,
+              correct: 0,
               explanation: "Changing multiple variables at once is a multivariate test, not a clean A/B test. You can't isolate which variable drove the result. If you want to learn what works (not just win this one test), change one variable at a time."
             },
             {
               question: "A new feature gets +40% engagement in its first week, then drops back to baseline in week 3. This is most likely:",
               options: [
                 "A successful test, the feature worked and then users normalized",
-                "A novelty effect, users engaged with something new, but it didn't provide lasting value",
                 "Statistical noise, the initial result was a false positive",
+                "A novelty effect, users engaged with something new, but it didn't provide lasting value",
                 "A sign the feature needs more users to achieve significance"
               ],
-              correct: 1,
+              correct: 2,
               explanation: "The novelty effect is real: users engage with new things just because they're new, not because they're valuable. This is why A/B tests should run long enough for novelty to wear off, typically 2-4 weeks for most consumer products."
             },
             {
@@ -663,9 +663,9 @@ const PM_GYM_DATA = {
             {
               question: "Feature A has: Reach=1,000/month, Impact=2, Confidence=80%, Effort=1 month. Feature B has: Reach=500/month, Impact=3, Confidence=100%, Effort=2 months. Which has a higher RICE score?",
               options: [
-                "Feature A, RICE = 1,600; Feature B, RICE = 750",
-                "Feature B, it has higher impact and confidence",
-                "Feature A, RICE = 1,600; Feature B, RICE = 750, so Feature A wins",
+                "Feature A: RICE = 1,600; Feature B: RICE = 750. Feature A wins",
+                "Feature B wins — higher impact (3) and full confidence outweigh Feature A's larger reach",
+                "Feature B: RICE = 1,500; Feature A: RICE = 1,600. Feature A wins by a slim margin",
                 "Both are equal when rounded to the nearest hundred"
               ],
               correct: 0,
@@ -675,22 +675,22 @@ const PM_GYM_DATA = {
               question: "A stakeholder insists that a niche feature should be 'Must Have' in MoSCoW because it's important to one key client. What should a PM do?",
               options: [
                 "Agree, customer requests should always be Must Have",
-                "Push back by asking whether this is truly essential for the product to function or for broader user value",
                 "Accept it as Must Have but add extra time to the sprint",
+                "Push back by asking whether this is truly essential for the product to function or for broader user value",
                 "Escalate to the CEO to decide"
               ],
-              correct: 1,
+              correct: 2,
               explanation: "'Must Have' should mean 'the product cannot launch or function without this', not 'this is important to someone.' A niche request from one client is typically a Should Have or Could Have. MoSCoW only works if Must Haves are kept to a genuine minimum."
             },
             {
               question: "A team uses a 2×2 Impact/Effort matrix and identifies a 'low impact, low effort' feature. What should they do?",
               options: [
                 "Build it immediately, low effort means low risk",
-                "Make it a stretch goal, do it if bandwidth allows, but don't prioritize it",
                 "Discard it entirely, low impact work should never be done",
-                "Move it to 'Must Have' since it won't take long"
+                "Move it to 'Must Have' since it won't take long",
+                "Make it a stretch goal, do it if bandwidth allows, but don't prioritize it"
               ],
-              correct: 1,
+              correct: 3,
               explanation: "Low impact, low effort features are 'fill-ins', fine to build when there's truly nothing more important, but they shouldn't displace high-impact work. They're not worth zero, but they shouldn't be prioritized over quick wins or big bets."
             },
             {
@@ -707,12 +707,12 @@ const PM_GYM_DATA = {
             {
               question: "The HEART framework's 'Task Success' dimension measures:",
               options: [
-                "Whether users complete onboarding within 24 hours",
                 "The efficiency, effectiveness, and error rate of users completing key tasks",
+                "Whether users complete onboarding within 24 hours",
                 "How many tasks are completed per session",
                 "Whether users successfully refer friends after completing a task"
               ],
-              correct: 1,
+              correct: 0,
               explanation: "Task Success measures usability: can users actually complete the tasks your product is designed for? Metrics include completion rate, time-on-task, and error rate. A task that most users fail or struggle with signals a UX problem regardless of other HEART dimensions."
             }
           ],
@@ -1629,55 +1629,55 @@ You are the CPO. Which do you ship and why?`,
               question: "A product team's strategy statement reads: 'We will grow to $50M ARR by Q4 next year.' What is wrong with this?",
               options: [
                 "The target is too ambitious for a single year",
-                "This is a goal, not a strategy, it states where you want to go but not how or why",
                 "ARR is a lagging metric that shouldn't appear in product strategy",
+                "This is a goal, not a strategy, it states where you want to go but not how or why",
                 "Strategies should be set for 3-5 year horizons, not 12 months"
               ],
-              correct: 1,
+              correct: 2,
               explanation: "Rumelt's key insight: strategy is the logic of how you'll win, not just where you want to end up. '$50M ARR' is a financial target. A strategy would say: 'Given that SMB customers churn due to poor onboarding, we'll invest in high-touch activation to reduce churn by 20% and expand via account expansion.'"
             },
             {
               question: "Spotify's decision to expand into podcasts and audiobooks is best described as:",
               options: [
                 "A tactical product decision to add new content types",
-                "A strategic move to reduce dependence on record labels and own a broader audio platform",
                 "A response to Apple Podcasts' market dominance",
-                "A way to improve Spotify's North Star metric of time spent listening"
+                "A way to improve Spotify's North Star metric of time spent listening",
+                "A strategic move to reduce dependence on record labels and own a broader audio platform"
               ],
-              correct: 1,
+              correct: 3,
               explanation: "This is a strategic move, not just a feature add. Spotify was heavily dependent on the major record labels for licensing. By expanding to podcasts (which they can own the distribution of) and audiobooks, they diversified their content moat and reduced leverage the labels had over them."
             },
             {
               question: "LinkedIn's primary competitive moat is best described as:",
               options: [
                 "Its user interface and design quality",
-                "Its brand recognition among job seekers",
                 "Network effects, the value of LinkedIn grows as more professionals join, making the data and connections increasingly irreplaceable",
+                "Its brand recognition among job seekers",
                 "Its recommendation algorithm for job matching"
               ],
-              correct: 2,
+              correct: 1,
               explanation: "LinkedIn's moat is its professional network, 900M+ profiles connected to their work history, skills, and professional relationships. No competitor can replicate this without getting professionals to add their entire career history again, which they won't do if everyone is already on LinkedIn."
             },
             {
               question: "In Rumelt's strategy kernel, the 'Guiding Policy' element refers to:",
               options: [
-                "The specific actions the team will take this quarter",
                 "The overall approach or logic for addressing the diagnosed challenge",
+                "The specific actions the team will take this quarter",
                 "The company's mission statement and values",
                 "The compliance and legal policies that govern product decisions"
               ],
-              correct: 1,
+              correct: 0,
               explanation: "The guiding policy is the bridge between diagnosis (what's the problem?) and coherent actions (what do we do?). It's the 'bet', the broad approach the team is committing to. Example: 'We will win by being the cheapest option' or 'We will win by being the best for power users, not beginners.'"
             },
             {
               question: "A PM says: 'Our product strategy is to build great features for all user types, enterprise, SMB, and consumers, with the best UX in the market.' What is the strategic problem here?",
               options: [
                 "The strategy is too expensive to execute",
-                "It tries to do everything, which means it makes no hard choices and offers no real direction",
                 "Consumer and enterprise products need separate strategies",
-                "UX should not be part of a product strategy"
+                "UX should not be part of a product strategy",
+                "It tries to do everything, which means it makes no hard choices and offers no real direction"
               ],
-              correct: 1,
+              correct: 3,
               explanation: "A strategy that tries to serve everyone equally, in every segment, with no focus, is actually no strategy, it's just a list of aspirations. Real strategy means choosing what you will NOT do. Trying to win with enterprise, SMB, and consumers simultaneously usually results in a mediocre product for all three."
             }
           ],
