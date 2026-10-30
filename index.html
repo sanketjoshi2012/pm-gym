@@ -36,7 +36,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="styles.css?v=1.2.9">
+  <link rel="stylesheet" href="styles.css?v=1.3.0">
 </head>
 <body>
 
@@ -69,90 +69,130 @@
 
   <!-- ─── Landing View ─── -->
   <section id="view-landing" class="view active">
-    <div class="hero">
-      <div class="hero-eyebrow">Free PM Learning Platform</div>
+    
+    <div class="hero-split-container">
+      <!-- Left Column: Value Prop & Direct Action -->
+      <div class="hero-left">
+        <div class="hero-eyebrow">Free PM Learning Platform</div>
 
-      <h1 class="hero-title">
-        Practice like a PM.<br><span class="accent">Think like one too.</span>
-      </h1>
+        <h1 class="hero-title">
+          Practice like a PM.<br><span class="accent">Think like one too.</span>
+        </h1>
 
-      <p class="hero-sub">
-        The free PM practice platform for aspiring product managers, career switchers, and anyone sharpening their product thinking, from first principles to real case studies.
-      </p>
+        <p class="hero-sub">
+          Build product sense through daily practice and real-world case studies.
+        </p>
 
-      <div class="hero-for">
-        <span class="for-chip">Software Engineers</span>
-        <span class="for-chip">Analysts &amp; Data Scientists</span>
-        <span class="for-chip">Designers</span>
-        <span class="for-chip">Consultants</span>
-        <span class="for-chip">Business Analysts</span>
-        <span class="for-chip">Existing PMs</span>
-      </div>
-
-      <button class="hero-cta" onclick="showView('levels')">
-        Start Practicing
-        <span>→</span>
-      </button>
-
-      <div class="hero-stats">
-        <div class="stat">
-          <div class="stat-num">9</div>
-          <div class="stat-label">Topic modules</div>
+        <div class="hero-cta-group">
+          <button class="hero-cta" onclick="showView('levels')">
+            Start Practicing
+            <span>→</span>
+          </button>
         </div>
-        <div class="stat">
-          <div class="stat-num">40+</div>
-          <div class="stat-label">Quiz questions</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num" id="statCaseStudies">5</div>
-          <div class="stat-label">Full case studies</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num">Free</div>
-          <div class="stat-label">Always</div>
+
+        <!-- Crisp Micro-Flow -->
+        <div class="hero-flow-split">
+          <span class="flow-label">How it works:</span>
+          <span class="flow-step" onclick="showView('levels')"><span class="flow-num">1</span> Pick Level</span>
+          <span class="flow-sep">→</span>
+          <span class="flow-step" onclick="showView('levels')"><span class="flow-num">2</span> Learn &amp; Quiz</span>
+          <span class="flow-sep">→</span>
+          <span class="flow-step" onclick="showView('topics', {levelId: 'advanced'})"><span class="flow-num">3</span> Teardowns</span>
         </div>
       </div>
 
-      <!-- How it works -->
-      <div style="max-width: 720px; margin: 4rem auto 0; text-align: left;">
-        <h2 style="font-size: 1.5rem; font-weight: 700; text-align: center; margin: 0 0 2rem;">How PM Gym Works</h2>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem;">
-          <div style="padding: 1.25rem; background: var(--bg-card); border: 1.5px solid var(--border); border-radius: 12px;">
-            <div class="step-num">01</div>
-            <div style="font-weight: 700; margin-bottom: 0.3rem;">Pick your level</div>
-            <div style="font-size: 0.875rem; color: var(--fg-2);">Beginner, Intermediate, or Advanced, start where it makes sense for you.</div>
+      <!-- Right Column: Interactive Daily PM Rep -->
+      <div class="hero-right">
+        <div class="daily-rep-card" id="dailyRepCard">
+          <div class="daily-rep-header">
+            <div class="daily-rep-meta">
+              <span class="daily-rep-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg> Daily PM Rep</span>
+              <span class="daily-rep-date" id="dailyRepDate">Today</span>
+            </div>
+            <div class="daily-rep-streak" id="dailyRepStreak">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+              <span id="dailyRepStreakCount">🔥 Start your streak</span>
+            </div>
           </div>
-          <div style="padding: 1.25rem; background: var(--bg-card); border: 1.5px solid var(--border); border-radius: 12px;">
-            <div class="step-num">02</div>
-            <div style="font-weight: 700; margin-bottom: 0.3rem;">Read the lesson</div>
-            <div style="font-size: 0.875rem; color: var(--fg-2);">Real PM concepts with examples from Spotify, LinkedIn, Airbnb, and more.</div>
+
+          <div class="daily-rep-body">
+            <div class="daily-rep-context" id="dailyRepTopic">From Module</div>
+            <h3 class="daily-rep-question" id="dailyRepQuestion">Loading daily question...</h3>
+            <div class="daily-rep-options" id="dailyRepOptions">
+              <!-- Rendered by JS -->
+            </div>
           </div>
-          <div style="padding: 1.25rem; background: var(--bg-card); border: 1.5px solid var(--border); border-radius: 12px;">
-            <div class="step-num">03</div>
-            <div style="font-weight: 700; margin-bottom: 0.3rem;">Take the quiz</div>
-            <div style="font-size: 0.875rem; color: var(--fg-2);">5–10 multiple-choice questions with explanations to reinforce each concept.</div>
-          </div>
-          <div style="padding: 1.25rem; background: var(--bg-card); border: 1.5px solid var(--border); border-radius: 12px;">
-            <div class="step-num">04</div>
-            <div style="font-weight: 700; margin-bottom: 0.3rem;">Try case studies</div>
-            <div style="font-size: 0.875rem; color: var(--fg-2);">Advanced: real PM scenarios where you write answers and compare to expert rubrics.</div>
+
+          <div class="daily-rep-feedback" id="dailyRepFeedback" style="display:none;">
+            <div class="daily-rep-result" id="dailyRepResult"></div>
+            <p class="daily-rep-explanation" id="dailyRepExplanation"></p>
+            <div class="daily-rep-actions">
+              <button class="daily-rep-jump-btn" id="dailyRepJumpBtn" onclick="jumpToDailyTopic()">Want more practice? Explore topic →</button>
+            </div>
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- Share Your Scenario -->
-      <div class="submit-scenario-section">
-        <div class="submit-scenario-inner">
-          <div class="submit-scenario-text">
-            <h3>Have a PM scenario from your domain?</h3>
-            <p>Describe the product problem, how you tackled it, and what the outcome was. The best submissions get featured as practice scenarios for the community. We credit you by name.</p>
-          </div>
-          <a href="https://tally.so/r/rDyLDR" target="_blank" rel="noopener" class="submit-scenario-btn">
-            Share Your Scenario →
-          </a>
+    <!-- ─── Featured Case Teardowns ─── -->
+    <div class="featured-teardowns-section">
+      <div class="featured-header">
+        <div>
+          <div class="featured-kicker">10 real-world case studies available</div>
+          <h2 class="featured-title">Featured Case Teardowns</h2>
+          <p class="featured-subtitle">Work through real product dilemmas, model answers, and rubric evaluations.</p>
         </div>
+        <button class="featured-all-btn" onclick="showView('topics', {levelId: 'advanced'})">
+          Explore all case studies →
+        </button>
       </div>
 
+      <div class="featured-grid">
+        <!-- Notion -->
+        <div class="featured-card" onclick="showView('module', {levelId: 'advanced', topicId: 'case-study-notion'})">
+          <div class="featured-card-top">
+            <span class="featured-badge">Work &amp; Productivity</span>
+            <span class="featured-time">15–20 min</span>
+          </div>
+          <h3 class="featured-card-title">Notion Onboarding Drop-off</h3>
+          <p class="featured-card-desc">Should Notion bundle AI features or charge separately to stop new users from abandoning after Day 1?</p>
+          <div class="featured-card-footer">
+            <span class="featured-tag">Activation</span>
+            <span class="featured-tag">Retention</span>
+            <span class="featured-arrow">Open teardown →</span>
+          </div>
+        </div>
+
+        <!-- Swiggy -->
+        <div class="featured-card" onclick="showView('module', {levelId: 'advanced', topicId: 'case-study-swiggy'})">
+          <div class="featured-card-top">
+            <span class="featured-badge">Food Delivery</span>
+            <span class="featured-time">15–20 min</span>
+          </div>
+          <h3 class="featured-card-title">Swiggy Order Cancellations Spike</h3>
+          <p class="featured-card-desc">Can faster delivery drive growth without hurting profitability when cancellations spike 25%?</p>
+          <div class="featured-card-footer">
+            <span class="featured-tag">Unit Economics</span>
+            <span class="featured-tag">Logistics</span>
+            <span class="featured-arrow">Open teardown →</span>
+          </div>
+        </div>
+
+        <!-- Chess.com -->
+        <div class="featured-card" onclick="showView('module', {levelId: 'advanced', topicId: 'case-study-chess'})">
+          <div class="featured-card-top">
+            <span class="featured-badge">Sports</span>
+            <span class="featured-time">15–20 min</span>
+          </div>
+          <h3 class="featured-card-title">Chess.com Puzzle Drop</h3>
+          <p class="featured-card-desc">How do you balance free engagement with paid subscriptions when daily completions drop 20%?</p>
+          <div class="featured-card-footer">
+            <span class="featured-tag">Freemium</span>
+            <span class="featured-tag">Paywall</span>
+            <span class="featured-arrow">Open teardown →</span>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -241,6 +281,6 @@
   <script src="js/data.js?v=1.2.1"></script>
   <script>(function(f,b){if(!b.__SV){var e,g,i,h;window.mixpanel=b;b._i=[];b.init=function(e,f,c){function g(a,d){var b=d.split(".");2==b.length&&(a=a[b[0]],d=b[1]);a[d]=function(){a.push([d].concat(Array.prototype.slice.call(arguments,0)))}}var a=b;"undefined"!==typeof c?a=b[c]=[]:c="mixpanel";a.people=a.people||[];a.toString=function(a){var d="mixpanel";"mixpanel"!==c&&(d+="."+c);a||(d+=" (stub)");return d};a.people.toString=function(){return a.toString(1)+".people (stub)"};i="disable time_event track track_pageview track_links track_forms track_with_groups add_group set_group remove_group register register_once alias unregister identify name_tag set_config reset opt_in_tracking opt_out_tracking has_opted_in_tracking has_opted_out_tracking clear_opt_in_out_tracking start_batch_senders people.set people.set_once people.unset people.increment people.append people.union people.track_charge people.clear_charges people.delete_user people.remove".split(" ");for(h=0;h<i.length;h++)g(a,i[h]);var j="set set_once union unset remove delete".split(" ");a.get_group=function(){function b(c){d[c]=function(){call2_args=arguments;call2=[c].concat(Array.prototype.slice.call(call2_args,0));a.push([e].concat(call2))}}for(var d={},e=["get_group"].concat(Array.prototype.slice.call(arguments,0)),c=0;c<j.length;c++)b(j[c]);return d};b._i.push([e,f,c])};b.__SV=1.2;e=f.createElement("script");e.type="text/javascript";e.async=!0;e.src="https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";g=f.getElementsByTagName("script")[0];g.parentNode.insertBefore(e,g)}})(document,window.mixpanel||[]);
   mixpanel.init('7a8c4d58d19669829887701b96fd1fd0');</script>
-  <script src="js/app.js?v=1.2.8"></script>
+  <script src="js/app.js?v=1.3.0"></script>
 </body>
 </html>

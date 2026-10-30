@@ -192,7 +192,10 @@ function showView(viewName, data = {}, { pushHash = true } = {}) {
 
   window.scrollTo(0, 0);
 
-  if (viewName === 'landing') mp('landing_page_viewed');
+  if (viewName === 'landing') {
+    mp('landing_page_viewed');
+    initDailyRep();
+  }
 
   // Render content for view
   if (viewName === 'levels') renderLevelCards();
@@ -1034,4 +1037,230 @@ document.addEventListener('keydown', function(e) {
     const nextBtn = quizContent.querySelector('.btn-next:not([disabled])');
     if (nextBtn) nextBtn.click();
   }
+});
+
+// ─── Daily PM Rep Engine (v1.3.0) ──────────────────────────────────────────────
+
+function getUtcDateKey() {
+  const d = new Date();
+  const year = d.getUTCFullYear();
+  const month = String(d.getUTCMonth() + 1).padStart(2, '0');
+  const day = String(d.getUTCDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+function formatUtcDisplayDate() {
+  const d = new Date();
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  return `${months[d.getUTCMonth()]} ${d.getUTCDate()}`;
+}
+
+function getDailyRepPool() {
+  if (typeof PM_GYM_DATA === 'undefined' || !PM_GYM_DATA.levels) return [];
+  const pool = [];
+  PM_GYM_DATA.levels.forEach(lvl => {
+    lvl.topics.forEach(t => {
+      if (Array.isArray(t.quiz) && t.quiz.length > 0) {
+        t.quiz.forEach(q => {
+          pool.push({
+            topicId: t.id,
+            topicTitle: t.title,
+            levelId: lvl.id,
+            question: q.question,
+            options: q.options,
+            correct: q.correct,
+            explanation: q.explanation
+          });
+        });
+      }
+    });
+  });
+  return pool;
+}
+
+function getTodayDailyItem(pool) {
+  if (!pool || pool.length === 0) return null;
+  const now = new Date();
+  // Deterministic UTC day calculation since Unix epoch
+  const dayIndex = Math.floor(now.getTime() / (24 * 60 * 60 * 1000));
+  return pool[Math.abs(dayIndex) % pool.length];
+}
+
+function initDailyRep() {
+  const container = document.getElementById('dailyRepCard');
+  if (!container) return;
+
+  const pool = getDailyRepPool();
+  if (pool.length === 0) return;
+
+  const currentItem = getTodayDailyItem(pool);
+  if (!currentItem) return;
+
+  const dateKey = getUtcDateKey();
+  const storageKey = `pmgym_daily_rep_${dateKey}`;
+
+  // Date element
+  const dateEl = document.getElementById('dailyRepDate');
+  if (dateEl) {
+    dateEl.textContent = formatUtcDisplayDate();
+  }
+
+  // Topic & question
+  const topicEl = document.getElementById('dailyRepTopic');
+  if (topicEl) {
+    topicEl.textContent = `From ${currentItem.topicTitle}`;
+  }
+
+  const questionEl = document.getElementById('dailyRepQuestion');
+  if (questionEl) {
+    questionEl.textContent = currentItem.question;
+  }
+
+  // Render streak
+  updateDailyStreakDisplay();
+
+  // Load saved answer for today
+  let saved = null;
+  try {
+    const raw = localStorage.getItem(storageKey);
+    if (raw) saved = JSON.parse(raw);
+  } catch (e) {
+    saved = null;
+  }
+
+  const optionsEl = document.getElementById('dailyRepOptions');
+  if (!optionsEl) return;
+  optionsEl.innerHTML = '';
+
+  currentItem.options.forEach((optText, idx) => {
+    const btn = document.createElement('div');
+    btn.className = 'daily-rep-opt';
+    btn.innerHTML = `<span class="daily-rep-opt-key">${String.fromCharCode(65 + idx)}</span> <span>${optText}</span>`;
+
+    if (saved) {
+      btn.classList.add('disabled');
+      if (idx === currentItem.correct) {
+        btn.classList.add('correct');
+      } else if (idx === saved.selected) {
+        btn.classList.add('wrong');
+      } else {
+        btn.classList.add('dimmed');
+      }
+    } else {
+      btn.onclick = () => handleDailyRepSelection(idx, currentItem, storageKey);
+    }
+
+    optionsEl.appendChild(btn);
+  });
+
+  if (saved) {
+    showDailyRepFeedback(saved.selected === currentItem.correct, currentItem);
+  } else {
+    const feedbackEl = document.getElementById('dailyRepFeedback');
+    if (feedbackEl) feedbackEl.style.display = 'none';
+  }
+
+  window._currentDailyTopic = {
+    levelId: currentItem.levelId,
+    topicId: currentItem.topicId,
+    topicTitle: currentItem.topicTitle
+  };
+}
+
+function handleDailyRepSelection(selectedIdx, item, storageKey) {
+  const isCorrect = selectedIdx === item.correct;
+
+  // Save selection
+  try {
+    localStorage.setItem(storageKey, JSON.stringify({
+      selected: selectedIdx,
+      isCorrect: isCorrect,
+      answeredAt: Date.now()
+    }));
+  } catch (e) {}
+
+  // Update streak counter
+  incrementDailyStreak();
+
+  // Disable options and style them
+  const options = document.querySelectorAll('.daily-rep-opt');
+  options.forEach((btn, idx) => {
+    btn.classList.add('disabled');
+    btn.onclick = null;
+    if (idx === item.correct) {
+      btn.classList.add('correct');
+    } else if (idx === selectedIdx) {
+      btn.classList.add('wrong');
+    } else {
+      btn.classList.add('dimmed');
+    }
+  });
+
+  showDailyRepFeedback(isCorrect, item);
+}
+
+function showDailyRepFeedback(isCorrect, item) {
+  const feedbackEl = document.getElementById('dailyRepFeedback');
+  const resultEl = document.getElementById('dailyRepResult');
+  const explanationEl = document.getElementById('dailyRepExplanation');
+  const jumpBtn = document.getElementById('dailyRepJumpBtn');
+
+  if (!feedbackEl || !resultEl || !explanationEl) return;
+
+  feedbackEl.style.display = 'block';
+  resultEl.className = 'daily-rep-result ' + (isCorrect ? 'success' : 'miss');
+  resultEl.textContent = isCorrect ? 'Spot on! Correct answer.' : 'Not quite right.';
+  explanationEl.textContent = item.explanation || '';
+
+  if (jumpBtn) {
+    jumpBtn.textContent = `Want more practice? Explore ${item.topicTitle} →`;
+  }
+}
+
+function updateDailyStreakDisplay() {
+  const streakEl = document.getElementById('dailyRepStreakCount');
+  if (!streakEl) return;
+
+  let streak = 0;
+  try {
+    streak = parseInt(localStorage.getItem('pmgym_rep_streak') || '0', 10);
+  } catch (e) {
+    streak = 0;
+  }
+
+  if (streak === 0) {
+    streakEl.textContent = '🔥 Start your streak';
+  } else if (streak === 1) {
+    streakEl.textContent = '🔥 1-day streak';
+  } else {
+    streakEl.textContent = `🔥 ${streak}-day streak`;
+  }
+}
+
+function incrementDailyStreak() {
+  const dateKey = getUtcDateKey();
+  const lastActiveKey = localStorage.getItem('pmgym_rep_last_date');
+  let streak = parseInt(localStorage.getItem('pmgym_rep_streak') || '0', 10);
+
+  if (lastActiveKey !== dateKey) {
+    streak = streak + 1;
+    localStorage.setItem('pmgym_rep_streak', streak.toString());
+    localStorage.setItem('pmgym_rep_last_date', dateKey);
+  }
+
+  updateDailyStreakDisplay();
+}
+
+function jumpToDailyTopic() {
+  if (window._currentDailyTopic) {
+    showView('module', {
+      levelId: window._currentDailyTopic.levelId,
+      topicId: window._currentDailyTopic.topicId
+    });
+  }
+}
+
+// Ensure Daily Rep re-inits whenever the landing view is shown
+document.addEventListener('DOMContentLoaded', () => {
+  initDailyRep();
 });
