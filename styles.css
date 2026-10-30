@@ -2136,3 +2136,27 @@ html { scroll-behavior: smooth; }
     margin-top: 2.5rem;
   }
 }
+
+/* Daily PM Rep feedback toggle */
+.daily-rep-feedback-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.35rem;
+}
+.daily-rep-toggle-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--accent);
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+.daily-rep-toggle-btn:hover {
+  text-decoration: underline;
+}
+.daily-rep-explanation-wrapper.collapsed {
+  display: none;
+}

@@ -1039,7 +1039,7 @@ document.addEventListener('keydown', function(e) {
   }
 });
 
-// ─── Daily PM Rep Engine (v1.3.0) ──────────────────────────────────────────────
+// ─── Daily PM Rep Engine (v1.3.1) ──────────────────────────────────────────────
 
 function getUtcDateKey() {
   const d = new Date();
@@ -1061,8 +1061,9 @@ function getDailyRepPool() {
   PM_GYM_DATA.levels.forEach(lvl => {
     lvl.topics.forEach(t => {
       if (Array.isArray(t.quiz) && t.quiz.length > 0) {
-        t.quiz.forEach(q => {
+        t.quiz.forEach((q, qIdx) => {
           pool.push({
+            id: `${t.id}-q${qIdx + 1}`,
             topicId: t.id,
             topicTitle: t.title,
             levelId: lvl.id,
@@ -1105,12 +1106,13 @@ function initDailyRep() {
     dateEl.textContent = formatUtcDisplayDate();
   }
 
-  // Topic & question
+  // Topic badge (clean TOPIC: prefix)
   const topicEl = document.getElementById('dailyRepTopic');
   if (topicEl) {
-    topicEl.textContent = `From ${currentItem.topicTitle}`;
+    topicEl.textContent = `TOPIC: ${currentItem.topicTitle}`;
   }
 
+  // Question title
   const questionEl = document.getElementById('dailyRepQuestion');
   if (questionEl) {
     questionEl.textContent = currentItem.question;
@@ -1119,7 +1121,7 @@ function initDailyRep() {
   // Render streak
   updateDailyStreakDisplay();
 
-  // Load saved answer for today
+  // Load saved attempt for today
   let saved = null;
   try {
     const raw = localStorage.getItem(storageKey);
@@ -1139,9 +1141,10 @@ function initDailyRep() {
 
     if (saved) {
       btn.classList.add('disabled');
+      const selected = typeof saved.selectedAnswer === 'number' ? saved.selectedAnswer : saved.selected;
       if (idx === currentItem.correct) {
         btn.classList.add('correct');
-      } else if (idx === saved.selected) {
+      } else if (idx === selected) {
         btn.classList.add('wrong');
       } else {
         btn.classList.add('dimmed');
@@ -1154,7 +1157,8 @@ function initDailyRep() {
   });
 
   if (saved) {
-    showDailyRepFeedback(saved.selected === currentItem.correct, currentItem);
+    const selected = typeof saved.selectedAnswer === 'number' ? saved.selectedAnswer : saved.selected;
+    showDailyRepFeedback(selected === currentItem.correct, currentItem);
   } else {
     const feedbackEl = document.getElementById('dailyRepFeedback');
     if (feedbackEl) feedbackEl.style.display = 'none';
@@ -1169,20 +1173,26 @@ function initDailyRep() {
 
 function handleDailyRepSelection(selectedIdx, item, storageKey) {
   const isCorrect = selectedIdx === item.correct;
+  const dateKey = getUtcDateKey();
 
-  // Save selection
+  // Store user's Daily Rep attempt with complete schema
+  const attempt = {
+    questionId: item.id,
+    date: dateKey,
+    selectedAnswer: selectedIdx,
+    isCorrect: isCorrect,
+    completed: true,
+    answeredAt: Date.now()
+  };
+
   try {
-    localStorage.setItem(storageKey, JSON.stringify({
-      selected: selectedIdx,
-      isCorrect: isCorrect,
-      answeredAt: Date.now()
-    }));
+    localStorage.setItem(storageKey, JSON.stringify(attempt));
   } catch (e) {}
 
-  // Update streak counter
+  // Update streak counter safely (only 1 increment per calendar day)
   incrementDailyStreak();
 
-  // Disable options and style them
+  // Disable options and style them immediately
   const options = document.querySelectorAll('.daily-rep-opt');
   options.forEach((btn, idx) => {
     btn.classList.add('disabled');
@@ -1203,6 +1213,8 @@ function showDailyRepFeedback(isCorrect, item) {
   const feedbackEl = document.getElementById('dailyRepFeedback');
   const resultEl = document.getElementById('dailyRepResult');
   const explanationEl = document.getElementById('dailyRepExplanation');
+  const wrapperEl = document.getElementById('dailyRepExplanationWrapper');
+  const toggleBtn = document.getElementById('dailyRepToggleBtn');
   const jumpBtn = document.getElementById('dailyRepJumpBtn');
 
   if (!feedbackEl || !resultEl || !explanationEl) return;
@@ -1212,9 +1224,24 @@ function showDailyRepFeedback(isCorrect, item) {
   resultEl.textContent = isCorrect ? 'Spot on! Correct answer.' : 'Not quite right.';
   explanationEl.textContent = item.explanation || '';
 
+  // Ensure explanation is visible and toggle shows "Hide explanation"
+  if (wrapperEl) wrapperEl.classList.remove('collapsed');
+  if (toggleBtn) {
+    toggleBtn.textContent = 'Hide explanation';
+  }
+
   if (jumpBtn) {
     jumpBtn.textContent = `Want more practice? Explore ${item.topicTitle} →`;
   }
+}
+
+function toggleDailyRepExplanation() {
+  const wrapperEl = document.getElementById('dailyRepExplanationWrapper');
+  const toggleBtn = document.getElementById('dailyRepToggleBtn');
+  if (!wrapperEl || !toggleBtn) return;
+
+  const isCollapsed = wrapperEl.classList.toggle('collapsed');
+  toggleBtn.textContent = isCollapsed ? 'Show explanation' : 'Hide explanation';
 }
 
 function updateDailyStreakDisplay() {
@@ -1228,12 +1255,13 @@ function updateDailyStreakDisplay() {
     streak = 0;
   }
 
+  // Clean label without duplicate emoji since SVG flame already precedes text
   if (streak === 0) {
-    streakEl.textContent = '🔥 Start your streak';
+    streakEl.textContent = 'Start your streak';
   } else if (streak === 1) {
-    streakEl.textContent = '🔥 1-day streak';
+    streakEl.textContent = '1-day streak';
   } else {
-    streakEl.textContent = `🔥 ${streak}-day streak`;
+    streakEl.textContent = `${streak}-day streak`;
   }
 }
 
@@ -1242,11 +1270,38 @@ function incrementDailyStreak() {
   const lastActiveKey = localStorage.getItem('pmgym_rep_last_date');
   let streak = parseInt(localStorage.getItem('pmgym_rep_streak') || '0', 10);
 
-  if (lastActiveKey !== dateKey) {
-    streak = streak + 1;
+  // If already completed today, do not increment again (prevents duplicate counting on refresh)
+  if (lastActiveKey === dateKey) {
+    updateDailyStreakDisplay();
+    return;
+  }
+
+  if (!lastActiveKey) {
+    // First completion ever
+    streak = 1;
+  } else {
+    // Calculate calendar day difference
+    try {
+      const prevDate = new Date(lastActiveKey + 'T00:00:00Z');
+      const currDate = new Date(dateKey + 'T00:00:00Z');
+      const diffDays = Math.round((currDate - prevDate) / (24 * 60 * 60 * 1000));
+
+      if (diffDays === 1) {
+        // Consecutive calendar day
+        streak = streak + 1;
+      } else {
+        // Missed one or more days: reset to 1 on this completion
+        streak = 1;
+      }
+    } catch (e) {
+      streak = 1;
+    }
+  }
+
+  try {
     localStorage.setItem('pmgym_rep_streak', streak.toString());
     localStorage.setItem('pmgym_rep_last_date', dateKey);
-  }
+  } catch (e) {}
 
   updateDailyStreakDisplay();
 }
