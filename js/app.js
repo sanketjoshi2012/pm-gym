@@ -1138,6 +1138,20 @@ function initDailyRep() {
   if (!optionsEl) return;
   optionsEl.innerHTML = '';
 
+  // Resolve the index of the originally selected option in the current (possibly reordered)
+  // options array. Prefers text matching (stable across reorders) over raw index (stale after F04).
+  // Returns null when the original selection cannot be reliably determined.
+  function resolveSelectedIndex(savedAttempt, item) {
+    if (!savedAttempt) return null;
+    const text = savedAttempt.selectedAnswerText;
+    if (typeof text === 'string') {
+      const idx = item.options.indexOf(text);
+      return idx >= 0 ? idx : null;
+    }
+    // Legacy records have no text — raw index may be stale; do not guess.
+    return null;
+  }
+
   currentItem.options.forEach((optText, idx) => {
     const btn = document.createElement('div');
     btn.className = 'daily-rep-opt';
@@ -1145,10 +1159,10 @@ function initDailyRep() {
 
     if (saved) {
       btn.classList.add('disabled');
-      const selected = typeof saved.selectedAnswer === 'number' ? saved.selectedAnswer : saved.selected;
+      const resolvedIdx = resolveSelectedIndex(saved, currentItem);
       if (idx === currentItem.correct) {
         btn.classList.add('correct');
-      } else if (idx === selected) {
+      } else if (resolvedIdx !== null && idx === resolvedIdx) {
         btn.classList.add('wrong');
       } else {
         btn.classList.add('dimmed');
@@ -1161,8 +1175,12 @@ function initDailyRep() {
   });
 
   if (saved) {
-    const selected = typeof saved.selectedAnswer === 'number' ? saved.selectedAnswer : saved.selected;
-    showDailyRepFeedback(selected === currentItem.correct, currentItem);
+    // Trust the stored isCorrect rather than re-deriving from option index,
+    // which would break for attempts saved before options were reordered.
+    const wasCorrect = typeof saved.isCorrect === 'boolean'
+      ? saved.isCorrect
+      : resolveSelectedIndex(saved, currentItem) === currentItem.correct;
+    showDailyRepFeedback(wasCorrect, currentItem);
   } else {
     const feedbackEl = document.getElementById('dailyRepFeedback');
     if (feedbackEl) feedbackEl.style.display = 'none';
@@ -1179,11 +1197,14 @@ function handleDailyRepSelection(selectedIdx, item, storageKey) {
   const isCorrect = selectedIdx === item.correct;
   const dateKey = getUtcDateKey();
 
-  // Store user's Daily Rep attempt with complete schema
+  // Store user's Daily Rep attempt with complete schema.
+  // selectedAnswerText persists the chosen option's content so it can be
+  // matched by text if options are later reordered (stable across data updates).
   const attempt = {
     questionId: item.id,
     date: dateKey,
     selectedAnswer: selectedIdx,
+    selectedAnswerText: item.options[selectedIdx],
     isCorrect: isCorrect,
     completed: true,
     answeredAt: Date.now()

@@ -77,16 +77,24 @@ perQuiz.forEach(({ topicId, questions }) => {
   );
 });
 
-console.log('\n--- Sweep test: always picking same letter never passes all 7 quizzes ---');
+// PM Gym passes a quiz at 60% (3/5 correct). Verify that no constant-letter
+// strategy achieves the passing threshold in any quiz.
+const PASS_THRESHOLD = 0.60;
+
+console.log(`\n--- Sweep test: constant-letter strategy never reaches ${PASS_THRESHOLD * 100}% in any quiz ---`);
 
 [0, 1, 2, 3].forEach(pos => {
   const label = ['A', 'B', 'C', 'D'][pos];
   let quizzesPassed = 0;
   perQuiz.forEach(({ topicId, questions }) => {
     const correct = questions.filter(({ q }) => q.correct === pos).length;
-    if (correct === questions.length) quizzesPassed++;
+    const score = correct / questions.length;
+    if (score >= PASS_THRESHOLD) quizzesPassed++;
   });
-  assert(quizzesPassed === 0, `Always picking ${label} passes 0 of ${perQuiz.length} quizzes (got ${quizzesPassed})`);
+  assert(
+    quizzesPassed === 0,
+    `Always picking ${label} reaches ≥${PASS_THRESHOLD * 100}% in 0 of ${perQuiz.length} quizzes (got ${quizzesPassed})`
+  );
 });
 
 console.log('\n--- Summary ---');
