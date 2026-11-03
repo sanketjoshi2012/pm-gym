@@ -87,7 +87,7 @@ Ideas for new topics:
 
 ---
 
-## Current experiment - **Kill rule (written before the data comes in):**
+## Current experiment 
 
 **Bet: does AI scoring on case answers make people practise again?**
 
