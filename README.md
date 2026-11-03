@@ -87,31 +87,11 @@ Ideas for new topics:
 
 ---
 
-## Current experiment
-
-**Bet: does AI scoring on case answers make people practise again?**
-
-Starting 3 November 2026, PM Gym is adding an LLM grader that scores written case answers against the existing rubric, quotes the learner's own words as evidence, and says what a strong answer would add.
-
-The question this answers: do people submit a second answer on the same case within 14 days?
-
-**Kill rule (written before the data comes in):**
-
-By end of week 4 (1 December 2026), among at least 25 people who submit one scored answer:
-
-- **Continue** if 30% or more submit a second answer within 14 days, and the AI score agrees with my own grading on at least 16 of 20 test answers.
-- **Freeze** if the repeat-submission rate is under 15%. Write up the case study, put it on the CV, move all evenings to job applications.
-- **One more iteration** if between 15% and 30%: fix the single biggest drop-off visible in Mixpanel, then decide again. No third extension.
-
-Either outcome is useful. "I ran the experiment, here is the metric, here is why I stopped" is a stronger interview story than "I built a site."
-
----
-
 ## Versioning
 
 See [CHANGELOG.md](CHANGELOG.md) for a full history of what's been added.
 
-Current version: **v1.3.6**
+Current version: **v1.0.0**
 
 ---
 
