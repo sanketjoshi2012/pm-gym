@@ -591,17 +591,17 @@ function nextQuestion(topicId, nextIdx) {
   if (!topic) return;
 
   state.questionStartTime = Date.now();
+  if (nextIdx >= topic.quiz.length) finalizeQuiz(topic);
   const quizContent = document.getElementById('quizContent');
   if (quizContent) quizContent.innerHTML = buildQuizQuestion(topic, nextIdx);
 }
 
-function buildQuizResults(topic) {
+function finalizeQuiz(topic) {
   const quiz = topic.quiz;
   const answers = state.quizState.answers;
   const correct = answers.filter((a, i) => a === quiz[i].correct).length;
   const pct = Math.round((correct / quiz.length) * 100);
 
-  // Save score
   state.quizScores[topic.id] = { correct, total: quiz.length, pct };
   saveState();
 
@@ -615,6 +615,19 @@ function buildQuizResults(topic) {
     ...(timeOnQuiz !== null && { time_on_quiz_seconds: timeOnQuiz }),
   });
 
+  if (pct >= 60 && state.lessonsDone.has(topic.id)) {
+    state.completedTopics.add(topic.id);
+    saveState();
+    showToast(`✓ "${topic.title}" completed!`);
+  }
+}
+
+function buildQuizResults(topic) {
+  const quiz = topic.quiz;
+  const answers = state.quizState.answers;
+  const correct = answers.filter((a, i) => a === quiz[i].correct).length;
+  const pct = Math.round((correct / quiz.length) * 100);
+
   let msg, emoji;
   if (pct >= 80) {
     msg = "Excellent work! You've mastered this topic.";
@@ -625,13 +638,6 @@ function buildQuizResults(topic) {
   } else {
     msg = "Keep studying, re-read the lesson and retake the quiz.";
     emoji = "💪";
-  }
-
-  // Mark topic as completed if quiz passed
-  if (pct >= 60 && state.lessonsDone.has(topic.id)) {
-    state.completedTopics.add(topic.id);
-    saveState();
-    showToast(`✓ "${topic.title}" completed!`);
   }
 
   const level = PM_GYM_DATA.levels.find(l => l.id === state.currentLevel);
@@ -1216,6 +1222,9 @@ function handleDailyRepSelection(selectedIdx, item, storageKey) {
 
   // Update streak counter safely (only 1 increment per calendar day)
   incrementDailyStreak();
+
+  const repStreak = parseInt(localStorage.getItem('pmgym_rep_streak') || '0', 10);
+  mp('daily_rep_answered', { is_correct: isCorrect, streak_length: repStreak });
 
   // Disable options and style them immediately
   const options = document.querySelectorAll('.daily-rep-opt');
