@@ -4,6 +4,39 @@ function mp(event, props) {
   try { if (typeof mixpanel !== 'undefined') mixpanel.track(event, props); } catch (e) {}
 }
 
+function mpSessionEvents() {
+  const today = new Date().toISOString().slice(0, 10);
+  const deviceType = window.innerWidth < 768 ? 'mobile' : 'desktop';
+
+  let firstDate, lastDate;
+  try {
+    firstDate = localStorage.getItem('pmgym_first_session_date');
+    lastDate  = localStorage.getItem('pmgym_last_session_date');
+  } catch (e) {}
+
+  if (!firstDate) {
+    try { localStorage.setItem('pmgym_first_session_date', today); } catch (e) {}
+    firstDate = today;
+  }
+
+  mp('session_started', { device_type: deviceType, is_authenticated: false });
+
+  if (lastDate && lastDate !== today) {
+    try {
+      const msPerDay = 86400000;
+      const daysSinceFirst = Math.round((new Date(today) - new Date(firstDate)) / msPerDay);
+      const daysSinceLast  = Math.round((new Date(today) - new Date(lastDate))  / msPerDay);
+      mp('return_session_started', {
+        days_since_first_session: daysSinceFirst,
+        days_since_last_session:  daysSinceLast,
+        return_variant: 'organic',
+      });
+    } catch (e) {}
+  }
+
+  try { localStorage.setItem('pmgym_last_session_date', today); } catch (e) {}
+}
+
 const STORAGE_KEYS = {
   STREAK: 'pmgym_streak',
   LAST_ACTIVE: 'pmgym_last_active',
@@ -193,7 +226,7 @@ function showView(viewName, data = {}, { pushHash = true } = {}) {
   window.scrollTo(0, 0);
 
   if (viewName === 'landing') {
-    mp('landing_page_viewed');
+    mpSessionEvents();
     initDailyRep();
   }
 
@@ -421,14 +454,26 @@ function renderModule(levelId, topicId) {
   if (!container) return;
 
   recordActivity();
-  mp('module_started', { module_id: topic.id, module_name: topic.title, level: levelId });
 
   const isCaseStudy = topic.isCaseStudy;
 
   if (isCaseStudy) {
+    mp('practice_started', {
+      content_type: 'case_study',
+      content_id: topic.id,
+      attempt_source: 'from_topic_page',
+      is_first_attempt_of_content: !state.completedTopics.has(topic.id),
+    });
     renderCaseStudy(container, topic, levelId);
     return;
   }
+
+  mp('practice_started', {
+    content_type: 'module',
+    content_id: topic.id,
+    attempt_source: 'from_topic_page',
+    is_first_attempt_of_content: !state.lessonsDone.has(topic.id),
+  });
 
   // Reset quiz state
   state.quizState = { currentQ: 0, answers: [], answered: false };
@@ -494,7 +539,12 @@ function switchTab(tab) {
   if (tab === 'quiz') {
     state.quizStartTime = Date.now();
     state.questionStartTime = Date.now();
-    mp('quiz_started', { module_id: state.currentTopic, level: state.currentLevel });
+    mp('practice_started', {
+      content_type: 'quiz',
+      content_id: state.currentTopic,
+      attempt_source: 'from_topic_page',
+      is_first_attempt_of_content: !state.quizScores[state.currentTopic],
+    });
   }
 }
 
@@ -573,10 +623,11 @@ function answerQuestion(topicId, qIndex, chosenIdx) {
 
   const isCorrect = chosenIdx === topic.quiz[qIndex].correct;
   const responseTime = state.questionStartTime ? Math.round((Date.now() - state.questionStartTime) / 1000) : null;
-  mp('quiz_question_answered', {
-    module_id: topicId,
-    question_index: qIndex + 1,
+  mp('quiz_answer_submitted', {
+    content_id: topicId,
+    question_id: `${topicId}_q${qIndex + 1}`,
     is_correct: isCorrect,
+    attempt_number: 1,
     ...(responseTime !== null && { response_time_seconds: responseTime }),
   });
 
@@ -606,13 +657,15 @@ function finalizeQuiz(topic) {
   saveState();
 
   const timeOnQuiz = state.quizStartTime ? Math.round((Date.now() - state.quizStartTime) / 1000) : null;
-  mp('quiz_completed', {
-    module_id: topic.id,
+  mp('practice_completed', {
+    content_type: 'quiz',
+    content_id: topic.id,
+    completion_status: state.quizScores[topic.id] ? 'completed_retry' : 'completed',
+    ...(timeOnQuiz !== null && { time_to_complete_seconds: timeOnQuiz }),
     score_percent: pct,
     correct_count: correct,
     total_questions: quiz.length,
     passed: pct >= 60,
-    ...(timeOnQuiz !== null && { time_on_quiz_seconds: timeOnQuiz }),
   });
 
   if (pct >= 60 && state.lessonsDone.has(topic.id)) {
@@ -696,7 +749,7 @@ function retakeQuiz(topicId) {
 function markLessonDone(topicId) {
   state.lessonsDone.add(topicId);
   saveState();
-  mp('lesson_completed', { module_id: topicId, level: state.currentLevel });
+  mp('practice_completed', { content_type: 'module', content_id: topicId, completion_status: 'completed' });
 
   const btn = document.getElementById('lessonDoneBtn');
   if (btn) {
@@ -713,7 +766,6 @@ function markLessonDone(topicId) {
 // ─── Case Study ───────────────────────────────────────────────────────────────
 
 function renderCaseStudy(container, topic, levelId) {
-  mp('case_study_started', { case_study_id: topic.id, case_study_name: topic.title, level: levelId });
   const level = PM_GYM_DATA.levels.find(l => l.id === levelId);
   const scenario = topic.scenario;
   const savedAnswer = state.caseAnswers[topic.id] || '';
@@ -807,7 +859,7 @@ function toggleModelAnswer(topicId) {
 function markCaseComplete(topicId, levelId) {
   state.completedTopics.add(topicId);
   saveState();
-  mp('case_study_completed', { case_study_id: topicId, level: levelId });
+  mp('practice_completed', { content_type: 'case_study', content_id: topicId, completion_status: 'completed' });
   showToast('✓ Case study completed!');
   setTimeout(() => showView('topics', { levelId }), 1000);
 }
