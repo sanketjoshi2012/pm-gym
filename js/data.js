@@ -751,7 +751,7 @@ const PM_GYM_DATA = {
           category: "Media & Entertainment",
           scenario: {
             title: "Spotify Discover Weekly Engagement Drops 15%",
-            context: `Spotify's Discover Weekly playlist, a personalized weekly playlist delivered every Monday, has seen a 15% drop in "full listen-through rate" (users listening to at least 80% of the playlist) over the past 8 weeks. Your team owns Discover Weekly. The head of product asks you to diagnose what's happening and propose next steps. Scenario figures are illustrative and simplified for practice. They are not company data.`,
+            context: `Scenario figures are illustrative and simplified for practice. They are not company data.\n\nSpotify's Discover Weekly playlist, a personalized weekly playlist delivered every Monday, has seen a 15% drop in "full listen-through rate" (users listening to at least 80% of the playlist) over the past 8 weeks. Your team owns Discover Weekly. The head of product asks you to diagnose what's happening and propose next steps.`,
             prompt: `In your answer, address the following:
 1. What are the possible root causes of this drop? (Structure your investigation across user, product, and external factors)
 2. What data would you pull to narrow down the cause?
@@ -824,7 +824,7 @@ const PM_GYM_DATA = {
           category: "Work & Productivity",
           scenario: {
             title: "Design a Feature for LinkedIn to Help Job Seekers",
-            context: `LinkedIn has 900M+ members. The vast majority of LinkedIn's revenue comes from recruiters (LinkedIn Recruiter tool), not from job seekers. Yet job seekers are what make the platform valuable to recruiters. Assume your data shows that job seekers who are actively searching "go dark", they stop engaging with LinkedIn content, about 3 weeks into their search. LinkedIn leadership wants to improve this. Scenario figures are illustrative and simplified for practice. They are not company data.`,
+            context: `Scenario figures are illustrative and simplified for practice. They are not company data.\n\nLinkedIn has 900M+ members. The vast majority of LinkedIn's revenue comes from recruiters (LinkedIn Recruiter tool), not from job seekers. Yet job seekers are what make the platform valuable to recruiters. Assume your data shows that job seekers who are actively searching "go dark", they stop engaging with LinkedIn content, about 3 weeks into their search. LinkedIn leadership wants to improve this.`,
             prompt: `In your answer, address the following:
 1. What is the core problem you're solving, and for whom?
 2. What are 3 distinct feature ideas that could help? For each, explain the user value and any risks.
@@ -901,7 +901,7 @@ const PM_GYM_DATA = {
           category: "Gaming",
           scenario: {
             title: "Chess.com, Daily Puzzle Completions Drop 20%",
-            context: `Chess.com's Daily Puzzle is one of the platform's highest DAU drivers. Over the past 30 days, puzzle completion rates have dropped 20%. You are the PM for the Daily Puzzle feature. The head of product asks you to diagnose what's happening and propose next steps. Scenario figures are illustrative and simplified for practice. They are not company data.`,
+            context: `Scenario figures are illustrative and simplified for practice. They are not company data.\n\nChess.com's Daily Puzzle is one of the platform's highest DAU drivers. Over the past 30 days, puzzle completion rates have dropped 20%. You are the PM for the Daily Puzzle feature. The head of product asks you to diagnose what's happening and propose next steps.`,
             prompt: `In your answer, address the following:
 1. What clarifying questions would you ask before investigating?
 2. What are your top hypotheses for the drop? Rank them by likelihood.
@@ -987,7 +987,7 @@ const PM_GYM_DATA = {
           category: "Sports",
           scenario: {
             title: "FotMob, Designing for Fans Who Only Show Up on Matchday",
-            context: `FotMob is a football scores and stats app used by millions of fans globally. Assume your data shows that a large segment of users, casual fans, only open the app on matchdays to check live scores. Between games, this segment's DAU drops to near zero. FotMob wants to increase engagement between matchdays without alienating their core power users (die-hard fans who already use the app daily). You are the PM for user engagement. Design a feature to bring casual fans back between matches. Scenario figures are illustrative and simplified for practice. They are not company data.`,
+            context: `Scenario figures are illustrative and simplified for practice. They are not company data.\n\nFotMob is a football scores and stats app used by millions of fans globally. Assume your data shows that a large segment of users, casual fans, only open the app on matchdays to check live scores. Between games, this segment's DAU drops to near zero. FotMob wants to increase engagement between matchdays without alienating their core power users (die-hard fans who already use the app daily). You are the PM for user engagement. Design a feature to bring casual fans back between matches.`,
             prompt: `In your answer, address the following:
 1. What do you know about the casual fan, their motivation, context, and what they care about?
 2. What are 3 distinct feature ideas to bring them back between matchdays? For each, describe the user value and the risk.
@@ -1069,12 +1069,12 @@ const PM_GYM_DATA = {
           category: "Sports",
           scenario: {
             title: "Cricbuzz, Three Features, One Engineering Team",
-            context: `Cricbuzz is India's largest cricket scores and news platform, with 50M+ monthly active users. Three internal teams have each proposed a feature for the next quarter, but there's only engineering capacity to ship one. The three proposals are:
+            context: `Scenario figures are illustrative and simplified for practice. They are not company data.\n\nCricbuzz is India's largest cricket scores and news platform, with 50M+ monthly active users. Three internal teams have each proposed a feature for the next quarter, but there's only engineering capacity to ship one. The three proposals are:
 1. Live score widgets for smartwatches (Apple Watch + Wear OS)
 2. Fantasy cricket integration, allow users to build and track fantasy teams within Cricbuzz
 3. Vernacular language support, localise the app into 6 regional Indian languages (Hindi, Tamil, Telugu, Kannada, Bengali, Marathi)
 
-You are the CPO. Which do you ship and why? Scenario figures are illustrative and simplified for practice. They are not company data.`,
+You are the CPO. Which do you ship and why?`,
             prompt: `In your answer, address the following:
 1. What framework or criteria would you use to evaluate these three options?
 2. Walk through your evaluation of each feature against those criteria.
@@ -1158,7 +1158,7 @@ You are the CPO. Which do you ship and why? Scenario figures are illustrative an
           category: "E-commerce & Fashion",
           scenario: {
             title: "Flipkart: How Would You Define and Measure Success?",
-            context: `Flipkart is India's largest e-commerce marketplace with over 400 million registered users. It operates as a two-sided marketplace, creating value for customers who buy products and sellers who list and fulfil orders. You have just joined as a senior PM. In your first week, the CPO asks you: "How would you define success for Flipkart, and what metrics would you track?" Scenario figures are illustrative and simplified for practice. They are not company data.`,
+            context: `Scenario figures are illustrative and simplified for practice. They are not company data.\n\nFlipkart is India's largest e-commerce marketplace with over 400 million registered users. It operates as a two-sided marketplace, creating value for customers who buy products and sellers who list and fulfil orders. You have just joined as a senior PM. In your first week, the CPO asks you: "How would you define success for Flipkart, and what metrics would you track?"`,
             prompt: `In your answer, address the following:
 1. Start with a clarifying question. Is this about Flipkart as a whole business or a specific product area?
 2. Frame Flipkart's business model and who the key stakeholders are.
@@ -1256,7 +1256,7 @@ You are the CPO. Which do you ship and why? Scenario figures are illustrative an
           category: "Food Delivery",
           scenario: {
             title: "Swiggy: Order Cancellation Rate Spiked 25% in Two Weeks",
-            context: `Swiggy is one of India's largest food delivery platforms, operating in 500+ cities. Last week, your data team flagged that the order cancellation rate has increased by 25% over the past two weeks, from 8% to 10%. This is now the highest it has been in 18 months. You are the PM for the consumer experience team. The Head of Product wants your analysis and a plan by end of week. Scenario figures are illustrative and simplified for practice. They are not company data.`,
+            context: `Scenario figures are illustrative and simplified for practice. They are not company data.\n\nSwiggy is one of India's largest food delivery platforms, operating in 500+ cities. Last week, your data team flagged that the order cancellation rate has increased by 25% over the past two weeks, from 8% to 10%. This is now the highest it has been in 18 months. You are the PM for the consumer experience team. The Head of Product wants your analysis and a plan by end of week.`,
             prompt: `In your answer, address the following:
 1. What clarifying questions would you ask before investigating?
 2. What are your top hypotheses for the spike? Rank them by likelihood.
@@ -1349,7 +1349,7 @@ You are the CPO. Which do you ship and why? Scenario figures are illustrative an
           category: "Work & Productivity",
           scenario: {
             title: "Notion: New Users Are Not Returning After Day 1",
-            context: `Notion is an all-in-one workspace tool used by individuals and teams for notes, wikis, project management, and databases. Despite strong top-of-funnel growth (driven by word of mouth and social media), the data team has flagged that D7 retention for new users is at 18%, significantly below the industry benchmark of 35% for productivity tools. Users sign up, spend time exploring Notion on Day 0, but most do not return by Day 7. You are the PM for the new user experience. Design a solution. Scenario figures are illustrative and simplified for practice. They are not company data.`,
+            context: `Scenario figures are illustrative and simplified for practice. They are not company data.\n\nNotion is an all-in-one workspace tool used by individuals and teams for notes, wikis, project management, and databases. Despite strong top-of-funnel growth (driven by word of mouth and social media), the data team has flagged that D7 retention for new users is at 18%, significantly below the industry benchmark of 35% for productivity tools. Users sign up, spend time exploring Notion on Day 0, but most do not return by Day 7. You are the PM for the new user experience. Design a solution.`,
             prompt: `In your answer, address the following:
 1. What do you think is the core user problem driving the drop-off?
 2. How would you validate your hypothesis before building anything?
@@ -1430,11 +1430,11 @@ You are the CPO. Which do you ship and why? Scenario figures are illustrative an
           category: "Fintech",
           scenario: {
             title: "Revolut: Three Features, One Quarter",
-            context: `Revolut is a UK-based fintech super-app with 45 million customers across Europe and globally. It offers banking, currency exchange, stock trading, crypto, and insurance. Three product teams have each proposed a major feature for Q1. Engineering capacity allows only one to be shipped. The three proposals are:
+            context: `Scenario figures are illustrative and simplified for practice. They are not company data.\n\nRevolut is a UK-based fintech super-app with 45 million customers across Europe and globally. It offers banking, currency exchange, stock trading, crypto, and insurance. Three product teams have each proposed a major feature for Q1. Engineering capacity allows only one to be shipped. The three proposals are:
 1. Savings Vaults 2.0: allow users to create multiple savings goals with automatic round-up contributions and interest on each vault separately.
 2. Shared Expenses: a bill-splitting feature integrated into the app, letting groups of friends track shared spending (similar to Splitwise but native to Revolut).
 3. Credit Score Monitoring: show users their credit score within the app, updated monthly, with tips to improve it.
-You are the CPO. Which do you ship and why? Scenario figures are illustrative and simplified for practice. They are not company data.`,
+You are the CPO. Which do you ship and why?`,
             prompt: `In your answer, address the following:
 1. What framework or criteria would you use to evaluate these options?
 2. Walk through your evaluation of each feature.
@@ -1509,7 +1509,7 @@ You are the CPO. Which do you ship and why? Scenario figures are illustrative an
           category: "E-commerce & Fashion",
           scenario: {
             title: "Zalando: A Fast Fashion Competitor Has Entered Your Market",
-            context: `Zalando is Europe's largest online fashion platform, operating in 25 European markets with 50 million active customers. It positions itself as a premium fashion destination with strong brand partnerships, a wide assortment, and a high-quality customer experience (free returns, fast delivery, personal styling features). A new ultra-fast-fashion competitor (think Shein-style) has just launched aggressively in Zalando's core markets, targeting younger demographics with extremely low prices, heavy social media marketing, and a broad but low-cost product range. Assume your data shows that customer acquisition cost has increased 15% and conversion rate among 18-24 year olds has dropped 8% in the past quarter. You are the Chief Product Officer. What do you do? Scenario figures are illustrative and simplified for practice. They are not company data.`,
+            context: `Scenario figures are illustrative and simplified for practice. They are not company data.\n\nZalando is Europe's largest online fashion platform, operating in 25 European markets with 50 million active customers. It positions itself as a premium fashion destination with strong brand partnerships, a wide assortment, and a high-quality customer experience (free returns, fast delivery, personal styling features). A new ultra-fast-fashion competitor (think Shein-style) has just launched aggressively in Zalando's core markets, targeting younger demographics with extremely low prices, heavy social media marketing, and a broad but low-cost product range. Assume your data shows that customer acquisition cost has increased 15% and conversion rate among 18-24 year olds has dropped 8% in the past quarter. You are the Chief Product Officer. What do you do?`,
             prompt: `In your answer, address the following:
 1. How do you frame the competitive threat? Is this a crisis, a signal, or a distraction?
 2. What data would you gather before deciding on a response strategy?
