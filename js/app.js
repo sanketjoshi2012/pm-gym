@@ -82,6 +82,33 @@ function loadState() {
     const lessons = JSON.parse(localStorage.getItem(STORAGE_KEYS.LESSON_DONE) || '[]');
     state.lessonsDone = new Set(lessons);
 
+    // Migration: add best-score fields to any legacy quiz score records
+    let migrated = false;
+    Object.keys(state.quizScores).forEach(id => {
+      const s = state.quizScores[id];
+      if (s.bestPct === undefined) {
+        s.bestPct = s.pct;
+        s.bestCorrect = s.correct;
+        s.attempts = 1;
+        migrated = true;
+      }
+    });
+
+    // Migration: retroactively complete topics where the best quiz score is 60%+
+    Object.keys(state.quizScores).forEach(id => {
+      const s = state.quizScores[id];
+      if ((s.bestPct ?? s.pct) >= 60) {
+        if (!state.lessonsDone.has(id)) { state.lessonsDone.add(id); migrated = true; }
+        if (!state.completedTopics.has(id)) { state.completedTopics.add(id); migrated = true; }
+      }
+    });
+
+    if (migrated) {
+      localStorage.setItem(STORAGE_KEYS.QUIZ_SCORES, JSON.stringify(state.quizScores));
+      localStorage.setItem(STORAGE_KEYS.LESSON_DONE, JSON.stringify([...state.lessonsDone]));
+      localStorage.setItem(STORAGE_KEYS.COMPLETED_TOPICS, JSON.stringify([...state.completedTopics]));
+    }
+
     state.streak = parseInt(localStorage.getItem(STORAGE_KEYS.STREAK) || '0');
     state.lastActive = localStorage.getItem(STORAGE_KEYS.LAST_ACTIVE);
 
@@ -374,8 +401,8 @@ function renderTopics(levelId) {
       }
     }
     if (score !== undefined && !isCaseStudy) {
-      const quizPct = Math.round((score.correct / score.total) * 100);
-      badges += `<span class="topic-badge badge-score">Quiz: ${score.correct}/${score.total}</span>`;
+      const best = score.bestCorrect ?? score.correct;
+      badges += `<span class="topic-badge badge-score">Quiz: ${best}/${score.total}</span>`;
     }
 
     const isHidden = isCaseStudy && category !== state.activeCaseCategory;
@@ -653,14 +680,23 @@ function finalizeQuiz(topic) {
   const correct = answers.filter((a, i) => a === quiz[i].correct).length;
   const pct = Math.round((correct / quiz.length) * 100);
 
-  state.quizScores[topic.id] = { correct, total: quiz.length, pct };
+  // Capture retry status BEFORE writing the new score
+  const isRetry = !!state.quizScores[topic.id];
+  const existing = state.quizScores[topic.id];
+  const prevBestPct = existing ? (existing.bestPct ?? existing.pct) : -1;
+  const prevBestCorrect = existing ? (existing.bestCorrect ?? existing.correct) : 0;
+  const bestPct = Math.max(prevBestPct, pct);
+  const bestCorrect = pct >= prevBestPct ? correct : prevBestCorrect;
+  const attempts = existing ? (existing.attempts ?? 1) + 1 : 1;
+
+  state.quizScores[topic.id] = { correct, total: quiz.length, pct, bestPct, bestCorrect, attempts };
   saveState();
 
   const timeOnQuiz = state.quizStartTime ? Math.round((Date.now() - state.quizStartTime) / 1000) : null;
   mp('practice_completed', {
     content_type: 'quiz',
     content_id: topic.id,
-    completion_status: state.quizScores[topic.id] ? 'completed_retry' : 'completed',
+    completion_status: isRetry ? 'completed_retry' : 'completed',
     ...(timeOnQuiz !== null && { time_to_complete_seconds: timeOnQuiz }),
     score_percent: pct,
     correct_count: correct,
@@ -668,10 +704,16 @@ function finalizeQuiz(topic) {
     passed: pct >= 60,
   });
 
-  if (pct >= 60 && state.lessonsDone.has(topic.id)) {
-    state.completedTopics.add(topic.id);
-    saveState();
-    showToast(`✓ "${topic.title}" completed!`);
+  // Passing quiz at 60%+ auto-marks lesson done and completes topic
+  if (pct >= 60) {
+    state.lessonsDone.add(topic.id);
+    if (!state.completedTopics.has(topic.id)) {
+      state.completedTopics.add(topic.id);
+      saveState();
+      showToast(`✓ "${topic.title}" completed!`);
+    } else {
+      saveState();
+    }
   }
 }
 
@@ -884,7 +926,7 @@ function renderDashboard() {
   const quizScoreList = Object.entries(state.quizScores)
     .map(([id, s]) => {
       const topic = PM_GYM_DATA.levels.flatMap(l => l.topics).find(t => t.id === id);
-      return { name: topic ? topic.title : id, pct: s.pct, correct: s.correct, total: s.total };
+      return { name: topic ? topic.title : id, pct: s.bestPct ?? s.pct, correct: s.bestCorrect ?? s.correct, total: s.total };
     })
     .sort((a, b) => a.pct - b.pct);
 
@@ -1115,6 +1157,23 @@ function getUtcDateKey() {
   return `${year}-${month}-${day}`;
 }
 
+function getLocalDateKey() {
+  const d = new Date();
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+// Parse two YYYY-MM-DD strings as local midnight to avoid DST arithmetic issues.
+function daysBetween(isoA, isoB) {
+  const [ya, ma, da] = isoA.split('-').map(Number);
+  const [yb, mb, db] = isoB.split('-').map(Number);
+  const a = new Date(ya, ma - 1, da);
+  const b = new Date(yb, mb - 1, db);
+  return Math.round((b - a) / (1000 * 60 * 60 * 24));
+}
+
 function formatUtcDisplayDate() {
   const d = new Date();
   const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -1341,6 +1400,17 @@ function updateDailyStreakDisplay() {
   let streak = 0;
   try {
     streak = parseInt(localStorage.getItem('pmgym_rep_streak') || '0', 10);
+    // Reset stale streak: if more than 1 calendar day has passed since last activity, the streak is broken
+    if (streak > 0) {
+      const lastDate = localStorage.getItem('pmgym_rep_last_date');
+      if (lastDate) {
+        const gap = daysBetween(lastDate, getLocalDateKey());
+        if (gap > 1) {
+          streak = 0;
+          localStorage.setItem('pmgym_rep_streak', '0');
+        }
+      }
+    }
   } catch (e) {
     streak = 0;
   }

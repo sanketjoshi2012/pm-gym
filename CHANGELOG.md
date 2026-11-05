@@ -9,6 +9,16 @@ Format: [Semantic Versioning](https://semver.org) — `MAJOR.MINOR.PATCH`
 
 ---
 
+## [1.4.6] — 2026-11-05
+
+### Fixed
+- **Stale Daily Rep streak display** — The streak badge on the Daily Rep screen was read directly from storage with no date check on page load. If a user missed a day without opening the app, the badge would show an inflated streak. On load, the display now compares the last-active date against today; if more than one calendar day has passed, it resets the displayed streak to 0.
+- **Quiz completion mismatch** — Completing a quiz at 60%+ now automatically marks the lesson as done and completes the topic, regardless of whether the lesson was explicitly opened first. Existing users are migrated on next load: any topic with a stored quiz score of 60%+ is retroactively completed.
+- **Best quiz score not preserved** — Retaking a quiz previously overwrote the stored score, so a lower retry wiped a better earlier result. Scores now track `bestPct`, `bestCorrect`, and `attempts`. Topic cards and the progress dashboard show the best result. Existing scores are migrated on next load. Failing a retake never revokes a previously earned completion.
+- **Mixpanel `completion_status` always reporting `completed_retry`** — The retry flag was evaluated after the score had already been saved, so every attempt was tracked as a retry. The flag is now captured before writing, so first attempts report `completed` and subsequent attempts report `completed_retry`.
+
+---
+
 ## [1.4.5] — 2026-11-05
 
 ### Fixed
