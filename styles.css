@@ -916,9 +916,8 @@ img { max-width: 100%; }
   padding-top: 0.9rem;
   border-top: 1px solid var(--border);
   font-size: 0.75rem;
-  color: var(--fg-3, var(--fg-2));
+  color: var(--fg-2);
   line-height: 1.5;
-  opacity: 0.75;
 }
 .case-disclaimer svg { flex-shrink: 0; margin-top: 0.1rem; }
 
