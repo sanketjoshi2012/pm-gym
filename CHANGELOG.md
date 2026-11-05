@@ -9,6 +9,13 @@ Format: [Semantic Versioning](https://semver.org) — `MAJOR.MINOR.PATCH`
 
 ---
 
+## [1.3.5] — 2026-11-05
+
+### Changed
+- **Case study disclaimer styling** — Removed faded opacity from the disclaimer line below case study banners. Color stepped up from muted tertiary to secondary foreground for sharper contrast.
+
+---
+
 ## [1.4.6] — 2026-11-05
 
 ### Fixed
