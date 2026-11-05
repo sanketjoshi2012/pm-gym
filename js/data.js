@@ -115,7 +115,7 @@ const PM_GYM_DATA = {
             {
               title: "Ken Norton: How to Hire a Product Manager",
               url: "https://www.bringthedonuts.com/essays/productmanager.html",
-              description: "The classic essay on what separates great PMs from good ones, still the most-cited PM piece ever written."
+              description: "A classic essay on what makes a strong PM."
             }
           ]
         },
@@ -1055,7 +1055,7 @@ const PM_GYM_DATA = {
               </ul>
 
               <h3>5. Success Metrics</h3>
-              <p><strong>Primary:</strong> Between-matchday DAU for the casual fan segment, baseline near zero, target 15–20% of casual fans opening the app at least once between matches within 4 weeks.</p>
+              <p><strong>Primary:</strong> Between-matchday DAU for the casual fan segment, baseline near zero. As an illustrative hypothesis: if the feature works, you might expect 15 to 20% of casual fans to open the app at least once between matches within 4 weeks. The right target should be set once you know the baseline more precisely.</p>
               <p><strong>Secondary:</strong> D7 retention for casual users (do they keep coming back week over week?).</p>
               <p><strong>Guardrail:</strong> Power user engagement metrics (daily session depth, match-day opens) must not decline, the feature should be additive, not a distraction.</p>
             `
@@ -1143,7 +1143,7 @@ You are the CPO. Which do you ship and why?`,
               </ul>
 
               <h3>5. Success Metrics</h3>
-              <p><strong>Primary:</strong> % of MAU using a non-English language within 90 days of launch, target 15% of MAU.</p>
+              <p><strong>Primary:</strong> % of MAU using a non-English language within 90 days of launch. As a hypothesis: if regional-language users are currently underserved, a 10 to 15% adoption rate among MAU within 90 days would be a reasonable early signal. The actual target should be anchored to the share of users in supported regions.</p>
               <p><strong>Secondary:</strong> D30 retention for vernacular users vs. English baseline, hypothesis: regional language users retain better because the product finally feels native to them.</p>
               <p><strong>Leading indicator:</strong> Language selection rate during onboarding for new installs in target regions.</p>
               <p><strong>Guardrail:</strong> English user experience metrics must not degrade, no regression in load time, scores accuracy, or existing feature reliability.</p>
@@ -1495,7 +1495,7 @@ You are the CPO. Which do you ship and why?`,
               </ul>
 
               <h3>5. Success Metrics</h3>
-              <p><strong>Primary:</strong> 30% of eligible users actively using the Credit Score feature within 90 days of launch (defined as opening the feature at least once per month).</p>
+              <p><strong>Primary:</strong> 30% of eligible users actively using the Credit Score feature within 90 days of launch (defined as opening the feature at least once per month). This is an illustrative hypothesis. The actual target should be calibrated against comparable feature adoption rates within Revolut.</p>
               <p><strong>Secondary:</strong> conversion rate from the Credit Score screen to Revolut credit product pages.</p>
               <p><strong>Guardrail:</strong> overall app session frequency must not decrease. Credit Score Monitoring should add a reason to open the app, not replace other habits.</p>
             `
@@ -1709,7 +1709,7 @@ You are the CPO. Which do you ship and why?`,
         { title: "Lenny: Choosing Your North Star Metric", url: "https://www.lennysnewsletter.com/p/choosing-your-north-star-metric", description: "Lenny's breakdown of how to pick the right North Star Metric, with examples from Airbnb, Slack, and more." },
         { title: "Amplitude: The North Star Checklist", url: "https://amplitude.com/books/north-star/the-north-star-checklist", description: "A practical checklist from Amplitude's North Star Playbook to validate and refine your North Star Metric." },
         { title: "Stratechery: Aggregation Theory", url: "https://stratechery.com/2015/aggregation-theory/", description: "Ben Thompson's foundational free essay on how internet companies build lasting product advantages." },
-        { title: "Ken Norton: Leading Cross-Functional Teams", url: "https://www.bringthedonuts.com/essays/leading-cross-functional-teams.html", description: "How PMs lead teams they don't manage, by the author of the most-cited PM essay ever written." }
+        { title: "Ken Norton: Leading Cross-Functional Teams", url: "https://www.bringthedonuts.com/essays/leading-cross-functional-teams.html", description: "How PMs lead teams they don't manage, by the author of How to Hire a Product Manager." }
       ]
     },
     {

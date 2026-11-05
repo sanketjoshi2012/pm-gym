@@ -9,6 +9,14 @@ Format: [Semantic Versioning](https://semver.org) — `MAJOR.MINOR.PATCH`
 
 ---
 
+## [1.4.5] — 2026-11-05
+
+### Fixed
+- **Model answer numerical targets** — FotMob, Cricbuzz, and Revolut model answers contained bare numerical targets with no stated reasoning. Each is now framed as an illustrative hypothesis with a note on how the real target should be calibrated.
+- **Ken Norton resource descriptions** — Removed unsupported superlative "most-cited PM piece ever written" from two locations. "How to Hire a Product Manager" now reads "A classic essay on what makes a strong PM." Resource Library attribution for "Leading Cross-Functional Teams" now names the other essay by title instead.
+
+---
+
 ## [1.4.4] — 2026-11-05
 
 ### Changed

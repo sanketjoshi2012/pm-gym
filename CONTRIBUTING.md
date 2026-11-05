@@ -140,6 +140,7 @@ To add a new category entirely:
 - Base them on realistic but clearly fictional scenarios (don't imply real internal data).
 - The rubric should have 4–5 dimensions with specific, actionable descriptions.
 - The model answer should model *structured thinking*, not just the right conclusion.
+- Numerical targets in model answers must include a brief explanation of how they were chosen — a baseline, a share of the relevant segment, or an explicitly stated hypothesis. A bare number with no reasoning teaches learners to copy figures instead of derive them.
 
 **Resources**
 - Free only (no paywalls, no affiliate links).
