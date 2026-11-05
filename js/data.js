@@ -41,7 +41,7 @@ const PM_GYM_DATA = {
               <p>PMs influence without authority, they lead teams they don't manage. This means PMs win through <strong>clarity, credibility, and communication</strong>. When a PM says "we should build X," the engineers, designers, and stakeholders need a reason to believe them. That reason is usually: clear data, a deep understanding of users, and a logical argument.</p>
 
               <h3>Real Example: Instagram Stories</h3>
-              <p>When Instagram's PM team saw Snapchat's Stories feature gaining traction, they had to make a hard call: copy the format or innovate. They chose to build Stories directly into Instagram. The PM's job was to define the exact feature scope (what makes a Story?), align Design and Engineering, and measure success post-launch. Stories now drives more engagement than the main feed, that's PM impact.</p>
+              <p>When Instagram's PM team saw Snapchat's Stories feature gaining traction, they had to make a hard call: build it into the existing app or launch something separate. They chose to add Stories directly into Instagram. Instagram added Stories inside the existing app instead of launching a separate one, and it became one of the most used parts of the product. That choice is product judgment.</p>
             `
           },
           quiz: [
@@ -168,7 +168,7 @@ const PM_GYM_DATA = {
               <p>Every metric needs a counter-metric, a guardrail to prevent gaming. If you optimize purely for "messages sent," users might spam each other. So you also track "message reply rate" (quality) and "report/block rate" (spam). Counter-metrics keep you honest.</p>
 
               <h3>Real Example: Duolingo</h3>
-              <p>Duolingo's PM team discovered that "daily active users" was misleading, users would open the app, do one lesson, and leave. The more meaningful metric was "learning sessions completed per user per week." That shift changed what features they built: streaks, smarter lesson length, and social accountability, all targeting meaningful engagement, not just opens.</p>
+              <p>A useful way to think about Duolingo: opening the app is not learning. A metric like lessons completed per learner per week is closer to the value the user gets than raw DAU. Teams that make this distinction build different features, streaks, smarter lesson length, social accountability, all targeting meaningful engagement, not just opens.</p>
             `
           },
           quiz: [
@@ -217,7 +217,7 @@ const PM_GYM_DATA = {
               explanation: "If you only optimize for messages sent, users might spam or send low-quality messages to inflate the number. Counter-metrics like reply rate (quality signal) and block/report rate (spam signal) prevent gaming and keep you focused on genuine engagement."
             },
             {
-              question: "Duolingo shifted from tracking 'daily active users' to 'learning sessions completed per week.' What PM principle does this illustrate?",
+              question: "A PM argues that tracking 'daily active users' is misleading because opening the app is not the same as getting value. They propose switching to 'sessions completed per week.' What PM principle does this illustrate?",
               options: [
                 "Revenue should always be the primary metric",
                 "Measuring the action that most directly connects to user value, not just presence",
@@ -225,7 +225,7 @@ const PM_GYM_DATA = {
                 "Simplifying metrics to make them easier to communicate to stakeholders"
               ],
               correct: 1,
-              explanation: "Duolingo realized that simply opening the app doesn't equal learning. The metric 'learning sessions completed' is directly tied to the user outcome (language progress). Great PMs identify the metric most tightly linked to genuine value delivery."
+              explanation: "Opening an app does not equal getting value from it. A metric like 'sessions completed' is directly tied to the user outcome. Great PMs identify the metric most tightly linked to genuine value delivery, not just presence."
             }
           ],
           resources: [
@@ -400,14 +400,14 @@ const PM_GYM_DATA = {
               <p><strong>Spotify:</strong> Time spent listening, the more you listen, the more value you're getting</p>
               <p><strong>Slack:</strong> Messages sent by org per day, signals active team collaboration</p>
               <p><strong>Facebook:</strong> Daily Active Users, measures whether users are returning (debated, but widely cited)</p>
-              <p><strong>Duolingo:</strong> Daily Active Users completing at least one lesson, measures actual learning, not just presence</p>
+              <p><strong>Duolingo:</strong> Lessons completed per learner per week, closer to actual learning value than raw DAU</p>
               <p><strong>Uber:</strong> Trips per day, captures both rider and driver value simultaneously</p>
 
               <h3>NSM vs. Input Metrics</h3>
               <p>The NSM lives at the top. Below it are "input metrics", the levers your team can actually pull. If your NSM is "nights booked," your inputs might be: search-to-booking conversion rate, listing quality score, and pricing competitiveness. Input metrics are what teams optimize daily; the NSM is what you track monthly to see if everything is working.</p>
 
-              <h3>The Input Metric Tree (AARRR)</h3>
-              <p>AARRR (Pirate Metrics) is a framework for mapping inputs:</p>
+              <h3>AARRR (Pirate Metrics)</h3>
+              <p>AARRR maps the user lifecycle as a funnel. Use it to find which stage is leaking, then pick input metrics for that stage.</p>
               <ul>
                 <li><strong>A</strong>cquisition, how users find you</li>
                 <li><strong>A</strong>ctivation, first experience of value</li>
@@ -486,7 +486,7 @@ const PM_GYM_DATA = {
               description: "The definitive free guide to North Star Metrics, with worksheets and real company examples."
             },
             {
-              title: "Sean Ellis: The Metric that Matters",
+              title: "Brian Balfour: North Star Metric",
               url: "https://brianbalfour.com/essays/north-star-metric",
               description: "Brian Balfour's deep dive into how to find the right metric for your company."
             },
