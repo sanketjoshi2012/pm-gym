@@ -9,6 +9,13 @@ Format: [Semantic Versioning](https://semver.org) — `MAJOR.MINOR.PATCH`
 
 ---
 
+## [1.4.4] — 2026-11-05
+
+### Changed
+- **Case study disclaimer** — Moved out of scenario text and into a rendered UI element. Appears below a hairline rule on every case study with an info icon and muted small text. Wording standardised to: "Practice scenario: Figures and assumptions are illustrative and simplified. They do not represent actual company data."
+
+---
+
 ## [1.4.3] — 2026-11-05
 
 ### Fixed
