@@ -146,6 +146,14 @@ To add a new category entirely:
 - Link directly to the content — not a homepage.
 - Prioritize: Lenny's Newsletter, Reforge Blog, Amplitude, Exponent, HBR, company engineering blogs.
 
+**Company facts**
+Every company fact on the site is one of three things, and the learner can tell which:
+- **Sourced:** a verifiable public number, cited with a link (e.g. "Revolut reported 45M customers in its 2023 annual report [link]")
+- **Illustrative:** a scenario figure, labelled with *"Scenario figures are illustrative and simplified for practice. They are not company data."*
+- **Assumption:** an explicit scenario premise, written as "Assume your data shows..." or "In this scenario..."
+
+Never present an unsourced number as a real company figure. If you can't source it, label it or frame it as an assumption.
+
 ---
 
 ## How to Submit

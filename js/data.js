@@ -203,7 +203,7 @@ const PM_GYM_DATA = {
                 "The ratio cannot be calculated without knowing weekly actives"
               ],
               correct: 0,
-              explanation: "DAU/MAU = 50,000 / 500,000 = 10%. This 'stickiness ratio' means the average user opens the app about 3 days per month (10% × 30 days). Facebook targets >60%; most consumer apps aim for >20%. A low ratio suggests users have no reason to return daily."
+              explanation: "DAU/MAU = 50,000 / 500,000 = 10%. This 'stickiness ratio' means the average user opens the app about 3 days per month (10% × 30 days). Social apps that people open daily can have very high DAU/MAU. Many consumer apps would be happy above 20%. What counts as good depends on how often the user's need comes up. A low ratio suggests users have no reason to return daily."
             },
             {
               question: "A PM is optimizing for 'number of messages sent per user.' What counter-metric should they also watch?",
@@ -527,7 +527,7 @@ const PM_GYM_DATA = {
               <p><strong>Mistake 4: Not considering secondary metrics.</strong> Your CTA might get more clicks, but if users who clicked convert at half the rate, you've lost ground overall.</p>
 
               <h3>When NOT to A/B Test</h3>
-              <p>A/B testing requires traffic volume and time. If you have fewer than 1,000 users, tests take too long to reach significance. Also, qualitative changes (a redesign, a new product direction) shouldn't be A/B tested first, use user research and judgment, then validate with metrics post-launch.</p>
+              <p>A/B testing requires traffic volume and time. Small products often cannot run reliable A/B tests. The sample you need depends on your baseline conversion and the size of change you want to detect. Use the <a href="https://www.evanmiller.org/ab-testing/sample-size.html" target="_blank" rel="noopener">Evan Miller sample size calculator</a> before you plan a test. Also, qualitative changes (a redesign, a new product direction) shouldn't be A/B tested first, use user research and judgment, then validate with metrics post-launch.</p>
             `
           },
           quiz: [
@@ -751,7 +751,7 @@ const PM_GYM_DATA = {
           category: "Media & Entertainment",
           scenario: {
             title: "Spotify Discover Weekly Engagement Drops 15%",
-            context: `Spotify's Discover Weekly playlist, a personalized weekly playlist delivered every Monday, has seen a 15% drop in "full listen-through rate" (users listening to at least 80% of the playlist) over the past 8 weeks. Your team owns Discover Weekly. The head of product asks you to diagnose what's happening and propose next steps.`,
+            context: `Spotify's Discover Weekly playlist, a personalized weekly playlist delivered every Monday, has seen a 15% drop in "full listen-through rate" (users listening to at least 80% of the playlist) over the past 8 weeks. Your team owns Discover Weekly. The head of product asks you to diagnose what's happening and propose next steps. Scenario figures are illustrative and simplified for practice. They are not company data.`,
             prompt: `In your answer, address the following:
 1. What are the possible root causes of this drop? (Structure your investigation across user, product, and external factors)
 2. What data would you pull to narrow down the cause?
@@ -824,7 +824,7 @@ const PM_GYM_DATA = {
           category: "Work & Productivity",
           scenario: {
             title: "Design a Feature for LinkedIn to Help Job Seekers",
-            context: `LinkedIn has 900M+ members. The vast majority of LinkedIn's revenue comes from recruiters (LinkedIn Recruiter tool), not from job seekers. Yet job seekers are what make the platform valuable to recruiters. Internal data shows that job seekers who are actively searching "go dark", they stop engaging with LinkedIn content, about 3 weeks into their search. LinkedIn leadership wants to improve this.`,
+            context: `LinkedIn has 900M+ members. The vast majority of LinkedIn's revenue comes from recruiters (LinkedIn Recruiter tool), not from job seekers. Yet job seekers are what make the platform valuable to recruiters. Assume your data shows that job seekers who are actively searching "go dark", they stop engaging with LinkedIn content, about 3 weeks into their search. LinkedIn leadership wants to improve this. Scenario figures are illustrative and simplified for practice. They are not company data.`,
             prompt: `In your answer, address the following:
 1. What is the core problem you're solving, and for whom?
 2. What are 3 distinct feature ideas that could help? For each, explain the user value and any risks.
@@ -898,10 +898,10 @@ const PM_GYM_DATA = {
           title: "Case Study: Chess.com Puzzle Drop",
           duration: "15–20 min",
           isCaseStudy: true,
-          category: "Sports",
+          category: "Gaming",
           scenario: {
             title: "Chess.com, Daily Puzzle Completions Drop 20%",
-            context: `Chess.com's Daily Puzzle is one of the platform's highest DAU drivers, millions of users open the app specifically to solve the daily puzzle. Over the past 30 days, puzzle completion rates have dropped 20%. You are the PM for the Daily Puzzle feature. The head of product asks you to diagnose what's happening and propose next steps.`,
+            context: `Chess.com's Daily Puzzle is one of the platform's highest DAU drivers. Over the past 30 days, puzzle completion rates have dropped 20%. You are the PM for the Daily Puzzle feature. The head of product asks you to diagnose what's happening and propose next steps. Scenario figures are illustrative and simplified for practice. They are not company data.`,
             prompt: `In your answer, address the following:
 1. What clarifying questions would you ask before investigating?
 2. What are your top hypotheses for the drop? Rank them by likelihood.
@@ -950,7 +950,7 @@ const PM_GYM_DATA = {
                 <li><strong>Difficulty spike</strong>, If the puzzle difficulty algorithm was updated, puzzles may be too hard for average users, causing abandonment. Most likely given the 30-day timeframe aligns with typical algo update cycles.</li>
                 <li><strong>Notification change</strong>, If push notification delivery dropped (OS permission change, frequency cap), fewer users are being reminded to open the puzzle.</li>
                 <li><strong>Competing feature</strong>, A new feature (e.g., a new game mode or live event) may be drawing attention away from Daily Puzzle.</li>
-                <li><strong>Seasonal</strong>, School exam periods or major chess tournament seasons can shift user behavior. Chess.com's audience skews younger and active tournament players.</li>
+                <li><strong>Seasonal</strong>, School exam periods or major chess tournament seasons can shift user behavior. Chess.com's audience includes active tournament players.</li>
                 <li><strong>Technical bug</strong>, Puzzle failing to load, timer not working, or incorrect answer validation causing users to abandon.</li>
               </ol>
 
@@ -987,7 +987,7 @@ const PM_GYM_DATA = {
           category: "Sports",
           scenario: {
             title: "FotMob, Designing for Fans Who Only Show Up on Matchday",
-            context: `FotMob is a football scores and stats app used by millions of fans globally. Internal data shows that a large segment of users, casual fans, only open the app on matchdays to check live scores. Between games, this segment's DAU drops to near zero. FotMob wants to increase engagement between matchdays without alienating their core power users (die-hard fans who already use the app daily). You are the PM for user engagement. Design a feature to bring casual fans back between matches.`,
+            context: `FotMob is a football scores and stats app used by millions of fans globally. Assume your data shows that a large segment of users, casual fans, only open the app on matchdays to check live scores. Between games, this segment's DAU drops to near zero. FotMob wants to increase engagement between matchdays without alienating their core power users (die-hard fans who already use the app daily). You are the PM for user engagement. Design a feature to bring casual fans back between matches. Scenario figures are illustrative and simplified for practice. They are not company data.`,
             prompt: `In your answer, address the following:
 1. What do you know about the casual fan, their motivation, context, and what they care about?
 2. What are 3 distinct feature ideas to bring them back between matchdays? For each, describe the user value and the risk.
@@ -1074,7 +1074,7 @@ const PM_GYM_DATA = {
 2. Fantasy cricket integration, allow users to build and track fantasy teams within Cricbuzz
 3. Vernacular language support, localise the app into 6 regional Indian languages (Hindi, Tamil, Telugu, Kannada, Bengali, Marathi)
 
-You are the CPO. Which do you ship and why?`,
+You are the CPO. Which do you ship and why? Scenario figures are illustrative and simplified for practice. They are not company data.`,
             prompt: `In your answer, address the following:
 1. What framework or criteria would you use to evaluate these three options?
 2. Walk through your evaluation of each feature against those criteria.
@@ -1158,7 +1158,7 @@ You are the CPO. Which do you ship and why?`,
           category: "E-commerce & Fashion",
           scenario: {
             title: "Flipkart: How Would You Define and Measure Success?",
-            context: `Flipkart is India's largest e-commerce marketplace with over 400 million registered users. It operates as a two-sided marketplace, creating value for customers who buy products and sellers who list and fulfil orders. You have just joined as a senior PM. In your first week, the CPO asks you: "How would you define success for Flipkart, and what metrics would you track?"`,
+            context: `Flipkart is India's largest e-commerce marketplace with over 400 million registered users. It operates as a two-sided marketplace, creating value for customers who buy products and sellers who list and fulfil orders. You have just joined as a senior PM. In your first week, the CPO asks you: "How would you define success for Flipkart, and what metrics would you track?" Scenario figures are illustrative and simplified for practice. They are not company data.`,
             prompt: `In your answer, address the following:
 1. Start with a clarifying question. Is this about Flipkart as a whole business or a specific product area?
 2. Frame Flipkart's business model and who the key stakeholders are.
@@ -1256,7 +1256,7 @@ You are the CPO. Which do you ship and why?`,
           category: "Food Delivery",
           scenario: {
             title: "Swiggy: Order Cancellation Rate Spiked 25% in Two Weeks",
-            context: `Swiggy is one of India's largest food delivery platforms, operating in 500+ cities. Last week, your data team flagged that the order cancellation rate has increased by 25% over the past two weeks, from 8% to 10%. This is now the highest it has been in 18 months. You are the PM for the consumer experience team. The Head of Product wants your analysis and a plan by end of week.`,
+            context: `Swiggy is one of India's largest food delivery platforms, operating in 500+ cities. Last week, your data team flagged that the order cancellation rate has increased by 25% over the past two weeks, from 8% to 10%. This is now the highest it has been in 18 months. You are the PM for the consumer experience team. The Head of Product wants your analysis and a plan by end of week. Scenario figures are illustrative and simplified for practice. They are not company data.`,
             prompt: `In your answer, address the following:
 1. What clarifying questions would you ask before investigating?
 2. What are your top hypotheses for the spike? Rank them by likelihood.
@@ -1331,7 +1331,7 @@ You are the CPO. Which do you ship and why?`,
               <ul>
                 <li>Work with the supply ops team to improve restaurant-to-driver assignment in high-demand periods to reduce ETA.</li>
                 <li>Add a real-time ETA confidence indicator so customers know if the estimate is likely to improve once a driver is assigned.</li>
-                <li>A/B test showing customers a range (30-40 min) rather than a single number, which research shows reduces cancellations when the number feels uncertain.</li>
+                <li>A/B test showing customers a range (30-40 min) rather than a single number. One hypothesis worth testing: showing a range instead of a single ETA sets better expectations. I would A/B test it.</li>
               </ul>
 
               <h3>6. Success Definition</h3>
@@ -1349,7 +1349,7 @@ You are the CPO. Which do you ship and why?`,
           category: "Work & Productivity",
           scenario: {
             title: "Notion: New Users Are Not Returning After Day 1",
-            context: `Notion is an all-in-one workspace tool used by individuals and teams for notes, wikis, project management, and databases. Despite strong top-of-funnel growth (driven by word of mouth and social media), the data team has flagged that D7 retention for new users is at 18%, significantly below the industry benchmark of 35% for productivity tools. Users sign up, spend time exploring Notion on Day 0, but most do not return by Day 7. You are the PM for the new user experience. Design a solution.`,
+            context: `Notion is an all-in-one workspace tool used by individuals and teams for notes, wikis, project management, and databases. Despite strong top-of-funnel growth (driven by word of mouth and social media), the data team has flagged that D7 retention for new users is at 18%, significantly below the industry benchmark of 35% for productivity tools. Users sign up, spend time exploring Notion on Day 0, but most do not return by Day 7. You are the PM for the new user experience. Design a solution. Scenario figures are illustrative and simplified for practice. They are not company data.`,
             prompt: `In your answer, address the following:
 1. What do you think is the core user problem driving the drop-off?
 2. How would you validate your hypothesis before building anything?
@@ -1434,7 +1434,7 @@ You are the CPO. Which do you ship and why?`,
 1. Savings Vaults 2.0: allow users to create multiple savings goals with automatic round-up contributions and interest on each vault separately.
 2. Shared Expenses: a bill-splitting feature integrated into the app, letting groups of friends track shared spending (similar to Splitwise but native to Revolut).
 3. Credit Score Monitoring: show users their credit score within the app, updated monthly, with tips to improve it.
-You are the CPO. Which do you ship and why?`,
+You are the CPO. Which do you ship and why? Scenario figures are illustrative and simplified for practice. They are not company data.`,
             prompt: `In your answer, address the following:
 1. What framework or criteria would you use to evaluate these options?
 2. Walk through your evaluation of each feature.
@@ -1509,7 +1509,7 @@ You are the CPO. Which do you ship and why?`,
           category: "E-commerce & Fashion",
           scenario: {
             title: "Zalando: A Fast Fashion Competitor Has Entered Your Market",
-            context: `Zalando is Europe's largest online fashion platform, operating in 25 European markets with 50 million active customers. It positions itself as a premium fashion destination with strong brand partnerships, a wide assortment, and a high-quality customer experience (free returns, fast delivery, personal styling features). A new ultra-fast-fashion competitor (think Shein-style) has just launched aggressively in Zalando's core markets, targeting younger demographics with extremely low prices, heavy social media marketing, and a broad but low-cost product range. Internal data shows that Zalando's customer acquisition cost has increased 15% and conversion rate among 18-24 year olds has dropped 8% in the past quarter. You are the Chief Product Officer. What do you do?`,
+            context: `Zalando is Europe's largest online fashion platform, operating in 25 European markets with 50 million active customers. It positions itself as a premium fashion destination with strong brand partnerships, a wide assortment, and a high-quality customer experience (free returns, fast delivery, personal styling features). A new ultra-fast-fashion competitor (think Shein-style) has just launched aggressively in Zalando's core markets, targeting younger demographics with extremely low prices, heavy social media marketing, and a broad but low-cost product range. Assume your data shows that customer acquisition cost has increased 15% and conversion rate among 18-24 year olds has dropped 8% in the past quarter. You are the Chief Product Officer. What do you do? Scenario figures are illustrative and simplified for practice. They are not company data.`,
             prompt: `In your answer, address the following:
 1. How do you frame the competitive threat? Is this a crisis, a signal, or a distraction?
 2. What data would you gather before deciding on a response strategy?
@@ -1719,6 +1719,12 @@ You are the CPO. Which do you ship and why?`,
         { title: "Continuous Discovery Habits, Teresa Torres", url: "https://www.amazon.com/Continuous-Discovery-Habits-Discover-Products/dp/1736633309", description: "The modern framework for user research integrated into product development." },
         { title: "Good Strategy Bad Strategy, Rumelt", url: "https://www.amazon.com/Good-Strategy-Bad-Difference-Matters/dp/0307886239", description: "The clearest book on what strategy actually is, and isn't." },
         { title: "Agile Product Management with Scrum, Roman Pichler", url: "https://www.amazon.de/-/en/Agile-Product-Management-Scrum-Addison-Wesley/dp/0321605780", description: "How to apply Scrum as a Product Owner, practical and concise." }
+      ]
+    },
+    {
+      category: "Tools & Calculators",
+      items: [
+        { title: "Evan Miller: A/B Test Sample Size Calculator", url: "https://www.evanmiller.org/ab-testing/sample-size.html", description: "Free calculator for determining how many users you need in each variant before running an A/B test." }
       ]
     }
   ]

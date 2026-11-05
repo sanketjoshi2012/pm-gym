@@ -9,6 +9,26 @@ Format: [Semantic Versioning](https://semver.org) — `MAJOR.MINOR.PATCH`
 
 ---
 
+## [1.4.3] — 2026-11-05
+
+### Fixed
+- **DAU/MAU benchmark** — Removed unsourced "Facebook targets >60%" claim from Metrics lesson quiz explanation. Replaced with VP's framing: stickiness benchmarks depend on how often the user's need comes up.
+- **A/B testing sample-size rule** — Removed hard "fewer than 1,000 users" threshold (presented as universal fact). Replaced with: sample needed depends on baseline conversion and effect size; inline link to Evan Miller sample size calculator added.
+- **Case study disclaimer** — Added "Scenario figures are illustrative and simplified for practice. They are not company data." to all 10 advanced case study contexts. No such disclaimer existed previously.
+- **LinkedIn case** — "Internal data shows that job seekers go dark" rephrased to "Assume your data shows..." to make it an explicit scenario assumption rather than a claim about LinkedIn's internal data.
+- **Zalando case** — "Internal data shows that Zalando's CAC increased 15%..." rephrased to "Assume your data shows..." for the same reason.
+- **FotMob case** — "Internal data shows that casual fans only open the app on matchdays" rephrased to "Assume your data shows..." for consistency.
+- **Swiggy model answer** — Removed "which research shows reduces cancellations" (unsourced). Replaced with explicit hypothesis framing: "One hypothesis worth testing: showing a range instead of a single ETA sets better expectations. I would A/B test it."
+- **Chess.com category** — Changed from "Sports" to "Gaming."
+- **Chess.com context** — Removed unsourced "millions of users open the app specifically to solve the daily puzzle."
+- **Chess.com model answer** — Removed unsourced "audience skews younger."
+
+### Added
+- **Tools & Calculators** category in Resource Library — Evan Miller A/B Test Sample Size Calculator.
+- **Company facts content standard** in CONTRIBUTING.md — every company fact must be sourced (with link), illustrative (labelled), or an assumption (written as "Assume...").
+
+---
+
 ## [1.4.2] — 2026-11-05
 
 ### Fixed
