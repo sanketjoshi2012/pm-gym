@@ -180,7 +180,7 @@ Before committing and pushing any meaningful change:
 - [ ] **Version bump** — increment the cache-buster in `index.html` (`data.js?v=X` or `app.js?v=X`) for whichever file changed. Data-only changes bump `data.js`; logic changes bump `app.js`; both changed, bump both.
 - [ ] **README.md checked** — if feature descriptions, content counts, setup instructions, or product positioning changed, update README to match.
 - [ ] **No stale claims** — search for any documentation that describes removed or renamed features and correct or delete it.
-- [ ] **Tests pass** — run `node tests/quiz-validation.js` after any change to `js/data.js`. All checks must pass before pushing.
+- [ ] **Tests pass** — run `node tests/quiz-validation.js` after any change to `js/data.js`. Run `node tests/logic-tests.js` after any change to `js/app.js`. All checks must pass before pushing.
 - [ ] **Diff reviewed** — read the full diff before committing. No unrelated files, no generated output, no secrets.
 - [ ] **Deployment verified** — after pushing, confirm the GitHub Actions run succeeds at `github.com/sanketjoshi2012/pm-gym/actions`.
 
