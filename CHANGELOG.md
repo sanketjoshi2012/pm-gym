@@ -9,6 +9,16 @@ Format: [Semantic Versioning](https://semver.org) — `MAJOR.MINOR.PATCH`
 
 ---
 
+## [1.4.7] — 2026-11-06
+
+### Fixed
+- **Daily Rep pool stability** — If a question is added or removed from the pool after a user has already answered today's Daily Rep, the app now recovers their original answered question by its stored id rather than showing a different question with the wrong saved feedback. If the original question no longer exists in the pool, a neutral "already completed today" message is shown instead. Historical answers are never deleted. No duplicate streak increment or analytics event is fired for already-completed days.
+- **Quiz finalization fires more than once** — `finalizeQuiz()` could be called twice on a rapid double-click of "See Results →" before the DOM updated, causing a duplicate Mixpanel `practice_completed` event and a second toast. A per-attempt guard (`state.quizFinalized`) ensures finalization, score saving, and the completion toast each run exactly once. The guard resets on retake and on fresh topic load.
+- **Dashboard missing In Progress for case studies** — Case study drafts saved by the user were not counted in the In Progress status on the progress dashboard. A saved, non-empty (after trimming whitespace) draft now marks the case study as In Progress. Completed cases remain Done and are not double-counted.
+- **localStorage corruption wipes unrelated state** — A single `JSON.parse` failure inside the previous monolithic `loadState()` try/catch would silently drop all subsequent keys, resetting streak, lessons, completed topics, and case drafts. Each key is now read and validated independently via a `safeLoadJSON` helper. Corrupted values fall back to their defaults; valid values are preserved. Raw corrupted values are never deleted.
+
+---
+
 ## [1.3.5] — 2026-11-05
 
 ### Changed

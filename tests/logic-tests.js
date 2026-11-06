@@ -1,5 +1,5 @@
 /**
- * Logic tests for Ranks 3, 4, 5 fixes.
+ * Logic tests for Ranks 3, 4, 5, 7, 8, 9, 10 fixes.
  * Pure functions extracted from app.js so they run in Node without browser APIs.
  */
 
@@ -231,6 +231,256 @@ test('already-migrated score is not re-migrated', () => {
   const { scores: migrated, changed } = migrateScores(scores);
   assertEqual(migrated.metrics.bestPct, 80, 'bestPct should be preserved');
   assert(!changed, 'no change when already migrated');
+});
+
+// ─── Rank 7: Daily Rep question resolution ────────────────────────────────────
+
+// Mirrors the resolution logic in initDailyRep()
+function resolveDailyDisplayItem(saved, currentItem, pool) {
+  if (!saved || !saved.questionId || saved.questionId === currentItem.id) {
+    return { displayItem: currentItem, neutral: false };
+  }
+  const originalItem = pool.find(q => q.id === saved.questionId);
+  if (originalItem) {
+    return { displayItem: originalItem, neutral: false };
+  }
+  return { displayItem: null, neutral: true };
+}
+
+console.log('\nRank 7: Daily Rep question resolution');
+
+test('no saved attempt: display current scheduled question', () => {
+  const pool = [{ id: 'q1' }, { id: 'q2' }];
+  const { displayItem, neutral } = resolveDailyDisplayItem(null, pool[0], pool);
+  assert(displayItem === pool[0], 'should display currentItem when no saved attempt');
+  assert(!neutral, 'should not be neutral');
+});
+
+test('saved questionId matches current: display current question unchanged', () => {
+  const pool = [{ id: 'q1' }, { id: 'q2' }];
+  const saved = { questionId: 'q1', isCorrect: true };
+  const { displayItem, neutral } = resolveDailyDisplayItem(saved, pool[0], pool);
+  assert(displayItem === pool[0], 'should display current item when ids match');
+  assert(!neutral, 'should not be neutral');
+});
+
+test('pool shifted: saved question still in pool — recover and display original', () => {
+  const pool = [{ id: 'q-new' }, { id: 'q1' }, { id: 'q2' }];
+  const saved = { questionId: 'q1', isCorrect: false };
+  const currentItem = pool[0]; // pool shifted, today now points to q-new
+  const { displayItem, neutral } = resolveDailyDisplayItem(saved, currentItem, pool);
+  assert(displayItem.id === 'q1', 'should recover original question from pool');
+  assert(!neutral, 'should not be neutral');
+});
+
+test('pool shifted: saved question removed from pool — show neutral state', () => {
+  const pool = [{ id: 'q-new' }, { id: 'q2' }]; // q1 was removed
+  const saved = { questionId: 'q1', isCorrect: true };
+  const currentItem = pool[0];
+  const { displayItem, neutral } = resolveDailyDisplayItem(saved, currentItem, pool);
+  assert(neutral, 'should be neutral when original question is gone');
+  assert(displayItem === null, 'displayItem should be null in neutral state');
+});
+
+test('saved attempt has no questionId (legacy): display current question', () => {
+  const pool = [{ id: 'q1' }];
+  const saved = { selectedAnswer: 0, isCorrect: true }; // no questionId field
+  const { displayItem, neutral } = resolveDailyDisplayItem(saved, pool[0], pool);
+  assert(displayItem === pool[0], 'legacy saved with no questionId should show current item');
+  assert(!neutral, 'should not be neutral');
+});
+
+// ─── Rank 8: quiz finalization guard ──────────────────────────────────────────
+
+function makeQuizFinalizer() {
+  let finalized = false;
+  let callCount = 0;
+  function finalizeQuiz() {
+    if (finalized) return;
+    finalized = true;
+    callCount++;
+  }
+  function retake() { finalized = false; }
+  return { finalizeQuiz, retake, getCount: () => callCount };
+}
+
+console.log('\nRank 8: quiz finalization guard');
+
+test('finalizeQuiz fires exactly once per attempt', () => {
+  const { finalizeQuiz, getCount } = makeQuizFinalizer();
+  finalizeQuiz();
+  finalizeQuiz();
+  finalizeQuiz();
+  assertEqual(getCount(), 1, 'should fire exactly once despite three calls');
+});
+
+test('retake resets guard so next attempt can finalize', () => {
+  const { finalizeQuiz, retake, getCount } = makeQuizFinalizer();
+  finalizeQuiz(); // first attempt
+  retake();
+  finalizeQuiz(); // second attempt
+  assertEqual(getCount(), 2, 'should fire once per attempt after retake');
+});
+
+test('retake does not finalize on its own', () => {
+  const { retake, getCount } = makeQuizFinalizer();
+  retake();
+  assertEqual(getCount(), 0, 'retake should not trigger finalization');
+});
+
+// ─── Rank 9: dashboard In Progress with draft check ──────────────────────────
+
+function computeStarted(topic, lessonsDone, quizScores, caseAnswers) {
+  const hasDraft = topic.isCaseStudy && !!(caseAnswers[topic.id] || '').trim();
+  return lessonsDone.has(topic.id) || quizScores[topic.id] !== undefined || hasDraft;
+}
+
+console.log('\nRank 9: dashboard In Progress');
+
+test('case study with non-empty draft is In Progress', () => {
+  const topic = { id: 'cs-1', isCaseStudy: true };
+  assert(computeStarted(topic, new Set(), {}, { 'cs-1': 'some draft text' }), 'draft should mark as started');
+});
+
+test('case study with whitespace-only draft is not In Progress', () => {
+  const topic = { id: 'cs-1', isCaseStudy: true };
+  assert(!computeStarted(topic, new Set(), {}, { 'cs-1': '   \n\t  ' }), 'whitespace-only draft should not count');
+});
+
+test('case study with empty draft is not In Progress', () => {
+  const topic = { id: 'cs-1', isCaseStudy: true };
+  assert(!computeStarted(topic, new Set(), {}, { 'cs-1': '' }), 'empty draft should not count');
+});
+
+test('case study with no saved answer is not In Progress', () => {
+  const topic = { id: 'cs-1', isCaseStudy: true };
+  assert(!computeStarted(topic, new Set(), {}, {}), 'no draft should be not started');
+});
+
+test('completed case study with draft remains Done (not double-counted)', () => {
+  const topic = { id: 'cs-1', isCaseStudy: true };
+  const done = new Set(['cs-1']);
+  // The dashboard logic: done takes precedence — started is irrelevant when done
+  const started = computeStarted(topic, new Set(), {}, { 'cs-1': 'some draft' });
+  assert(started, 'started is true (draft exists)');
+  // The status would be 'done' because done is checked first — this is a contract test
+  const status = done.has(topic.id) ? 'done' : started ? 'progress' : 'todo';
+  assertEqual(status, 'done', 'done takes precedence over started');
+});
+
+test('regular topic with lesson done is In Progress', () => {
+  const topic = { id: 'north-star', isCaseStudy: false };
+  assert(computeStarted(topic, new Set(['north-star']), {}, {}), 'lesson done should count as started');
+});
+
+// ─── Rank 10: localStorage recovery ──────────────────────────────────────────
+
+function safeLoadJSON(raw, fallback) {
+  try {
+    if (raw === null || raw === undefined) return fallback;
+    return JSON.parse(raw);
+  } catch (e) {
+    return fallback;
+  }
+}
+
+function validateArray(val, fallback) {
+  return Array.isArray(val) ? val : fallback;
+}
+
+function validateObject(val, fallback) {
+  return (val && typeof val === 'object' && !Array.isArray(val)) ? val : fallback;
+}
+
+function loadStateFromValues(rawCompleted, rawScores, rawLessons, rawCases) {
+  const completedTopics = new Set(validateArray(safeLoadJSON(rawCompleted, []), []));
+  const quizScores = validateObject(safeLoadJSON(rawScores, {}), {});
+  const lessonsDone = new Set(validateArray(safeLoadJSON(rawLessons, []), []));
+  const caseAnswers = validateObject(safeLoadJSON(rawCases, {}), {});
+  return { completedTopics, quizScores, lessonsDone, caseAnswers };
+}
+
+console.log('\nRank 10: localStorage recovery');
+
+test('all keys valid: full state loaded correctly', () => {
+  const state = loadStateFromValues(
+    '["metrics","ab-testing"]',
+    '{"metrics":{"correct":4,"total":5,"pct":80}}',
+    '["metrics"]',
+    '{"cs-1":"my draft"}'
+  );
+  assert(state.completedTopics.has('metrics'), 'metrics should be completed');
+  assert(state.completedTopics.has('ab-testing'), 'ab-testing should be completed');
+  assertEqual(state.quizScores.metrics.pct, 80, 'quiz score should be 80');
+  assert(state.lessonsDone.has('metrics'), 'lesson should be marked done');
+  assertEqual(state.caseAnswers['cs-1'], 'my draft', 'case answer should be loaded');
+});
+
+test('corrupted QUIZ_SCORES: other keys still load', () => {
+  const state = loadStateFromValues(
+    '["metrics"]',
+    'not-valid-json{{{',
+    '["metrics"]',
+    '{}'
+  );
+  assert(state.completedTopics.has('metrics'), 'completed topics should still load');
+  assert(state.lessonsDone.has('metrics'), 'lessons should still load');
+  assertEqual(Object.keys(state.quizScores).length, 0, 'quiz scores should fall back to empty object');
+});
+
+test('corrupted COMPLETED_TOPICS: other keys still load', () => {
+  const state = loadStateFromValues(
+    '{invalid}',
+    '{"metrics":{"correct":3,"total":5,"pct":60}}',
+    '[]',
+    '{"cs-1":"draft"}'
+  );
+  assertEqual(state.completedTopics.size, 0, 'completed topics should fall back to empty set');
+  assertEqual(state.quizScores.metrics.pct, 60, 'quiz scores should still load');
+  assertEqual(state.caseAnswers['cs-1'], 'draft', 'case answers should still load');
+});
+
+test('corrupted CASE_ANSWERS: other keys still load', () => {
+  const state = loadStateFromValues(
+    '["metrics"]',
+    '{}',
+    '["metrics"]',
+    'undefined'
+  );
+  assert(state.completedTopics.has('metrics'), 'completed topics should load');
+  assertEqual(Object.keys(state.caseAnswers).length, 0, 'case answers should fall back to empty');
+});
+
+test('valid JSON with wrong type: array where object expected falls back', () => {
+  const state = loadStateFromValues('[]', '[1,2,3]', '[]', '[]');
+  assertEqual(Object.keys(state.quizScores).length, 0, 'array for scores should fall back to {}');
+  assertEqual(Object.keys(state.caseAnswers).length, 0, 'array for cases should fall back to {}');
+});
+
+test('valid JSON with wrong type: object where array expected falls back', () => {
+  const state = loadStateFromValues('{"a":1}', '{}', '{"b":2}', '{}');
+  assertEqual(state.completedTopics.size, 0, 'object for completed should fall back to empty set');
+  assertEqual(state.lessonsDone.size, 0, 'object for lessons should fall back to empty set');
+});
+
+test('null stored values return defaults', () => {
+  const state = loadStateFromValues(null, null, null, null);
+  assertEqual(state.completedTopics.size, 0, 'null completed should give empty set');
+  assertEqual(Object.keys(state.quizScores).length, 0, 'null scores should give empty object');
+  assertEqual(state.lessonsDone.size, 0, 'null lessons should give empty set');
+  assertEqual(Object.keys(state.caseAnswers).length, 0, 'null cases should give empty object');
+});
+
+test('existing migrations still apply to validly loaded scores', () => {
+  // Mirrors the Rank 5 migration: legacy score gets bestPct/bestCorrect/attempts added
+  const scores = { 'metrics': { correct: 3, total: 5, pct: 60 } };
+  const { scores: migrated, changed } = migrateScores(scores);
+  assertEqual(migrated.metrics.bestPct, 60, 'migration adds bestPct');
+  assert(changed, 'migration reports change');
+  // Rank 4 migration: topic with passing score gets completed
+  const { completedTopics, changed: c2 } = migrateCompletions(migrated, new Set(), new Set());
+  assert(completedTopics.has('metrics'), 'passing score completes topic');
+  assert(c2, 'completion migration reports change');
 });
 
 // ─── Summary ──────────────────────────────────────────────────────────────────

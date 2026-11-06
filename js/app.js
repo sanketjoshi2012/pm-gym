@@ -59,6 +59,7 @@ let state = {
     answers: [],
     answered: false,
   },
+  quizFinalized: false,
   quizStartTime: null,
   questionStartTime: null,
   completedTopics: new Set(),
@@ -71,62 +72,91 @@ let state = {
 
 // ─── Storage ─────────────────────────────────────────────────────────────────
 
-function loadState() {
+// Reads and parses one localStorage key independently. Returns fallback on any error.
+// Never throws, never deletes the raw stored value.
+function safeLoadJSON(key, fallback) {
   try {
-    const completed = JSON.parse(localStorage.getItem(STORAGE_KEYS.COMPLETED_TOPICS) || '[]');
-    state.completedTopics = new Set(completed);
+    const raw = localStorage.getItem(key);
+    if (raw === null) return fallback;
+    return JSON.parse(raw);
+  } catch (e) {
+    return fallback;
+  }
+}
 
-    const scores = JSON.parse(localStorage.getItem(STORAGE_KEYS.QUIZ_SCORES) || '{}');
-    state.quizScores = scores;
+function loadState() {
+  // Each key is loaded independently so corruption in one does not affect the others.
 
-    const lessons = JSON.parse(localStorage.getItem(STORAGE_KEYS.LESSON_DONE) || '[]');
-    state.lessonsDone = new Set(lessons);
+  // COMPLETED_TOPICS: must be an array of strings
+  const completedRaw = safeLoadJSON(STORAGE_KEYS.COMPLETED_TOPICS, []);
+  state.completedTopics = new Set(Array.isArray(completedRaw) ? completedRaw : []);
 
-    // Migration: add best-score fields to any legacy quiz score records
-    let migrated = false;
-    Object.keys(state.quizScores).forEach(id => {
-      const s = state.quizScores[id];
-      if (s.bestPct === undefined) {
-        s.bestPct = s.pct;
-        s.bestCorrect = s.correct;
-        s.attempts = 1;
-        migrated = true;
-      }
-    });
+  // QUIZ_SCORES: must be a plain object (non-array)
+  const scoresRaw = safeLoadJSON(STORAGE_KEYS.QUIZ_SCORES, {});
+  state.quizScores = (scoresRaw && typeof scoresRaw === 'object' && !Array.isArray(scoresRaw)) ? scoresRaw : {};
 
-    // Migration: retroactively complete topics where the best quiz score is 60%+
-    Object.keys(state.quizScores).forEach(id => {
-      const s = state.quizScores[id];
-      if ((s.bestPct ?? s.pct) >= 60) {
-        if (!state.lessonsDone.has(id)) { state.lessonsDone.add(id); migrated = true; }
-        if (!state.completedTopics.has(id)) { state.completedTopics.add(id); migrated = true; }
-      }
-    });
+  // LESSON_DONE: must be an array of strings
+  const lessonsRaw = safeLoadJSON(STORAGE_KEYS.LESSON_DONE, []);
+  state.lessonsDone = new Set(Array.isArray(lessonsRaw) ? lessonsRaw : []);
 
-    if (migrated) {
+  // Migration: add best-score fields to any legacy quiz score records
+  let migrated = false;
+  Object.keys(state.quizScores).forEach(id => {
+    const s = state.quizScores[id];
+    if (s && typeof s === 'object' && s.bestPct === undefined && typeof s.pct === 'number') {
+      s.bestPct = s.pct;
+      s.bestCorrect = s.correct;
+      s.attempts = 1;
+      migrated = true;
+    }
+  });
+
+  // Migration: retroactively complete topics where the best quiz score is 60%+
+  Object.keys(state.quizScores).forEach(id => {
+    const s = state.quizScores[id];
+    if (s && (s.bestPct ?? s.pct) >= 60) {
+      if (!state.lessonsDone.has(id)) { state.lessonsDone.add(id); migrated = true; }
+      if (!state.completedTopics.has(id)) { state.completedTopics.add(id); migrated = true; }
+    }
+  });
+
+  if (migrated) {
+    try {
       localStorage.setItem(STORAGE_KEYS.QUIZ_SCORES, JSON.stringify(state.quizScores));
       localStorage.setItem(STORAGE_KEYS.LESSON_DONE, JSON.stringify([...state.lessonsDone]));
       localStorage.setItem(STORAGE_KEYS.COMPLETED_TOPICS, JSON.stringify([...state.completedTopics]));
-    }
+    } catch (e) {}
+  }
 
-    state.streak = parseInt(localStorage.getItem(STORAGE_KEYS.STREAK) || '0');
-    state.lastActive = localStorage.getItem(STORAGE_KEYS.LAST_ACTIVE);
+  // STREAK: parseInt handles non-numeric strings gracefully
+  try {
+    state.streak = parseInt(localStorage.getItem(STORAGE_KEYS.STREAK) || '0', 10) || 0;
+  } catch (e) {
+    state.streak = 0;
+  }
 
-    const cases = JSON.parse(localStorage.getItem(STORAGE_KEYS.CASE_ANSWERS) || '{}');
-    state.caseAnswers = cases;
+  // LAST_ACTIVE
+  try {
+    state.lastActive = localStorage.getItem(STORAGE_KEYS.LAST_ACTIVE) || null;
+  } catch (e) {
+    state.lastActive = null;
+  }
 
-    // Load theme
+  // CASE_ANSWERS: must be a plain object (non-array)
+  const casesRaw = safeLoadJSON(STORAGE_KEYS.CASE_ANSWERS, {});
+  state.caseAnswers = (casesRaw && typeof casesRaw === 'object' && !Array.isArray(casesRaw)) ? casesRaw : {};
+
+  // DARK_MODE: plain string, not JSON
+  try {
     const darkMode = localStorage.getItem(STORAGE_KEYS.DARK_MODE);
     if (darkMode === 'dark') {
       document.documentElement.setAttribute('data-theme', 'dark');
     } else if (darkMode === 'light') {
       document.documentElement.setAttribute('data-theme', 'light');
     }
+  } catch (e) {}
 
-    updateStreak();
-  } catch (e) {
-    // Graceful fallback, storage might be blocked
-  }
+  updateStreak();
 }
 
 function saveState() {
@@ -504,6 +534,7 @@ function renderModule(levelId, topicId) {
 
   // Reset quiz state
   state.quizState = { currentQ: 0, answers: [], answered: false };
+  state.quizFinalized = false;
 
   const tabs = ['lesson', 'quiz'];
   const tabLabels = { lesson: 'Lesson', quiz: 'Quiz' };
@@ -675,6 +706,9 @@ function nextQuestion(topicId, nextIdx) {
 }
 
 function finalizeQuiz(topic) {
+  if (state.quizFinalized) return;
+  state.quizFinalized = true;
+
   const quiz = topic.quiz;
   const answers = state.quizState.answers;
   const correct = answers.filter((a, i) => a === quiz[i].correct).length;
@@ -782,6 +816,7 @@ function retakeQuiz(topicId) {
   if (!topic) return;
 
   state.quizState = { currentQ: 0, answers: [], answered: false };
+  state.quizFinalized = false;
   const quizContent = document.getElementById('quizContent');
   if (quizContent) quizContent.innerHTML = buildQuizQuestion(topic, 0);
 }
@@ -933,7 +968,8 @@ function renderDashboard() {
   const topicRows = PM_GYM_DATA.levels.flatMap(l =>
     l.topics.map(t => {
       const done = state.completedTopics.has(t.id);
-      const started = state.lessonsDone.has(t.id) || state.quizScores[t.id] !== undefined;
+      const hasDraft = t.isCaseStudy && !!(state.caseAnswers[t.id] || '').trim();
+      const started = state.lessonsDone.has(t.id) || state.quizScores[t.id] !== undefined || hasDraft;
       const levelLabel = l.title;
       return { name: t.title, done, started, level: levelLabel };
     })
@@ -1225,28 +1261,8 @@ function initDailyRep() {
   const dateKey = getUtcDateKey();
   const storageKey = `pmgym_daily_rep_${dateKey}`;
 
-  // Date element
-  const dateEl = document.getElementById('dailyRepDate');
-  if (dateEl) {
-    dateEl.textContent = formatUtcDisplayDate();
-  }
-
-  // Topic badge (clean TOPIC: prefix)
-  const topicEl = document.getElementById('dailyRepTopic');
-  if (topicEl) {
-    topicEl.textContent = `TOPIC: ${currentItem.topicTitle}`;
-  }
-
-  // Question title
-  const questionEl = document.getElementById('dailyRepQuestion');
-  if (questionEl) {
-    questionEl.textContent = currentItem.question;
-  }
-
-  // Render streak
-  updateDailyStreakDisplay();
-
-  // Load saved attempt for today
+  // Load saved attempt before resolving which question to display, so a pool
+  // change after the user already answered does not let them answer again.
   let saved = null;
   try {
     const raw = localStorage.getItem(storageKey);
@@ -1255,12 +1271,57 @@ function initDailyRep() {
     saved = null;
   }
 
+  // Resolve display item. If the pool shifted since the user answered today,
+  // try to recover the original question by its stored id. Never show saved
+  // feedback against a different question.
+  let displayItem = currentItem;
+  let alreadyCompletedNeutral = false;
+
+  if (saved && saved.questionId && saved.questionId !== currentItem.id) {
+    const originalItem = pool.find(q => q.id === saved.questionId);
+    if (originalItem) {
+      displayItem = originalItem;
+    } else {
+      // Original question no longer in pool — cannot display it
+      alreadyCompletedNeutral = true;
+    }
+  }
+
+  // Date element
+  const dateEl = document.getElementById('dailyRepDate');
+  if (dateEl) dateEl.textContent = formatUtcDisplayDate();
+
+  // Render streak
+  updateDailyStreakDisplay();
+
+  // Neutral state: user answered today but the original question is gone from the pool
+  if (alreadyCompletedNeutral) {
+    const topicEl = document.getElementById('dailyRepTopic');
+    if (topicEl) topicEl.textContent = '';
+    const questionEl = document.getElementById('dailyRepQuestion');
+    if (questionEl) questionEl.textContent = "You've already completed today's practice.";
+    const optionsEl = document.getElementById('dailyRepOptions');
+    if (optionsEl) optionsEl.innerHTML = '';
+    const feedbackEl = document.getElementById('dailyRepFeedback');
+    if (feedbackEl) feedbackEl.style.display = 'none';
+    window._currentDailyTopic = null;
+    return;
+  }
+
+  // Topic badge
+  const topicEl = document.getElementById('dailyRepTopic');
+  if (topicEl) topicEl.textContent = `TOPIC: ${displayItem.topicTitle}`;
+
+  // Question title
+  const questionEl = document.getElementById('dailyRepQuestion');
+  if (questionEl) questionEl.textContent = displayItem.question;
+
   const optionsEl = document.getElementById('dailyRepOptions');
   if (!optionsEl) return;
   optionsEl.innerHTML = '';
 
   // Resolve the index of the originally selected option in the current (possibly reordered)
-  // options array. Prefers text matching (stable across reorders) over raw index (stale after F04).
+  // options array. Prefers text matching (stable across reorders) over raw index.
   // Returns null when the original selection cannot be reliably determined.
   function resolveSelectedIndex(savedAttempt, item) {
     if (!savedAttempt) return null;
@@ -1273,15 +1334,15 @@ function initDailyRep() {
     return null;
   }
 
-  currentItem.options.forEach((optText, idx) => {
+  displayItem.options.forEach((optText, idx) => {
     const btn = document.createElement('div');
     btn.className = 'daily-rep-opt';
     btn.innerHTML = `<span class="daily-rep-opt-key">${String.fromCharCode(65 + idx)}</span> <span>${optText}</span>`;
 
     if (saved) {
       btn.classList.add('disabled');
-      const resolvedIdx = resolveSelectedIndex(saved, currentItem);
-      if (idx === currentItem.correct) {
+      const resolvedIdx = resolveSelectedIndex(saved, displayItem);
+      if (idx === displayItem.correct) {
         btn.classList.add('correct');
       } else if (resolvedIdx !== null && idx === resolvedIdx) {
         btn.classList.add('wrong');
@@ -1289,7 +1350,7 @@ function initDailyRep() {
         btn.classList.add('dimmed');
       }
     } else {
-      btn.onclick = () => handleDailyRepSelection(idx, currentItem, storageKey);
+      btn.onclick = () => handleDailyRepSelection(idx, displayItem, storageKey);
     }
 
     optionsEl.appendChild(btn);
@@ -1300,17 +1361,17 @@ function initDailyRep() {
     // which would break for attempts saved before options were reordered.
     const wasCorrect = typeof saved.isCorrect === 'boolean'
       ? saved.isCorrect
-      : resolveSelectedIndex(saved, currentItem) === currentItem.correct;
-    showDailyRepFeedback(wasCorrect, currentItem);
+      : resolveSelectedIndex(saved, displayItem) === displayItem.correct;
+    showDailyRepFeedback(wasCorrect, displayItem);
   } else {
     const feedbackEl = document.getElementById('dailyRepFeedback');
     if (feedbackEl) feedbackEl.style.display = 'none';
   }
 
   window._currentDailyTopic = {
-    levelId: currentItem.levelId,
-    topicId: currentItem.topicId,
-    topicTitle: currentItem.topicTitle
+    levelId: displayItem.levelId,
+    topicId: displayItem.topicId,
+    topicTitle: displayItem.topicTitle
   };
 }
 
