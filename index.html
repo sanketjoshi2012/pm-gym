@@ -36,7 +36,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="styles.css?v=1.3.6">
+  <link rel="stylesheet" href="styles.css?v=1.3.7">
 </head>
 <body>
 
@@ -83,7 +83,17 @@
           Build product sense through daily practice and real-world case studies.
         </p>
 
-        <p class="hero-founder">Built by Sanket, a data scientist in Berlin transitioning into Product Management.</p>
+        <div class="maker-pill">
+          <div class="maker-avatar" aria-hidden="true">SJ</div>
+          <div class="maker-body">
+            <span class="maker-bio">Built by <strong>Sanket</strong> &middot; Data Scientist in Berlin &rarr; PM</span>
+            <span class="maker-links">
+              <button class="maker-link" onclick="showView('about')" aria-label="Read Sanket's story on the About page">Read my story</button>
+              <span class="maker-dot" aria-hidden="true">&middot;</span>
+              <a class="maker-link" href="https://www.linkedin.com/in/sanket-joshi-897961102/" target="_blank" rel="noopener" aria-label="Sanket's LinkedIn profile (opens in new tab)">LinkedIn ↗</a>
+            </span>
+          </div>
+        </div>
 
         <div class="hero-cta-group">
           <button class="hero-cta" onclick="showView('levels')">

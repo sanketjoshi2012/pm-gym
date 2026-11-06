@@ -17,7 +17,7 @@ Format: [Semantic Versioning](https://semver.org) — `MAJOR.MINOR.PATCH`
 - **Flow steps non-interactive** — Removed click handlers from the three How it works steps. Steps are now purely informational; hover highlight is preserved.
 
 ### Added
-- **Founder line** — Subtle attribution line below the hero description: "Built by Sanket, a data scientist in Berlin transitioning into Product Management."
+- **Maker pill** — Replaced the faded founder line with a compact pill below the hero description. Shows avatar initials, bio ("Built by Sanket · Data Scientist in Berlin → PM"), and two links: "Read my story" (About page) and "LinkedIn ↗" (external profile). Keyboard accessible with focus-visible outlines.
 - **Streak badge accessibility** — Streak count now displays "N day streak" with an `aria-live` region and visually hidden label for screen readers. SVG flame icon marked `aria-hidden`.
 
 ---
