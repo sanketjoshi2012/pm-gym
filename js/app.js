@@ -846,7 +846,6 @@ function renderCaseStudy(container, topic, levelId) {
   const level = PM_GYM_DATA.levels.find(l => l.id === levelId);
   const scenario = topic.scenario;
   const savedAnswer = state.caseAnswers[topic.id] || '';
-  const answered = !!savedAnswer;
 
   container.innerHTML = `
     <button class="back-btn" onclick="showView('topics', {levelId: '${levelId}'})">← Back to ${level.title}</button>
@@ -883,7 +882,7 @@ function renderCaseStudy(container, topic, levelId) {
       </button>
     </div>
 
-    <div id="modelAnswerSection" class="${answered ? '' : 'hidden'}">
+    <div id="modelAnswerSection" class="hidden">
       <div class="model-answer">
         <div class="model-answer-header">⭐ Evaluation Rubric</div>
         <div class="model-answer-body">

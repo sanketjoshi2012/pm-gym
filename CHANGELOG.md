@@ -9,6 +9,13 @@ Format: [Semantic Versioning](https://semver.org) — `MAJOR.MINOR.PATCH`
 
 ---
 
+## [1.4.8] — 2026-11-06
+
+### Fixed
+- **Case study model answer auto-reveals after saving a draft** — The model answer section used the presence of a saved draft to decide its initial visibility, so reopening any case study after saving a draft would immediately expose the model answer. Draft persistence and reveal visibility are now independent. The model answer always starts hidden; it appears only when the user explicitly clicks Reveal Model Answer. Existing drafts and completed progress are unaffected.
+
+---
+
 ## [1.4.7] — 2026-11-06
 
 ### Fixed
