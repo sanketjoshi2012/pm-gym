@@ -36,7 +36,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="styles.css?v=1.3.7">
+  <link rel="stylesheet" href="styles.css?v=1.4.0">
 </head>
 <body>
 
@@ -73,7 +73,7 @@
     <div class="hero-split-container">
       <!-- Left Column: Value Prop & Direct Action -->
       <div class="hero-left">
-        <div class="hero-eyebrow">Free PM Learning Platform</div>
+        <div class="hero-eyebrow">Free PM case practice for career switchers</div>
 
         <h1 class="hero-title">
           Practice like a PM.<br><span class="accent">Think like one too.</span>
@@ -113,8 +113,108 @@
         </div>
       </div>
 
-      <!-- Right Column: Interactive Daily PM Rep -->
+      <!-- Right Column: Featured Case -->
       <div class="hero-right">
+        <div class="featured-hero-card" onclick="showView('module', {levelId: 'advanced', topicId: 'case-study-notion'})" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){showView('module',{levelId:'advanced',topicId:'case-study-notion'})}">
+          <div class="featured-hero-top">
+            <span class="featured-hero-eyebrow">FEATURED CASE</span>
+            <span class="featured-hero-time">15–20 min</span>
+          </div>
+          <div class="featured-hero-body">
+            <div class="featured-hero-icon" aria-hidden="true">N</div>
+            <div class="featured-hero-text">
+              <h2 class="featured-hero-title">Notion Onboarding Drop-off</h2>
+              <p class="featured-hero-desc">New users sign up but don't return. Diagnose the drop-off and design initiatives to improve retention.</p>
+            </div>
+          </div>
+          <div class="featured-hero-tags">
+            <span class="featured-tag">Activation</span>
+            <span class="featured-tag">Retention</span>
+          </div>
+          <button class="featured-hero-cta" onclick="event.stopPropagation(); showView('module', {levelId: 'advanced', topicId: 'case-study-notion'})">
+            Start this case →
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── Featured Case Teardowns ─── -->
+    <div class="featured-teardowns-section">
+      <div class="featured-header">
+        <div>
+          <div class="featured-kicker">Explore more cases</div>
+          <h2 class="featured-title">Featured Case Teardowns</h2>
+          <p class="featured-subtitle">Work through real product dilemmas, model answers, and rubric evaluations.</p>
+        </div>
+        <button class="featured-all-btn" onclick="showView('topics', {levelId: 'advanced'})">
+          Explore all case studies →
+        </button>
+      </div>
+
+      <div class="featured-grid">
+        <!-- Spotify -->
+        <div class="featured-card">
+          <div class="featured-card-top">
+            <span class="featured-badge">Media &amp; Entertainment</span>
+            <span class="featured-time">15–20 min</span>
+          </div>
+          <h3 class="featured-card-title">Spotify Engagement Drop</h3>
+          <p class="featured-card-desc">Discover Weekly's full listen-through rate fell 15% over 8 weeks. Diagnose the root cause and propose a recovery plan.</p>
+          <div class="featured-card-footer">
+            <span class="featured-tag">Engagement</span>
+            <span class="featured-tag">Metrics</span>
+            <button class="featured-arrow-btn" onclick="showView('module', {levelId: 'advanced', topicId: 'case-study-spotify'})">Open teardown →</button>
+          </div>
+        </div>
+
+        <!-- Swiggy -->
+        <div class="featured-card">
+          <div class="featured-card-top">
+            <span class="featured-badge">Food Delivery</span>
+            <span class="featured-time">15–20 min</span>
+          </div>
+          <h3 class="featured-card-title">Swiggy Order Cancellations Spike</h3>
+          <p class="featured-card-desc">Cancellation rate jumped from 8% to 10% in two weeks, the highest in 18 months. Find the root cause and build a plan.</p>
+          <div class="featured-card-footer">
+            <span class="featured-tag">Unit Economics</span>
+            <span class="featured-tag">Logistics</span>
+            <button class="featured-arrow-btn" onclick="showView('module', {levelId: 'advanced', topicId: 'case-study-swiggy'})">Open teardown →</button>
+          </div>
+        </div>
+
+        <!-- Chess.com -->
+        <div class="featured-card">
+          <div class="featured-card-top">
+            <span class="featured-badge">Sports</span>
+            <span class="featured-time">15–20 min</span>
+          </div>
+          <h3 class="featured-card-title">Chess.com Puzzle Drop</h3>
+          <p class="featured-card-desc">Daily Puzzle completions, the top DAU driver, dropped 20%. Deconstruct the funnel, diagnose the cause, and design a fix.</p>
+          <div class="featured-card-footer">
+            <span class="featured-tag">Freemium</span>
+            <span class="featured-tag">Paywall</span>
+            <button class="featured-arrow-btn" onclick="showView('module', {levelId: 'advanced', topicId: 'case-study-chess'})">Open teardown →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── Daily PM Rep Strip ─── -->
+    <div class="daily-rep-strip-section">
+      <div class="daily-rep-strip-row">
+        <div class="daily-rep-strip-label-group">
+          <svg class="daily-rep-strip-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          <span class="daily-rep-strip-heading">Daily PM Rep</span>
+          <span class="daily-rep-strip-divider" aria-hidden="true">|</span>
+          <span class="daily-rep-strip-desc">A quick 2-minute question to keep your product thinking sharp.</span>
+        </div>
+        <button class="daily-rep-strip-cta" id="dailyRepStripBtn" onclick="toggleDailyRepStrip()" aria-expanded="false" aria-controls="dailyRepStripBody">
+          <span id="dailyRepStripBtnLabel">Try today's question</span>
+          <svg class="daily-rep-strip-chevron" id="dailyRepStripChevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+      </div>
+
+      <div class="daily-rep-strip-body" id="dailyRepStripBody" hidden>
         <div class="daily-rep-card" id="dailyRepCard">
           <div class="daily-rep-header">
             <div class="daily-rep-meta">
@@ -151,66 +251,6 @@
       </div>
     </div>
 
-    <!-- ─── Featured Case Teardowns ─── -->
-    <div class="featured-teardowns-section">
-      <div class="featured-header">
-        <div>
-          <div class="featured-kicker">10 real-world case studies available</div>
-          <h2 class="featured-title">Featured Case Teardowns</h2>
-          <p class="featured-subtitle">Work through real product dilemmas, model answers, and rubric evaluations.</p>
-        </div>
-        <button class="featured-all-btn" onclick="showView('topics', {levelId: 'advanced'})">
-          Explore all case studies →
-        </button>
-      </div>
-
-      <div class="featured-grid">
-        <!-- Notion -->
-        <div class="featured-card">
-          <div class="featured-card-top">
-            <span class="featured-badge">Work &amp; Productivity</span>
-            <span class="featured-time">15–20 min</span>
-          </div>
-          <h3 class="featured-card-title">Notion Onboarding Drop-off</h3>
-          <p class="featured-card-desc">D7 retention is 18% vs a 35% benchmark. New users sign up, explore Day 0, and never come back. Design a fix.</p>
-          <div class="featured-card-footer">
-            <span class="featured-tag">Activation</span>
-            <span class="featured-tag">Retention</span>
-            <button class="featured-arrow-btn" onclick="showView('module', {levelId: 'advanced', topicId: 'case-study-notion'})">Open teardown →</button>
-          </div>
-        </div>
-
-        <!-- Swiggy -->
-        <div class="featured-card">
-          <div class="featured-card-top">
-            <span class="featured-badge">Food Delivery</span>
-            <span class="featured-time">15–20 min</span>
-          </div>
-          <h3 class="featured-card-title">Swiggy Order Cancellations Spike</h3>
-          <p class="featured-card-desc">Cancellation rate jumped from 8% to 10% in two weeks, the highest in 18 months. Find the root cause and build a plan.</p>
-          <div class="featured-card-footer">
-            <span class="featured-tag">Unit Economics</span>
-            <span class="featured-tag">Logistics</span>
-            <button class="featured-arrow-btn" onclick="showView('module', {levelId: 'advanced', topicId: 'case-study-swiggy'})">Open teardown →</button>
-          </div>
-        </div>
-
-        <!-- Chess.com -->
-        <div class="featured-card">
-          <div class="featured-card-top">
-            <span class="featured-badge">Sports</span>
-            <span class="featured-time">15–20 min</span>
-          </div>
-          <h3 class="featured-card-title">Chess.com Puzzle Drop</h3>
-          <p class="featured-card-desc">Daily Puzzle completions, the top DAU driver, dropped 20%. Deconstruct the funnel, diagnose the cause, and design a fix.</p>
-          <div class="featured-card-footer">
-            <span class="featured-tag">Freemium</span>
-            <span class="featured-tag">Paywall</span>
-            <button class="featured-arrow-btn" onclick="showView('module', {levelId: 'advanced', topicId: 'case-study-chess'})">Open teardown →</button>
-          </div>
-        </div>
-      </div>
-    </div>
   </section>
 
   <!-- ─── Levels View ─── -->
@@ -313,6 +353,6 @@
   <script src="js/data.js?v=1.2.4"></script>
   <script>(function(f,b){if(!b.__SV){var e,g,i,h;window.mixpanel=b;b._i=[];b.init=function(e,f,c){function g(a,d){var b=d.split(".");2==b.length&&(a=a[b[0]],d=b[1]);a[d]=function(){a.push([d].concat(Array.prototype.slice.call(arguments,0)))}}var a=b;"undefined"!==typeof c?a=b[c]=[]:c="mixpanel";a.people=a.people||[];a.toString=function(a){var d="mixpanel";"mixpanel"!==c&&(d+="."+c);a||(d+=" (stub)");return d};a.people.toString=function(){return a.toString(1)+".people (stub)"};i="disable time_event track track_pageview track_links track_forms track_with_groups add_group set_group remove_group register register_once alias unregister identify name_tag set_config reset opt_in_tracking opt_out_tracking has_opted_in_tracking has_opted_out_tracking clear_opt_in_out_tracking start_batch_senders people.set people.set_once people.unset people.increment people.append people.union people.track_charge people.clear_charges people.delete_user people.remove".split(" ");for(h=0;h<i.length;h++)g(a,i[h]);var j="set set_once union unset remove delete".split(" ");a.get_group=function(){function b(c){d[c]=function(){call2_args=arguments;call2=[c].concat(Array.prototype.slice.call(call2_args,0));a.push([e].concat(call2))}}for(var d={},e=["get_group"].concat(Array.prototype.slice.call(arguments,0)),c=0;c<j.length;c++)b(j[c]);return d};b._i.push([e,f,c])};b.__SV=1.2;e=f.createElement("script");e.type="text/javascript";e.async=!0;e.src="https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";g=f.getElementsByTagName("script")[0];g.parentNode.insertBefore(e,g)}})(document,window.mixpanel||[]);
   mixpanel.init('0b6a4fbd9406a3b8f42130b91e18321a', { api_host: 'https://api-eu.mixpanel.com' });</script>
-  <script src="js/app.js?v=1.4.9"></script>
+  <script src="js/app.js?v=1.5.0"></script>
 </body>
 </html>

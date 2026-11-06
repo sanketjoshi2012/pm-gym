@@ -1418,6 +1418,7 @@ function handleDailyRepSelection(selectedIdx, item, storageKey) {
   });
 
   showDailyRepFeedback(isCorrect, item);
+  updateDailyRepStripCTA();
 }
 
 function showDailyRepFeedback(isCorrect, item) {
@@ -1537,7 +1538,30 @@ function jumpToDailyTopic() {
   }
 }
 
+// ─── Daily Rep Strip ──────────────────────────────────────────────────────────
+
+function updateDailyRepStripCTA() {
+  const btn = document.getElementById('dailyRepStripBtn');
+  const label = document.getElementById('dailyRepStripBtnLabel');
+  if (!btn || !label) return;
+  const dateKey = getUtcDateKey();
+  const saved = localStorage.getItem('pmgym_daily_rep_' + dateKey);
+  label.textContent = saved ? 'Review today\'s rep' : 'Try today\'s question';
+}
+
+function toggleDailyRepStrip() {
+  const body = document.getElementById('dailyRepStripBody');
+  const btn = document.getElementById('dailyRepStripBtn');
+  const chevron = document.getElementById('dailyRepStripChevron');
+  if (!body || !btn) return;
+  const isOpen = !body.hidden;
+  body.hidden = isOpen;
+  btn.setAttribute('aria-expanded', String(!isOpen));
+  if (chevron) chevron.style.transform = isOpen ? '' : 'rotate(180deg)';
+}
+
 // Ensure Daily Rep re-inits whenever the landing view is shown
 document.addEventListener('DOMContentLoaded', () => {
   initDailyRep();
+  updateDailyRepStripCTA();
 });

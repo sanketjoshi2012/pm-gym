@@ -9,6 +9,19 @@ Format: [Semantic Versioning](https://semver.org) — `MAJOR.MINOR.PATCH`
 
 ---
 
+## [1.5.0] — 2026-11-06
+
+### Changed
+- **Homepage layout** — Replaced the right-side Daily PM Rep hero card with a static Featured Case card (Notion Onboarding Drop-off). Daily PM Rep moved below the Featured Case Teardowns grid as a collapsible full-width strip.
+- **Hero eyebrow** — Updated from "Free PM Learning Platform" to "Free PM case practice for career switchers".
+- **Featured Case Teardowns kicker** — Updated from "10 real-world case studies available" to "Explore more cases" to frame the grid as discovery after the featured case.
+- **Featured Case Teardowns grid** — Replaced Notion (now featured in hero) with Spotify Engagement Drop to avoid duplication. Grid is now: Spotify · Swiggy · Chess.com.
+
+### Added
+- **Daily PM Rep strip** — Compact horizontal strip with lightning icon, heading, description, and a CTA that reflects completion state: "Try today's question" before answering, "Review today's rep" after. Clicking expands the full Daily Rep interface inline; clicking again collapses it. No changes to question selection, streak, analytics, or answer persistence logic.
+
+---
+
 ## [1.4.9] — 2026-11-06
 
 ### Changed
