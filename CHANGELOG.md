@@ -14,6 +14,7 @@ Format: [Semantic Versioning](https://semver.org) — `MAJOR.MINOR.PATCH`
 ### Changed
 - **Banner copy** — "PM Gym is actively growing, content and scenarios are added weekly" replaced with "New cases and improvements are in development." Share link preserved.
 - **Three-step flow copy** — "Pick Level → Learn & Quiz → Teardowns" updated to "Pick a case → Write your answer → Compare with the rubric" to describe the actual workflow more accurately.
+- **Flow steps non-interactive** — Removed click handlers from the three How it works steps. Steps are now purely informational; hover highlight is preserved.
 
 ### Added
 - **Founder line** — Subtle attribution line below the hero description: "Built by Sanket, a data scientist in Berlin transitioning into Product Management."
