@@ -36,13 +36,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="styles.css?v=1.3.5">
+  <link rel="stylesheet" href="styles.css?v=1.3.6">
 </head>
 <body>
 
   <!-- ─── Navigation ─── -->
   <div class="wip-banner">
-    <span class="announcement-pill">UPDATE</span> PM Gym is actively growing, content and scenarios are added weekly. <a href="https://tally.so/r/rDyLDR" target="_blank" rel="noopener">Share your PM scenario →</a>
+    <span class="announcement-pill">UPDATE</span> New cases and improvements are in development. <a href="https://tally.so/r/rDyLDR" target="_blank" rel="noopener">Share your PM scenario →</a>
   </div>
 
   <nav class="nav">
@@ -61,7 +61,7 @@
       </div>
 
       <div class="nav-actions">
-        <div class="streak-badge" id="streakBadge" style="display:none"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg> <span class="streak-count">0</span></div>
+        <div class="streak-badge" id="streakBadge" style="display:none" role="status" aria-live="polite"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg> <span class="streak-count">0</span><span class="streak-label"> day streak</span><span class="sr-only" id="streakAriaLabel">0-day streak</span></div>
         <button class="btn-icon" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle dark mode"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></button>
       </div>
     </div>
@@ -83,6 +83,8 @@
           Build product sense through daily practice and real-world case studies.
         </p>
 
+        <p class="hero-founder">Built by Sanket, a data scientist in Berlin transitioning into Product Management.</p>
+
         <div class="hero-cta-group">
           <button class="hero-cta" onclick="showView('levels')">
             Start Practicing
@@ -93,11 +95,11 @@
         <!-- Crisp Micro-Flow -->
         <div class="hero-flow-split">
           <span class="flow-label">How it works:</span>
-          <span class="flow-step" onclick="showView('levels')"><span class="flow-num">1</span> Pick Level</span>
+          <span class="flow-step" onclick="showView('levels')"><span class="flow-num">1</span> Pick a case</span>
           <span class="flow-sep">→</span>
-          <span class="flow-step" onclick="showView('levels')"><span class="flow-num">2</span> Learn &amp; Quiz</span>
+          <span class="flow-step" onclick="showView('levels')"><span class="flow-num">2</span> Write your answer</span>
           <span class="flow-sep">→</span>
-          <span class="flow-step" onclick="showView('topics', {levelId: 'advanced'})"><span class="flow-num">3</span> Teardowns</span>
+          <span class="flow-step" onclick="showView('topics', {levelId: 'advanced'})"><span class="flow-num">3</span> Compare with the rubric</span>
         </div>
       </div>
 
@@ -301,6 +303,6 @@
   <script src="js/data.js?v=1.2.4"></script>
   <script>(function(f,b){if(!b.__SV){var e,g,i,h;window.mixpanel=b;b._i=[];b.init=function(e,f,c){function g(a,d){var b=d.split(".");2==b.length&&(a=a[b[0]],d=b[1]);a[d]=function(){a.push([d].concat(Array.prototype.slice.call(arguments,0)))}}var a=b;"undefined"!==typeof c?a=b[c]=[]:c="mixpanel";a.people=a.people||[];a.toString=function(a){var d="mixpanel";"mixpanel"!==c&&(d+="."+c);a||(d+=" (stub)");return d};a.people.toString=function(){return a.toString(1)+".people (stub)"};i="disable time_event track track_pageview track_links track_forms track_with_groups add_group set_group remove_group register register_once alias unregister identify name_tag set_config reset opt_in_tracking opt_out_tracking has_opted_in_tracking has_opted_out_tracking clear_opt_in_out_tracking start_batch_senders people.set people.set_once people.unset people.increment people.append people.union people.track_charge people.clear_charges people.delete_user people.remove".split(" ");for(h=0;h<i.length;h++)g(a,i[h]);var j="set set_once union unset remove delete".split(" ");a.get_group=function(){function b(c){d[c]=function(){call2_args=arguments;call2=[c].concat(Array.prototype.slice.call(call2_args,0));a.push([e].concat(call2))}}for(var d={},e=["get_group"].concat(Array.prototype.slice.call(arguments,0)),c=0;c<j.length;c++)b(j[c]);return d};b._i.push([e,f,c])};b.__SV=1.2;e=f.createElement("script");e.type="text/javascript";e.async=!0;e.src="https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";g=f.getElementsByTagName("script")[0];g.parentNode.insertBefore(e,g)}})(document,window.mixpanel||[]);
   mixpanel.init('0b6a4fbd9406a3b8f42130b91e18321a', { api_host: 'https://api-eu.mixpanel.com' });</script>
-  <script src="js/app.js?v=1.4.8"></script>
+  <script src="js/app.js?v=1.4.9"></script>
 </body>
 </html>

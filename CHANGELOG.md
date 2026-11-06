@@ -9,6 +9,18 @@ Format: [Semantic Versioning](https://semver.org) — `MAJOR.MINOR.PATCH`
 
 ---
 
+## [1.4.9] — 2026-11-06
+
+### Changed
+- **Banner copy** — "PM Gym is actively growing, content and scenarios are added weekly" replaced with "New cases and improvements are in development." Share link preserved.
+- **Three-step flow copy** — "Pick Level → Learn & Quiz → Teardowns" updated to "Pick a case → Write your answer → Compare with the rubric" to describe the actual workflow more accurately.
+
+### Added
+- **Founder line** — Subtle attribution line below the hero description: "Built by Sanket, a data scientist in Berlin transitioning into Product Management."
+- **Streak badge accessibility** — Streak count now displays "N day streak" with an `aria-live` region and visually hidden label for screen readers. SVG flame icon marked `aria-hidden`.
+
+---
+
 ## [1.4.8] — 2026-11-06
 
 ### Fixed

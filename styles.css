@@ -206,6 +206,25 @@ img { max-width: 100%; }
   color: var(--warning);
 }
 
+.streak-label {
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: var(--warning);
+  opacity: 0.75;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .btn-icon {
   width: 36px;
   height: 36px;
@@ -1730,7 +1749,14 @@ html { scroll-behavior: smooth; }
   font-size: 1.05rem;
   line-height: 1.55;
   color: var(--fg-2);
-  margin: 0 0 1.75rem;
+  margin: 0 0 0.75rem;
+  max-width: 520px;
+}
+
+.hero-founder {
+  font-size: 0.75rem;
+  color: var(--fg-3);
+  margin: 0 0 1.25rem;
   max-width: 520px;
 }
 

@@ -308,6 +308,8 @@ function renderStreakBadge() {
   if (badge) {
     badge.querySelector('.streak-count').textContent = state.streak;
     badge.style.display = state.streak > 0 ? 'flex' : 'none';
+    const ariaEl = document.getElementById('streakAriaLabel');
+    if (ariaEl) ariaEl.textContent = state.streak + '-day streak';
   }
 }
 
