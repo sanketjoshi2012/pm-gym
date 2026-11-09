@@ -9,6 +9,13 @@ Format: [Semantic Versioning](https://semver.org) — `MAJOR.MINOR.PATCH`
 
 ---
 
+## [1.6.2] — 2026-11-09
+
+### Fixed
+- **Mixpanel SDK not initialising after consent** — `loadAnalytics()` injected the CDN script and waited for `onload` to call `init()`, but the Mixpanel full library requires a pre-existing stub object on `window.mixpanel` to initialise against. Without the stub, `window.mixpanel` remained undefined after the CDN script loaded, so `init()` was never called and no events were sent. Fixed by running the Mixpanel stub IIFE inside `loadAnalytics()` before injecting the CDN script. The stub is created synchronously on consent; the CDN library loads asynchronously, finds the stub, and processes the queued `init()` call. No SDK code runs before consent.
+
+---
+
 ## [1.6.1] — 2026-11-09
 
 ### Changed
