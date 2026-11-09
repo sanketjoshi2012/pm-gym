@@ -22,21 +22,13 @@
   <!-- Favicon (SVG Barbell) -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 5v14M18 5v14M2 9h4M18 9h4M2 15h4M18 15h4M6 12h12'/%3E%3C/svg%3E">
 
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-K5383SFVVD"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-K5383SFVVD');
-  </script>
   <meta name="description" content="Free practice platform for aspiring Product Managers. Lessons, quizzes, case studies, and curated resources for career switchers breaking into PM.">
     <meta name="theme-color" content="#09090b">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="styles.css?v=1.4.0">
+  <link rel="stylesheet" href="styles.css?v=1.5.1">
 </head>
 <body>
 
@@ -322,6 +314,11 @@
         <a class="footer-link" href="https://github.com/sanketjoshi2012/pm-gym" target="_blank" rel="noopener">GitHub</a>
       </nav>
       <p class="footer-copy">&copy; 2026 PM Gym &middot; Built for aspiring Product Managers.</p>
+      <div class="footer-privacy">
+        <button class="footer-link footer-privacy-link" onclick="openPrivacyInfo()">Privacy information</button>
+        <span class="footer-privacy-sep" aria-hidden="true">&middot;</span>
+        <button class="footer-link footer-privacy-link" onclick="openConsentPreferences()">Manage analytics preferences</button>
+      </div>
     </div>
   </footer>
 
@@ -349,10 +346,51 @@
     </button>
   </nav>
 
+  <!-- Privacy Information Dialog -->
+  <div class="privacy-dialog-overlay" id="privacyDialogOverlay" role="dialog" aria-modal="true" aria-labelledby="privacyDialogTitle" hidden onclick="closePrivacyInfo()">
+    <div class="privacy-dialog" onclick="event.stopPropagation()">
+      <div class="privacy-dialog-header">
+        <h2 class="privacy-dialog-title" id="privacyDialogTitle">Privacy information</h2>
+        <button class="privacy-dialog-close" onclick="closePrivacyInfo()" aria-label="Close privacy information">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <ul class="privacy-dialog-list">
+        <li><strong>Local data (never sent):</strong> quiz scores, completed topics, lessons done, streak count, case drafts.</li>
+        <li><strong>Analytics events (after consent only):</strong> session start, topic opened, quiz answered, practice completed, Daily Rep answered.</li>
+        <li><strong>Device identifier:</strong> Mixpanel stores a device ID in your browser's localStorage to associate events across sessions.</li>
+        <li><strong>IP address:</strong> reaches Mixpanel's EU servers at the network level during each request, but is not stored as an event property on your data.</li>
+        <li><strong>Withdraw consent:</strong> use "Manage analytics preferences" in the footer to stop tracking and clear Mixpanel identifiers.</li>
+        <li><strong>Clear learning progress:</strong> clear this site's data in your browser settings (this cannot be undone).</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Analytics Consent Banner -->
+  <div class="consent-banner" id="consentBanner" role="region" aria-label="Analytics consent" hidden>
+    <div class="consent-banner-inner">
+      <div class="consent-banner-main">
+        <p class="consent-banner-text">PM Gym uses <strong>Mixpanel</strong> to understand how people use the site (EU servers only). Your learning progress is saved in your browser and never sent anywhere. <button class="consent-more-btn" id="consentMoreBtn" onclick="toggleConsentDetails()" aria-expanded="false" aria-controls="consentDetails">Learn more</button></p>
+        <div class="consent-banner-actions">
+          <button class="consent-btn consent-btn-decline" onclick="declineAnalytics()">No thanks</button>
+          <button class="consent-btn consent-btn-accept" onclick="acceptAnalytics()">Accept analytics</button>
+        </div>
+      </div>
+      <div class="consent-details" id="consentDetails" hidden>
+        <ul class="consent-details-list">
+          <li><strong>Local data (never sent):</strong> quiz scores, completed topics, lessons done, streak count, case drafts.</li>
+          <li><strong>Analytics events (after consent only):</strong> session start, topic opened, quiz answered, practice completed, Daily Rep answered.</li>
+          <li><strong>Device identifier:</strong> Mixpanel stores a device ID in your browser's localStorage to associate events across sessions.</li>
+          <li><strong>IP address:</strong> reaches Mixpanel's EU servers at the network level during each request, but is not stored as an event property on your data.</li>
+          <li><strong>Withdraw consent:</strong> click "No thanks" at any time to stop tracking and clear Mixpanel identifiers. Use "Manage analytics preferences" in the footer.</li>
+          <li><strong>Clear learning progress:</strong> clear this site's data in your browser settings (this cannot be undone).</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
   <!-- Scripts -->
   <script src="js/data.js?v=1.2.4"></script>
-  <script>(function(f,b){if(!b.__SV){var e,g,i,h;window.mixpanel=b;b._i=[];b.init=function(e,f,c){function g(a,d){var b=d.split(".");2==b.length&&(a=a[b[0]],d=b[1]);a[d]=function(){a.push([d].concat(Array.prototype.slice.call(arguments,0)))}}var a=b;"undefined"!==typeof c?a=b[c]=[]:c="mixpanel";a.people=a.people||[];a.toString=function(a){var d="mixpanel";"mixpanel"!==c&&(d+="."+c);a||(d+=" (stub)");return d};a.people.toString=function(){return a.toString(1)+".people (stub)"};i="disable time_event track track_pageview track_links track_forms track_with_groups add_group set_group remove_group register register_once alias unregister identify name_tag set_config reset opt_in_tracking opt_out_tracking has_opted_in_tracking has_opted_out_tracking clear_opt_in_out_tracking start_batch_senders people.set people.set_once people.unset people.increment people.append people.union people.track_charge people.clear_charges people.delete_user people.remove".split(" ");for(h=0;h<i.length;h++)g(a,i[h]);var j="set set_once union unset remove delete".split(" ");a.get_group=function(){function b(c){d[c]=function(){call2_args=arguments;call2=[c].concat(Array.prototype.slice.call(call2_args,0));a.push([e].concat(call2))}}for(var d={},e=["get_group"].concat(Array.prototype.slice.call(arguments,0)),c=0;c<j.length;c++)b(j[c]);return d};b._i.push([e,f,c])};b.__SV=1.2;e=f.createElement("script");e.type="text/javascript";e.async=!0;e.src="https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";g=f.getElementsByTagName("script")[0];g.parentNode.insertBefore(e,g)}})(document,window.mixpanel||[]);
-  mixpanel.init('0b6a4fbd9406a3b8f42130b91e18321a', { api_host: 'https://api-eu.mixpanel.com' });</script>
-  <script src="js/app.js?v=1.5.0"></script>
+  <script src="js/app.js?v=1.6.1"></script>
 </body>
 </html>

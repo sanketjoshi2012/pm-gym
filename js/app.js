@@ -1,7 +1,109 @@
 // PM Gym, Application Logic
 
 function mp(event, props) {
-  try { if (typeof mixpanel !== 'undefined') mixpanel.track(event, props); } catch (e) {}
+  try {
+    if (localStorage.getItem('pmgym_analytics_consent') === 'accepted' && typeof mixpanel !== 'undefined') {
+      mixpanel.track(event, props);
+    }
+  } catch (e) {}
+}
+
+// ─── Analytics Consent Management ────────────────────────────────────────────
+
+let analyticsLoaded = false;
+
+function loadAnalytics() {
+  if (analyticsLoaded) return;
+  analyticsLoaded = true;
+  const script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.async = true;
+  script.src = 'https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js';
+  script.onload = function() {
+    if (typeof window.mixpanel === 'undefined') return;
+    window.mixpanel.init('0b6a4fbd9406a3b8f42130b91e18321a', {
+      api_host: 'https://api-eu.mixpanel.com',
+      ip: false,
+      loaded: function() { mpSessionEvents(); }
+    });
+  };
+  document.head.appendChild(script);
+}
+
+function initConsentBanner() {
+  const consent = localStorage.getItem('pmgym_analytics_consent');
+  if (consent === 'accepted') {
+    loadAnalytics();
+  } else if (!consent) {
+    const banner = document.getElementById('consentBanner');
+    if (banner) banner.hidden = false;
+  }
+}
+
+function acceptAnalytics() {
+  try { localStorage.setItem('pmgym_analytics_consent', 'accepted'); } catch (e) {}
+  hideConsentBanner();
+  loadAnalytics();
+}
+
+function declineAnalytics() {
+  const wasAccepted = localStorage.getItem('pmgym_analytics_consent') === 'accepted';
+  try { localStorage.setItem('pmgym_analytics_consent', 'declined'); } catch (e) {}
+  hideConsentBanner();
+  if (wasAccepted) {
+    try {
+      if (typeof mixpanel !== 'undefined') {
+        mixpanel.opt_out_tracking();
+        mixpanel.reset();
+      }
+      localStorage.removeItem('mp_0b6a4fbd9406a3b8f42130b91e18321a_mixpanel');
+      localStorage.removeItem('__mp_opt_in_out_0b6a4fbd9406a3b8f42130b91e18321a');
+    } catch (e) {}
+    window.location.reload();
+  }
+}
+
+function hideConsentBanner() {
+  const banner = document.getElementById('consentBanner');
+  if (banner) banner.hidden = true;
+}
+
+function openConsentPreferences() {
+  const banner = document.getElementById('consentBanner');
+  if (banner) {
+    banner.hidden = false;
+    banner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+
+function toggleConsentDetails() {
+  const details = document.getElementById('consentDetails');
+  const btn = document.getElementById('consentMoreBtn');
+  if (!details || !btn) return;
+  const isOpen = !details.hidden;
+  details.hidden = isOpen;
+  btn.setAttribute('aria-expanded', String(!isOpen));
+  btn.textContent = isOpen ? 'Learn more' : 'Show less';
+}
+
+function openPrivacyInfo() {
+  const overlay = document.getElementById('privacyDialogOverlay');
+  if (!overlay) return;
+  overlay.hidden = false;
+  const closeBtn = overlay.querySelector('.privacy-dialog-close');
+  if (closeBtn) closeBtn.focus();
+  overlay._escHandler = function(e) { if (e.key === 'Escape') closePrivacyInfo(); };
+  document.addEventListener('keydown', overlay._escHandler);
+}
+
+function closePrivacyInfo() {
+  const overlay = document.getElementById('privacyDialogOverlay');
+  if (!overlay) return;
+  overlay.hidden = true;
+  if (overlay._escHandler) {
+    document.removeEventListener('keydown', overlay._escHandler);
+    overlay._escHandler = null;
+  }
 }
 
 function mpSessionEvents() {
@@ -283,7 +385,6 @@ function showView(viewName, data = {}, { pushHash = true } = {}) {
   window.scrollTo(0, 0);
 
   if (viewName === 'landing') {
-    mpSessionEvents();
     initDailyRep();
   }
 
@@ -1157,6 +1258,7 @@ function init() {
   renderStreakBadge();
   updateThemeIcon();
   updateStats();
+  initConsentBanner();
 
   // Navigate to hash on load, or landing if none
   navigateFromHash();

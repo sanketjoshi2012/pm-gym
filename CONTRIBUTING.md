@@ -178,6 +178,7 @@ Before committing and pushing any meaningful change:
 
 - [ ] **CHANGELOG.md updated** — add an entry under the correct version with Added / Changed / Fixed sections. Use today's date.
 - [ ] **Version bump** — increment the cache-buster in `index.html` for whichever file changed: `data.js?v=X` for data-only changes, `app.js?v=X` for logic changes, `styles.css?v=X` for style changes. Bump all that apply.
+- [ ] **Analytics consent respected** — new `mp()` calls must be inside user-action handlers only (not page load or view render). Never call `loadAnalytics()` or reference `window.mixpanel` directly. Never load the Mixpanel SDK unconditionally.
 - [ ] **README.md checked** — if feature descriptions, content counts, setup instructions, or product positioning changed, update README to match.
 - [ ] **No stale claims** — search for any documentation that describes removed or renamed features and correct or delete it.
 - [ ] **Tests pass** — run `node tests/quiz-validation.js` after any change to `js/data.js`. Run `node tests/logic-tests.js` after any change to `js/app.js`. All checks must pass before pushing.

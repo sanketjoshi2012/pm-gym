@@ -9,6 +9,33 @@ Format: [Semantic Versioning](https://semver.org) — `MAJOR.MINOR.PATCH`
 
 ---
 
+## [1.6.1] — 2026-11-09
+
+### Changed
+- **Footer privacy row** — Replaced the long privacy paragraph with two compact, centered text links: "Privacy information" and "Manage analytics preferences", separated by a dot. All privacy disclosures are preserved; they now live in a lightweight dialog opened by "Privacy information".
+
+### Added
+- **Privacy information dialog** — A centered modal opened from the footer. Contains all six privacy disclosures: local data saved in browser, analytics events tracked after consent, Mixpanel device identifier, IP address handling, how to withdraw consent, and how to clear local learning progress. Closes on X button, Escape key, or clicking outside. Keyboard accessible.
+
+---
+
+## [1.6.0] — 2026-11-09
+
+### Changed
+- **Analytics consent gate** — Mixpanel SDK is no longer loaded on page load. The SDK is fetched and initialised only after a visitor explicitly accepts analytics via the new consent banner. Declining keeps the SDK completely absent for that session and all future sessions until consent changes.
+- **Google Analytics removed** — The GA4 snippet (G-K5383SFVVD) has been fully removed from index.html. Mixpanel (EU endpoint) remains as the sole analytics provider.
+- **`mp()` hardened** — The Mixpanel tracking wrapper now checks `pmgym_analytics_consent === 'accepted'` and `typeof mixpanel !== 'undefined'` before sending any event, providing a second layer of protection independent of the SDK loading gate.
+- **`mpSessionEvents()` moved into consent path** — Session start events fire only after the SDK loads and `init()` completes, never on page load or navigation before consent is given.
+- **Mixpanel config** — Added `ip: false` to `mixpanel.init()` options. This instructs Mixpanel not to store the client IP as an event property. Note: the IP still reaches Mixpanel's EU servers at the network level during each HTTP request.
+
+### Added
+- **Consent banner** — A fixed bottom bar with "No thanks" and "Accept analytics" buttons. Appears on first visit when no consent preference is stored. Keyboard accessible (focus-visible outlines, full tab order). Includes a "Learn more" toggle that expands privacy details inline.
+- **Privacy details panel** — Expandable section inside the consent banner listing: which data is saved locally, which events Mixpanel collects after consent, the device identifier, IP handling, and how to withdraw consent or clear local progress.
+- **Footer privacy row** — Added below the copyright line. Describes local vs. analytics data storage, Mixpanel's device identifier, IP handling, and how to clear local progress. Includes a "Manage analytics preferences" button that reopens the consent banner.
+- **Consent management** — `openConsentPreferences()` shows the banner without changing existing consent. `declineAnalytics()` calls `mixpanel.opt_out_tracking()` and `mixpanel.reset()` and clears Mixpanel localStorage keys when withdrawing from an accepted state, then reloads the page to guarantee the SDK is no longer active. Learning progress (streak, scores, drafts) is never touched.
+
+---
+
 ## [1.5.0] — 2026-11-06
 
 ### Changed
