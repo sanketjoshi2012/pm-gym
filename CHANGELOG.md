@@ -9,6 +9,16 @@ Format: [Semantic Versioning](https://semver.org) — `MAJOR.MINOR.PATCH`
 
 ---
 
+## [1.7.0] — 2026-11-12
+
+### Added
+- **AI Grader rubric specification** (`js/grader-rubric.js`) — machine-readable scoring anchors for the four-case AI Grader pilot: FotMob, Cricbuzz, Spotify, and Swiggy. Each of the 21 rubric dimensions has explicit score-1, score-2, and score-3 descriptions. Model answers are kept in `data.js` only and are excluded from the grader specification. File is a prerequisite for the Cloudflare Worker implementation; the Worker has not been built yet.
+
+### Changed
+- **Spotify case study** — Added a fifth task question: "How would you measure whether your proposed solution worked, and what guardrail metrics would you monitor?" This aligns the prompt with the existing Metrics for Success rubric dimension, which previously had no corresponding explicit question.
+
+---
+
 ## [1.6.2] — 2026-11-09
 
 ### Fixed

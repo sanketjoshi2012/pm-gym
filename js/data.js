@@ -756,7 +756,8 @@ const PM_GYM_DATA = {
 1. What are the possible root causes of this drop? (Structure your investigation across user, product, and external factors)
 2. What data would you pull to narrow down the cause?
 3. What's your initial hypothesis, and what experiment would you run to test it?
-4. If confirmed, what specific features or changes would you propose?`,
+4. If confirmed, what specific features or changes would you propose?
+5. How would you measure whether your proposed solution worked, and what guardrail metrics would you monitor?`,
             rubric: [
               {
                 dimension: "Problem Decomposition",

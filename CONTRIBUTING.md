@@ -103,6 +103,28 @@ Case studies go in the **Advanced** level. They replace the lesson/quiz with an 
 }
 ```
 
+### AI Grader Rubric Specification
+
+The AI Grader scoring anchors live in `js/grader-rubric.js` — a file separate from `data.js`. It contains case-specific score-1, score-2, and score-3 descriptions for the four pilot cases (FotMob, Cricbuzz, Spotify, Swiggy) and the universal scoring rules.
+
+**Rules for this file:**
+- **Model answers must never be added here.** They stay in `data.js` only and must not appear in live grading prompts.
+- Each dimension needs all three score anchors (`score_3`, `score_2`, `score_1`). Partial entries will be rejected in validation.
+- `caseId` values must exactly match the `id` field of the corresponding case study in `data.js`.
+- Score descriptions are guidelines, not checklists. Phrase them to describe demonstrated competence, not coverage of a list.
+
+```js
+// Example dimension entry
+{
+  name: "Problem Decomposition",
+  score_3: "What strong competence looks like for this dimension.",
+  score_2: "What partial competence looks like — neither fully strong nor fully weak.",
+  score_1: "What a weak or absent response looks like for this dimension."
+}
+```
+
+---
+
 ### Adding a Resource to the Library
 
 Find the right category in `PM_GYM_DATA.resources` and add to its `items` array:
