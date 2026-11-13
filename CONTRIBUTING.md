@@ -123,6 +123,39 @@ The AI Grader scoring anchors live in `js/grader-rubric.js` — a file separate 
 }
 ```
 
+### Cloudflare Worker (AI Grader Backend)
+
+The grading backend lives in `worker/`. It is a Cloudflare Worker project — a single-process JS service that runs locally via Wrangler and deploys to Cloudflare's edge when the time comes.
+
+**Running locally (no Cloudflare account needed):**
+
+```bash
+cd worker
+npm install
+npm test          # run the 32-test suite with node --test
+npm run dev       # start a local HTTP server on :8787
+```
+
+**Project structure:**
+
+| File | Purpose |
+|---|---|
+| `src/index.js` | POST `/grade` handler — routing, body size cap, rate-limit hook |
+| `src/validate.js` | Input validation: `case_id`, word count (120–1500), char cap (15k) |
+| `src/context.js` | Builds grading context from `grader-rubric.js` — no model answer |
+| `src/mock-llm.js` | Mock adapter returning `_mock: true` feedback — replace in a future step |
+| `src/schema.js` | Validates LLM output, checks `evidence_quote`, computes server-side totals |
+| `src/rate-limit.js` | No-op stub — replaced with KV + Durable Object guard in a future step |
+| `tests/grade.test.js` | 32 tests, Node.js built-in runner |
+
+**Rules for Worker changes:**
+- `case_id` values in `validate.js` must match the `caseId` fields in `grader-rubric.js` exactly.
+- `buildGradingContext` must never include the model answer (it stays in `data.js` only).
+- `total_score` and `max_total_score` are always computed in `schema.js` — never trusted from LLM output.
+- `evidence_quote` must be verified server-side as an exact substring of the learner's answer.
+- Do not deploy (`npm run deploy`) or connect a paid LLM without a separate approval step.
+- Do not log learner answer text or feedback content.
+
 ---
 
 ### Adding a Resource to the Library

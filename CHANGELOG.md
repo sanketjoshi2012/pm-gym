@@ -9,6 +9,19 @@ Format: [Semantic Versioning](https://semver.org) — `MAJOR.MINOR.PATCH`
 
 ---
 
+## [1.8.0] — 2026-11-13
+
+### Added
+- **Cloudflare Worker** (`worker/`) — locally testable grading backend with a POST `/grade` endpoint. Accepts `case_id`, `answer`, `attempt`, and `assisted`; validates the case against the four pilot cases (FotMob, Cricbuzz, Spotify, Swiggy); enforces a 120-word minimum, 1500-word maximum, and 15,000-character cap; builds a grading context from `grader-rubric.js` with scoring anchors but no model answer; returns structured feedback with per-dimension `score` (1–3), `evidence_quote` (exact substring of the answer or null), `reasoning`, and `improvement`. `total_score` and `max_total_score` are computed server-side, never from the LLM. No real LLM connected and Worker not deployed; run locally with `npm run dev` or `npm test` from `worker/`.
+- **Mock LLM adapter** (`worker/src/mock-llm.js`) — returns structurally valid stub feedback for all 21 dimensions across the four pilot cases, clearly marked `_mock: true`. Replaced with a real LLM call in a future step.
+- **Rate-limit stub** (`worker/src/rate-limit.js`) — no-op with the fixed `checkRateLimit(request, env)` signature; replaced with a KV burst limiter and Durable Object budget guard in a future step.
+- **Worker test suite** (`worker/tests/grade.test.js`) — 32 tests across 5 suites covering input validation, grading context, mock LLM output, schema validation, and end-to-end mock grading for all four pilot cases. Run with `node --test` (no Cloudflare account required).
+
+### Changed
+- **`js/grader-rubric.js`** — added a CommonJS export guard at the bottom so the Worker can import the file directly without maintaining a second copy. Guard is a no-op in browser `<script>` tags.
+
+---
+
 ## [1.7.0] — 2026-11-12
 
 ### Added
