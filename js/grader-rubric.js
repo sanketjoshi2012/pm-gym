@@ -225,3 +225,7 @@ const GRADER_RUBRIC = {
 
   ]
 };
+
+// Allow Node.js / Cloudflare Worker import without breaking browser <script> usage.
+// In a classic browser script, `module` is undefined so this line never runs.
+if (typeof module !== 'undefined') module.exports = GRADER_RUBRIC; // eslint-disable-line no-undef

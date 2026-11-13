@@ -1,0 +1,6 @@
+name = "pm-gym-grader"
+main = "src/index.js"
+compatibility_date = "2024-09-02"
+
+[vars]
+ENVIRONMENT = "development"
