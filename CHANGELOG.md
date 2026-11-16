@@ -9,6 +9,27 @@ Format: [Semantic Versioning](https://semver.org) — `MAJOR.MINOR.PATCH`
 
 ---
 
+## [1.9.0] — 2026-11-16
+
+### Added
+- **Per-client rate limiting** (`worker/src/rate-limit.js`): replaces the no-op stub. Uses Cloudflare KV to limit each client to 10 grading requests per hour and 50 per day. These limits are approximate by design because KV is eventually consistent. Clients are identified only from Cloudflare's `CF-Connecting-IP`; client-supplied headers such as `X-Forwarded-For` are never read. IPv6 clients are limited per /64.
+- **Global daily request cap** (`worker/src/global-budget.js`): a Durable Object that enforces an exact, atomic cap on grading requests per UTC day across all users. Configurable through `GLOBAL_DAILY_CAP`, with a conservative default of 20. Concurrent requests cannot exceed it.
+- **Fail closed behaviour**: if the KV binding, Durable Object binding, `IP_HASH_SALT` secret, or trusted client address is missing, or if any storage call fails, the Worker returns HTTP 503 and does not grade. Limit hits return HTTP 429 with a `Retry-After` header and a generic message.
+- **Privacy**: rate-limit storage holds only keyed HMAC digests of client addresses and counters. No raw IP addresses and no learner answers are stored.
+- **Rate-limit test suite** (`worker/tests/rate-limit.test.js`): 39 tests covering hourly limits, daily limits, the global cap, concurrent requests, failure conditions, and the request body size cap. Total Worker tests: 71.
+
+### Changed
+- **Rate-limit check moved after input validation** in `worker/src/index.js`, so rejected requests (bad case ID, too short, too long) never consume the global budget. It still runs immediately before the LLM call.
+
+### Fixed
+- **Request body size cap** (`worker/src/body.js`): the 50 KB limit previously trusted the `Content-Length` header, so a request with a missing or understated header could bypass it. The Worker now counts the bytes it actually receives and stops reading once the limit is passed, returning HTTP 413.
+
+### Notes
+- The global cap limits the number of grading requests. It is not a euro spending cap. Worst-case daily spend is roughly the cap multiplied by the maximum cost of one grading request, including retries. The production value must be chosen after measuring real model costs.
+- Mock LLM still in place. No real AI provider connected. Worker not deployed.
+
+---
+
 ## [1.8.0] — 2026-11-13
 
 ### Added

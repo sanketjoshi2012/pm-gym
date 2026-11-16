@@ -3,6 +3,7 @@ import { buildGradingContext } from './context.js';
 import { mockLLM } from './mock-llm.js';
 import { validateAndEnrichResponse } from './schema.js';
 import { checkRateLimit } from './rate-limit.js';
+import { readJsonBody } from './body.js';
 
 const CORS_HEADERS = {
   'Content-Type': 'application/json',
@@ -11,9 +12,11 @@ const CORS_HEADERS = {
   'Access-Control-Allow-Headers': 'Content-Type',
 };
 
-function json(data, status = 200) {
-  return new Response(JSON.stringify(data), { status, headers: CORS_HEADERS });
+function json(data, status = 200, extraHeaders = {}) {
+  return new Response(JSON.stringify(data), { status, headers: { ...CORS_HEADERS, ...extraHeaders } });
 }
+
+export { GlobalBudget } from './global-budget.js';
 
 export default {
   async fetch(request, env) {
@@ -31,31 +34,27 @@ export default {
       return json({ error: 'Method not allowed' }, 405);
     }
 
-    // Rate limit hook — no-op stub; replaced with KV + Durable Object guard in Step 3
-    const rl = await checkRateLimit(request, env);
-    if (!rl.ok) {
-      return json({ error: rl.error }, 429);
+    const parsed = await readJsonBody(request);
+    if (!parsed.ok) {
+      return parsed.status === 413
+        ? json({ error: 'Request body too large' }, 413)
+        : json({ error: 'Invalid JSON body' }, 400);
     }
 
-    // Body size cap
-    const contentLength = parseInt(request.headers.get('content-length') ?? '0', 10);
-    if (contentLength > 50_000) {
-      return json({ error: 'Request body too large' }, 413);
-    }
-
-    let body;
-    try {
-      body = await request.json();
-    } catch {
-      return json({ error: 'Invalid JSON body' }, 400);
-    }
-
-    const validation = validateInput(body);
+    const validation = validateInput(parsed.body);
     if (!validation.ok) {
       return json({ error: validation.error }, 400);
     }
 
     const { case_id, answer, attempt, assisted } = validation.data;
+
+    // Runs after validation so rejected requests never consume the global budget,
+    // and immediately before the LLM call so nothing billable can bypass it.
+    const rl = await checkRateLimit(request, env);
+    if (!rl.ok) {
+      const extra = rl.retryAfter ? { 'Retry-After': String(rl.retryAfter) } : {};
+      return json({ error: rl.error }, rl.status, extra);
+    }
 
     const context = buildGradingContext(case_id, answer);
     const rawFeedback = await mockLLM(context);

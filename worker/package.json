@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "wrangler dev --local",
-    "test": "node --test tests/grade.test.js",
+    "dev": "wrangler dev",
+    "test": "node --test tests/grade.test.js tests/rate-limit.test.js",
     "deploy": "wrangler deploy"
   },
   "devDependencies": {

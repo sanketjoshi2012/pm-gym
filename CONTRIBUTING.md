@@ -132,21 +132,25 @@ The grading backend lives in `worker/`. It is a Cloudflare Worker project — a 
 ```bash
 cd worker
 npm install
-npm test          # run the 32-test suite with node --test
-npm run dev       # start a local HTTP server on :8787
+cp .dev.vars.example .dev.vars   # then set a long random IP_HASH_SALT (never commit .dev.vars)
+npm test          # run the 71-test suite with node --test
+npm run dev       # start a local HTTP server on :8787 (KV and Durable Object are simulated locally)
 ```
 
 **Project structure:**
 
 | File | Purpose |
 |---|---|
-| `src/index.js` | POST `/grade` handler — routing, body size cap, rate-limit hook |
+| `src/index.js` | POST `/grade` handler: routing, rate-limit check, response |
+| `src/body.js` | Reads the request body with a 50 KB cap enforced on bytes actually received |
 | `src/validate.js` | Input validation: `case_id`, word count (120–1500), char cap (15k) |
 | `src/context.js` | Builds grading context from `grader-rubric.js` — no model answer |
 | `src/mock-llm.js` | Mock adapter returning `_mock: true` feedback — replace in a future step |
 | `src/schema.js` | Validates LLM output, checks `evidence_quote`, computes server-side totals |
-| `src/rate-limit.js` | No-op stub — replaced with KV + Durable Object guard in a future step |
-| `tests/grade.test.js` | 32 tests, Node.js built-in runner |
+| `src/rate-limit.js` | Per-client limits in KV (10 per hour, 50 per day), then the global cap. Fails closed |
+| `src/global-budget.js` | Durable Object enforcing the atomic global daily request cap |
+| `tests/grade.test.js` | 32 tests for validation, context, mock LLM, and schema |
+| `tests/rate-limit.test.js` | 39 tests for per-client limits, global cap, concurrency, failure conditions, and the body size cap |
 
 **Rules for Worker changes:**
 - `case_id` values in `validate.js` must match the `caseId` fields in `grader-rubric.js` exactly.
@@ -155,6 +159,22 @@ npm run dev       # start a local HTTP server on :8787
 - `evidence_quote` must be verified server-side as an exact substring of the learner's answer.
 - Do not deploy (`npm run deploy`) or connect a paid LLM without a separate approval step.
 - Do not log learner answer text or feedback content.
+- Rate limiting must fail closed. A missing binding, missing secret, or storage error returns 503 and must never fall through to grading.
+- Identify clients only from `CF-Connecting-IP`. Never read `X-Forwarded-For` or other client-supplied headers.
+- Rate-limit storage may hold only HMAC digests and counters. No raw IP addresses, no answers.
+- Nothing billable may run before `checkRateLimit` succeeds. Any future LLM retry must reserve its own slot from the global cap.
+
+**Request cap versus spending cap:**
+
+`GLOBAL_DAILY_CAP` limits how many grading requests run per UTC day. It does not measure money. The real spending bound is:
+
+```
+worst-case daily spend = GLOBAL_DAILY_CAP x maximum cost of one grading request
+```
+
+The maximum cost of one request depends on the model's input and output token prices, the largest possible prompt (rubric plus a 1500-word answer), the output token limit, the number of retries, and the USD to EUR exchange rate. Before production: measure real per-request cost, set a hard output token limit on the LLM call, choose the cap from the formula above, and also set a spending limit in the model provider's console as an independent backstop.
+
+Other limits to know: the per-client KV limits are approximate and exist to deter abuse, not to protect the budget. Each graded request makes 2 KV writes, and the Cloudflare free tier allows 1,000 KV writes per day, so the free tier supports about 500 graded requests per day.
 
 ---
 

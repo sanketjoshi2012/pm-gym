@@ -4,3 +4,24 @@ compatibility_date = "2024-09-02"
 
 [vars]
 ENVIRONMENT = "development"
+# Maximum grading REQUESTS per UTC day across all users, enforced by the GlobalBudget Durable Object.
+# This is a request count, not a euro amount. Worst-case daily spend is roughly
+# GLOBAL_DAILY_CAP x (maximum cost of one grading request, including any retries).
+# Keep this conservative until real per-request model costs have been measured.
+GLOBAL_DAILY_CAP = "20"
+
+# Per-client counters (approximate). Replace the id with a real namespace id before any deploy.
+[[kv_namespaces]]
+binding = "RATE_LIMIT_KV"
+id = "REPLACE_WITH_REAL_KV_NAMESPACE_ID_BEFORE_DEPLOY"
+
+[[durable_objects.bindings]]
+name = "GLOBAL_BUDGET"
+class_name = "GlobalBudget"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["GlobalBudget"]
+
+# IP_HASH_SALT is a secret (16+ characters) and is deliberately not listed here.
+# Local: copy .dev.vars.example to .dev.vars. Production: wrangler secret put IP_HASH_SALT.
