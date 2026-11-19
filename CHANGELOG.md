@@ -9,6 +9,27 @@ Format: [Semantic Versioning](https://semver.org) — `MAJOR.MINOR.PATCH`
 
 ---
 
+## [1.10.0] — 2026-11-19
+
+### Added
+- **Real LLM adapter** (`worker/src/anthropic-llm.js`): calls Anthropic's Messages API with `claude-haiku-5-5`. 15-second timeout, at most one retry (5xx / network / timeout only; no retry on 4xx, 429 or malformed output), 3,500-token output cap, 2-sentence reasoning constraint. Builds the prompt from the scenario, questions, 3-level scoring anchors and universal rules in `js/grader-rubric.js`; the model answer is never included. Evidence quotes are still verified server-side as exact substrings of the learner's answer; `total_score` and `max_total_score` are still computed in `schema.js`.
+- **Explicit adapter selection with fail-closed default** (`worker/src/index.js`): the Worker now selects between the real adapter and the mock adapter from `env.LLM_PROVIDER`. Any value other than `"anthropic"` or `"mock"` (including missing) returns HTTP 503 before the rate-limit check or any paid call. `LLM_PROVIDER` is deliberately absent from `wrangler.toml [vars]` so a bare `wrangler deploy` cannot ship mock to production.
+- **Truncation detection and failure accounting**: when the API returns `stop_reason: "max_tokens"`, the adapter short-circuits parsing with a distinct `output_truncated` reason. `GraderError` now carries the billed `usage` and `stop_reason` from the upstream response so parse failures and truncations record real costs instead of showing $0.
+- **New offline tests** (`worker/tests/anthropic-llm.test.js`): 26 tests covering the prompt builder (every scenario, question and anchor present; model answer absent for all four pilot cases), JSON extraction and parsing, round-trip through the existing schema validator, retry behaviour, timeout handling, truncation detection, parse-failure accounting and log-line hygiene (no answer text, feedback text or API key in logs). Total Worker tests: 102.
+- **Local smoke-test scripts** (`worker/scripts/`): `real-grade.mjs` runs up to 10 synthetic calls spanning all four pilot cases and four quality levels (strong, medium, weak, keyword-stuffed). `retry-swiggy.mjs` reruns the previously truncated Swiggy case up to three times. Both enforce a $0.05 cumulative recorded-cost stop in the script and write a JSON report under `scripts/`. The reports are gitignored.
+
+### Changed
+- **`wrangler.toml`**: the `LLM_PROVIDER` default was removed so production cannot silently run the mock adapter. The file now documents the production deployment sequence (`[env.production.vars]` with `LLM_PROVIDER = "anthropic"` plus `wrangler secret put ANTHROPIC_API_KEY`).
+- **`.dev.vars.example`**: documents `LLM_PROVIDER=mock` (required for local development) and `ANTHROPIC_API_KEY` (required only when `LLM_PROVIDER=anthropic`). Real `.dev.vars` remains git-ignored.
+
+### Notes
+- **Implemented but not deployed.** The adapter is committed and offline-tested. The Cloudflare Worker is not deployed, the website has no "Get AI feedback" control, and no end user can reach the grader. Deployment and the frontend integration are separate steps.
+- **Measured cost** (offline smoke test, not a production figure): mean ~$0.0011 per grading request on `claude-haiku-5-5`. At the current `GLOBAL_DAILY_CAP` of 20 requests/day, worst-case spend is in the low cents per day. These numbers come from a synthetic calibration set. Real learner costs will be measured again before deployment.
+- The synthetic answers used in the smoke tests are clearly labelled in `scripts/calibration-answers.mjs` and must not be used as a human calibration benchmark. The Section-5 calibration against Cohort 21 answers is a separate step.
+- Mock adapter retained for tests and local development.
+
+---
+
 ## [1.9.0] — 2026-11-16
 
 ### Added

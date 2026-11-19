@@ -132,8 +132,8 @@ The grading backend lives in `worker/`. It is a Cloudflare Worker project — a 
 ```bash
 cd worker
 npm install
-cp .dev.vars.example .dev.vars   # then set a long random IP_HASH_SALT (never commit .dev.vars)
-npm test          # run the 71-test suite with node --test
+cp .dev.vars.example .dev.vars   # see "Environment variables" below for required values (never commit .dev.vars)
+npm test          # run the 102-test suite with node --test
 npm run dev       # start a local HTTP server on :8787 (KV and Durable Object are simulated locally)
 ```
 
@@ -145,12 +145,17 @@ npm run dev       # start a local HTTP server on :8787 (KV and Durable Object ar
 | `src/body.js` | Reads the request body with a 50 KB cap enforced on bytes actually received |
 | `src/validate.js` | Input validation: `case_id`, word count (120–1500), char cap (15k) |
 | `src/context.js` | Builds grading context from `grader-rubric.js` — no model answer |
-| `src/mock-llm.js` | Mock adapter returning `_mock: true` feedback — replace in a future step |
+| `src/mock-llm.js` | Mock adapter returning `_mock: true` feedback. Used for local development and tests |
+| `src/anthropic-llm.js` | Real adapter for `claude-haiku-5-5`. Timeout, bounded retry, truncation detection, cost-preserving error handling |
 | `src/schema.js` | Validates LLM output, checks `evidence_quote`, computes server-side totals |
 | `src/rate-limit.js` | Per-client limits in KV (10 per hour, 50 per day), then the global cap. Fails closed |
 | `src/global-budget.js` | Durable Object enforcing the atomic global daily request cap |
 | `tests/grade.test.js` | 32 tests for validation, context, mock LLM, and schema |
-| `tests/rate-limit.test.js` | 39 tests for per-client limits, global cap, concurrency, failure conditions, and the body size cap |
+| `tests/rate-limit.test.js` | 44 tests for per-client limits, global cap, concurrency, failure conditions, the body size cap, and adapter selection |
+| `tests/anthropic-llm.test.js` | 26 tests for the real adapter: prompt, parsing, retries, timeout, truncation, failure accounting, log hygiene |
+| `scripts/real-grade.mjs` | Local smoke-test runner (10 synthetic calls, $0.05 recorded-cost stop). Not part of `npm test` |
+| `scripts/retry-swiggy.mjs` | Focused rerun of the Swiggy case (up to 3 attempts, $0.05 recorded-cost stop) |
+| `scripts/calibration-answers.mjs` | Synthetic smoke-test answers. NOT a human calibration benchmark |
 
 **Rules for Worker changes:**
 - `case_id` values in `validate.js` must match the `caseId` fields in `grader-rubric.js` exactly.
@@ -163,6 +168,18 @@ npm run dev       # start a local HTTP server on :8787 (KV and Durable Object ar
 - Identify clients only from `CF-Connecting-IP`. Never read `X-Forwarded-For` or other client-supplied headers.
 - Rate-limit storage may hold only HMAC digests and counters. No raw IP addresses, no answers.
 - Nothing billable may run before `checkRateLimit` succeeds. Any future LLM retry must reserve its own slot from the global cap.
+- **Adapter selection fails closed.** `pickAdapter(env)` returns `null` unless `env.LLM_PROVIDER` is exactly `"anthropic"` or `"mock"`. The handler then returns 503 and never falls through to grading. `wrangler.toml [vars]` deliberately does not set `LLM_PROVIDER`, so a bare `wrangler deploy` cannot ship mock to production. Set it in `[env.production.vars]` or at deploy time.
+- **The real adapter requires `env.ANTHROPIC_API_KEY`.** Store it as a Cloudflare Worker secret (`wrangler secret put ANTHROPIC_API_KEY --env production`) in production and in `.dev.vars` locally. Never put it in `wrangler.toml`, `.dev.vars.example`, source files, test fixtures, or chat.
+- **Smoke-test scripts cost real money.** `scripts/real-grade.mjs` and `scripts/retry-swiggy.mjs` call the Anthropic API when `.dev.vars` carries a real key. They are not part of `npm test`. Both stop when cumulative recorded cost reaches $0.05, but that is not a guaranteed billing cap — set an independent spending limit in the Anthropic console too. Their JSON reports are gitignored.
+
+**Environment variables**
+
+| Variable | Where | Required when | What it does |
+|---|---|---|---|
+| `IP_HASH_SALT` | `.dev.vars` or Worker secret | Always | HMAC salt for rate-limit storage. Must be 16+ characters of randomness. Never an API key. |
+| `LLM_PROVIDER` | `.dev.vars` locally, `[env.*.vars]` or deploy flag in production | Always | `"anthropic"` for real grading, `"mock"` for local development. Any other value returns 503. |
+| `ANTHROPIC_API_KEY` | `.dev.vars` or Worker secret | Only when `LLM_PROVIDER=anthropic` | Credential for the Messages API. Never committed, never logged, never echoed back in chat. Rotate immediately if exposed. |
+| `GLOBAL_DAILY_CAP` | `wrangler.toml [vars]` | Optional | Max grading requests per UTC day across all clients. Defaults to 20. See the request-cap-versus-spending-cap note below. |
 
 **Request cap versus spending cap:**
 
@@ -175,6 +192,10 @@ worst-case daily spend = GLOBAL_DAILY_CAP x maximum cost of one grading request
 The maximum cost of one request depends on the model's input and output token prices, the largest possible prompt (rubric plus a 1500-word answer), the output token limit, the number of retries, and the USD to EUR exchange rate. Before production: measure real per-request cost, set a hard output token limit on the LLM call, choose the cap from the formula above, and also set a spending limit in the model provider's console as an independent backstop.
 
 Other limits to know: the per-client KV limits are approximate and exist to deter abuse, not to protect the budget. Each graded request makes 2 KV writes, and the Cloudflare free tier allows 1,000 KV writes per day, so the free tier supports about 500 graded requests per day.
+
+**Current measured cost (synthetic calibration, not production):** mean ~$0.0011 per grading request on `claude-haiku-5-5` at verified pricing of $0.10 / $0.50 per million input / output tokens (prompts under 100k). At the default `GLOBAL_DAILY_CAP` of 20, worst-case spend is in the low cents per day. Re-measure with real learner traffic before raising the cap.
+
+**Implemented vs deployed.** As of v1.10.0: the real adapter is committed and offline-tested, and the Worker boots locally against the real model under `wrangler dev`. The Cloudflare Worker is **not deployed**, `index.html` and `app.js` have **no "Get AI feedback" control**, and no end user can reach the grader yet. Deployment and the frontend integration are tracked as separate steps.
 
 ---
 
