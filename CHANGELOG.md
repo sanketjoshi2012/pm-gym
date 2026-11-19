@@ -9,6 +9,25 @@ Format: [Semantic Versioning](https://semver.org) — `MAJOR.MINOR.PATCH`
 
 ---
 
+## [2.0.0] — 2026-11-19
+
+### Added
+- **AI Grader backend deployed to Cloudflare** (`worker/wrangler.toml` `[env.production]`): the real Haiku 5.5 grading Worker is now live at `https://pm-gym-grader-production.joshisanket80.workers.dev/grade`. Production environment `pm-gym-grader-production` binds a dedicated KV namespace for per-client counters and a `GlobalBudget` Durable Object (SQLite-backed) for the atomic daily cap. The `v1` migration ran on first deploy.
+- **Production configuration pinned in git**: `[env.production]` block adds `ENVIRONMENT="production"`, `LLM_PROVIDER="anthropic"`, `GLOBAL_DAILY_CAP="20"`, and the public KV namespace id. The default top-level `[vars]` block still omits `LLM_PROVIDER` so a bare `wrangler deploy` cannot ship the mock adapter to production.
+- **Secrets configured via `wrangler secret put` (not in git)**: `ANTHROPIC_API_KEY` and `IP_HASH_SALT` are stored only as Cloudflare Worker secrets on the production environment.
+
+### Verified at deploy time
+- **Fail-closed before secrets:** the first `wrangler deploy --env production` left the Worker reachable but serving HTTP 503 on every `POST /grade` because `IP_HASH_SALT` was not yet set. No mock grading, no paid call. Confirmed with a live probe (latency ~57 ms, response `{"error":"Grading is temporarily unavailable..."}`).
+- **One controlled live grading request succeeded** after both secrets were set. Response was a schema-valid feedback object on `case-study-fotmob` with real evidence quotes and reasoning (no `_mock` flag). Billed: 2,355 input + 1,525 output tokens on `claude-haiku-5-5`, Worker-side latency 6.3 s, stop_reason `end_turn`, cost ≈ $0.001 (0.1 ¢). The global daily counter advanced by exactly 1.
+
+### Notes
+- **Deployed, not yet integrated.** The Worker is live, but the PM Gym site has no "Get AI feedback" control; `app.js` and `index.html` do not call `/grade` from anywhere. End users still cannot reach the grader. Frontend integration is a separate step.
+- **Rate limits and privacy protections unchanged.** 10/hour and 50/day per client via KV (approximate), global 20/day via Durable Object (atomic), HMAC-salted identifiers only, no raw IPs or learner answers stored.
+- **Rubrics, website, homepage, and analytics unchanged.**
+- The `workers.dev` subdomain `joshisanket80.workers.dev` is a Cloudflare account setting, created once during first deploy.
+
+---
+
 ## [1.10.0] — 2026-11-19
 
 ### Added
