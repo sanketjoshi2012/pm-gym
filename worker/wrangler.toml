@@ -41,7 +41,12 @@ name = "pm-gym-grader-production"
 
 [env.production.vars]
 ENVIRONMENT = "production"
-LLM_PROVIDER = "anthropic"
+# "off" disables grading at the adapter level while Cohort 21 calibration runs.
+# pickAdapter() returns null for anything other than "anthropic" or "mock", so every POST /grade
+# returns 503 before rate-limit check, context build, or any paid Anthropic call.
+# Re-enable with LLM_PROVIDER = "anthropic" and `wrangler deploy --env production` + verifying
+# curl output in CHANGELOG. See [2.3.0] for the full reactivation procedure.
+LLM_PROVIDER = "off"
 GLOBAL_DAILY_CAP = "20"
 
 [[env.production.kv_namespaces]]

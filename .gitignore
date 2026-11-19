@@ -1,3 +1,11 @@
 .DS_Store
 .claude/
 *.log
+
+# Private calibration data. Volunteer / Cohort 21 answers MUST NEVER be committed, even anonymised.
+# Local fixture files that the calibration runner can read via --answers=<path>.
+worker/scripts/*.local.mjs
+
+# Calibration output reports (scores, latency, tokens only — but still local-only).
+worker/scripts/*-report.json
+worker/scripts/*-report.local.json

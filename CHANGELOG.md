@@ -9,6 +9,47 @@ Format: [Semantic Versioning](https://semver.org) — `MAJOR.MINOR.PATCH`
 
 ---
 
+## [2.3.0] — 2026-11-19
+
+### Changed — AI Grader temporarily frozen for Cohort 21 calibration (Section 5)
+Reversible freeze that hides the public AI grader without losing any code, data, or configuration. Participants will produce calibration answers offline (paper / docs); two independent human evaluations happen first, then we run those answers through the real grader using a private local script (see Section 5 note below).
+
+- **Worker disabled** (`worker/wrangler.toml`): `[env.production.vars].LLM_PROVIDER` flipped from `"anthropic"` to `"off"`. Because `pickAdapter()` returns `null` for anything other than `"anthropic"` or `"mock"`, every `POST /grade` now returns `503 "Grading is temporarily unavailable. Please try again later."` before rate-limit check, context build, or any paid Anthropic call. Verified live:
+  ```
+  curl -i -X POST https://pm-gym-grader-production.joshisanket80.workers.dev/grade \
+    -H 'Content-Type: application/json' \
+    -d '{"case_id":"case-study-fotmob","answer":"<192-word synthetic>","attempt":1,"assisted":false}'
+  # HTTP/2 503
+  # {"error":"Grading is temporarily unavailable. Please try again later."}
+  ```
+  `ANTHROPIC_API_KEY`, `IP_HASH_SALT`, the KV namespace id, the `GlobalBudget` Durable Object binding, the `v1` migration, the production Worker name, CORS, and the global 20/day cap are all preserved.
+- **Frontend grader UI fully hidden** (`js/app.js`): new `const GRADER_ENABLED = false;` next to `GRADER_URL`; `isPilotCase()` now returns `GRADER_ENABLED && PILOT_CASE_IDS.has(topicId)`. One flag flips off the word counter, Get AI feedback button, View last feedback button, result panel, hydration of stored grades, error banner, stale-badge listener, and the model-answer-revealed → assisted flip. `requestGrade()` early-returns. Drafts (`pmgym_case_answers`) and grading records (`pmgym_case_grading`) are preserved in every learner's browser.
+- **Homepage AI promotional copy removed** (`index.html`): hero loses its `✦ AI Feedback Available` pill; the three grid cards lose theirs; section renamed "Practice with AI Feedback" → **"Featured Case Teardowns"** with kicker "Explore more cases" and the pre-AI subtitle. Hero still features Swiggy; grid still features FotMob / Cricbuzz / Spotify. The case pages themselves still open — they just no longer promise grading. `index.html` cache-busters bumped to `styles.css?v=1.7.2` and `app.js?v=1.8.0`.
+
+### Preserved (bit for bit)
+- `worker/src/*.js` — grader code, schema validator, Anthropic + mock adapters, Durable Object, `GraderError`.
+- `js/grader-rubric.js`, `js/app.js` grader helpers and render functions, `js/data.js`, `styles.css` grader rules.
+- `tests/grader-ui-tests.js` (77 tests) continues to run and protect the implementation.
+- Analytics code, consent logic, rubrics, pilot IDs, production Worker name, KV id, DO binding, migration tag, Worker secrets.
+- Every learner's `pmgym_case_answers` and `pmgym_case_grading` localStorage state.
+
+### Added — Private calibration tooling (local only, no public exposure)
+- `worker/scripts/real-grade.mjs` extended with `--answers=<path>`, `--repeat=<n>`, `--spend-stop=<usd>`, and `--report=<path>`. Calls the Anthropic adapter directly (no Worker, no `wrangler dev`). Captures per-run dimension-level scores, total scores, token usage, latency, and cost. **Never logs or writes participant answer text.** Reports go to a gitignored path by default.
+- `worker/scripts/calibration-answers.mjs` header comment now spells out the privacy rule: real volunteer / Cohort 21 answers belong in a gitignored `*.local.mjs` file and must never be committed, even anonymised.
+- `.gitignore` adds `worker/scripts/*.local.mjs` and `worker/scripts/*-report*.json` so neither inputs nor outputs of calibration runs can be committed by accident.
+
+### Reactivation procedure (three steps, in order)
+1. **Worker first.** In `worker/wrangler.toml` change `LLM_PROVIDER = "off"` back to `"anthropic"` under `[env.production.vars]`. Run `cd worker && wrangler deploy --env production`. Verify with a schema-valid curl to `/grade` (~0.1¢). The production 20/day cap resumes protecting cost.
+2. **Frontend second.** In `js/app.js` set `GRADER_ENABLED = true`. Restore the AI label spans and the "Practice with AI Feedback" copy in `index.html` (git revert the freeze commit's `index.html` hunks is the cleanest route). Flip the homepage tests back to AI assertions. Bump cache-busters. Run all suites green locally.
+3. **Push `origin/main`.** GitHub Pages ships the new HTML + JS. Saved drafts and prior grades surface automatically because nothing was deleted.
+
+### Notes
+- Zero paid API calls were made for this release.
+- Section 5 calibration itself is offline. Participants submit answers on paper / docs; two independent human evaluations happen first; the local runner above is only used after that step. No participant-facing calibration interface was built.
+- No changes to analytics, grading rubrics, Worker code, data, or the production daily cap.
+
+---
+
 ## [2.2.0] — 2026-11-19
 
 ### Added

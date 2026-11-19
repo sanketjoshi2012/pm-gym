@@ -2,6 +2,14 @@
 // These are NOT the real Cohort 21 answers from Section 5. They exist to exercise the adapter
 // against different answer qualities before we spend money on real calibration.
 // quality: "strong" | "medium" | "weak" | "trap"
+//
+// IMPORTANT — PRIVACY RULE:
+// Real volunteer / Cohort 21 / participant answers MUST NEVER be committed to this repo, even
+// anonymised. They belong in a gitignored local file (see .gitignore → worker/scripts/*.local.mjs).
+// To grade real answers, create e.g. `worker/scripts/cohort21-answers.local.mjs` with the same
+// shape as CALIBRATION_ANSWERS and point the runner at it:
+//   node worker/scripts/real-grade.mjs --answers=worker/scripts/cohort21-answers.local.mjs
+// The runner never logs or writes answer text, only scores / tokens / latency.
 
 export const CALIBRATION_ANSWERS = [
   {

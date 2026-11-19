@@ -41,20 +41,20 @@ function featuredBlock() {
 
 // ─── Section heading + copy ─────────────────────────────────────────────────
 
-console.log('\n--- Heading + section copy ---');
-test('section heading reads "Practice with AI Feedback"', () => {
-  truthy(/<h2 class="featured-title">Practice with AI Feedback<\/h2>/.test(HTML),
-    'new section heading missing');
+console.log('\n--- Freeze: heading + section copy reverted ---');
+test('section heading reverted to "Featured Case Teardowns"', () => {
+  truthy(/<h2 class="featured-title">Featured Case Teardowns<\/h2>/.test(HTML),
+    'freeze heading missing — expected "Featured Case Teardowns"');
 });
-test('legacy "Featured Case Teardowns" heading is removed', () => {
-  falsy(HTML.includes('Featured Case Teardowns'), 'old heading still present');
+test('AI-era heading "Practice with AI Feedback" is absent', () => {
+  falsy(HTML.includes('Practice with AI Feedback'), 'AI-era heading must not appear while grader is frozen');
 });
-test('kicker + short subtitle present (no marketing paragraphs)', () => {
-  truthy(/<div class="featured-kicker">Try it now<\/div>/.test(HTML), 'kicker missing');
-  // Subtitle should be a single short sentence
+test('kicker reverted and subtitle has no AI promotional copy', () => {
+  truthy(/<div class="featured-kicker">Explore more cases<\/div>/.test(HTML), 'freeze kicker missing');
   const sub = HTML.match(/<p class="featured-subtitle">([^<]+)<\/p>/);
   truthy(sub, 'subtitle missing');
   truthy(sub[1].length < 160, `subtitle must stay short (got ${sub[1].length} chars)`);
+  falsy(/AI\b/i.test(sub[1]), 'subtitle must not mention AI during freeze');
 });
 
 // ─── Featured card selection ────────────────────────────────────────────────
@@ -85,10 +85,11 @@ test('no non-pilot case is featured on the homepage', () => {
     falsy(block.includes(bad), `${bad} must not appear in the AI featured grid`);
   }
 });
-test('every featured card has an "AI Feedback Available" label', () => {
-  const block = featuredBlock();
-  const labels = block.match(/class="featured-ai-label"[^>]*>[\s\S]*?AI Feedback Available/g) || [];
-  eq(labels.length, 3, 'all three grid cards must show the AI label');
+test('no "AI Feedback Available" label anywhere on the homepage', () => {
+  eq((HTML.match(/AI Feedback Available/g) || []).length, 0,
+    'AI label markup must be removed from the hero and all grid cards during freeze');
+  eq((HTML.match(/featured-ai-label/g) || []).length, 0,
+    '.featured-ai-label markup must not appear in HTML during freeze (CSS rule may remain for reactivation)');
 });
 test('across the whole homepage, every pilot case appears exactly once', () => {
   // Hero markup + grid markup together should cover all four pilot IDs, with no duplicates.
@@ -97,17 +98,11 @@ test('across the whole homepage, every pilot case appears exactly once', () => {
     eq(hits, 1, `${id} must appear exactly once (hero or grid, never both). Found ${hits}.`);
   }
 });
-test('AI label uses accent tokens (subtle, no oversized badge)', () => {
+test('AI label CSS is preserved for easy reactivation (markup removed, styles stay)', () => {
+  // We deliberately keep .featured-ai-label CSS in styles.css so reactivation is a markup-only change.
+  // No visual impact while freeze is in effect because no element carries the class.
   const css = fs.readFileSync(path.join(__dirname, '..', 'styles.css'), 'utf8');
-  const rule = css.match(/\.featured-ai-label\s*\{[^}]+\}/);
-  truthy(rule, '.featured-ai-label CSS missing');
-  truthy(/background:\s*var\(--accent-soft\)/.test(rule[0]), 'should use --accent-soft background');
-  truthy(/font-size:\s*0\.6875rem/.test(rule[0]), 'label font-size should be small (0.6875rem)');
-  // No animation keyframes referenced from the label
-  const kf = css.match(/@keyframes[\s\S]*?\}\s*\}/g) || [];
-  for (const k of kf) {
-    falsy(k.includes('featured-ai'), 'AI label should not animate');
-  }
+  truthy(/\.featured-ai-label\s*\{/.test(css), '.featured-ai-label CSS must remain for reactivation');
 });
 
 // ─── Navigation wiring ──────────────────────────────────────────────────────
@@ -167,9 +162,16 @@ console.log('\n--- Hero featured case ---');
 function heroBlock() {
   const start = HTML.indexOf('class="featured-hero-card"');
   const anchor = HTML.lastIndexOf('<div', start);
-  // End at the next sibling section (Practice with AI Feedback) rather than counting divs manually.
-  const end = HTML.indexOf('<!-- ─── Practice with AI Feedback ─── -->', anchor);
-  return HTML.slice(anchor, end);
+  // End at the next sibling section rather than counting divs manually. The section comment
+  // flips between "Practice with AI Feedback" (grader active) and "Featured Case Teardowns" (freeze);
+  // try both so this helper survives either state.
+  const markers = ['<!-- ─── Featured Case Teardowns ─── -->', '<!-- ─── Practice with AI Feedback ─── -->'];
+  let end = -1;
+  for (const m of markers) {
+    const i = HTML.indexOf(m, anchor);
+    if (i > 0) { end = i; break; }
+  }
+  return HTML.slice(anchor, end > 0 ? end : HTML.length);
 }
 
 test('hero featured card points to an AI-enabled pilot case', () => {
@@ -186,12 +188,10 @@ test('hero featured card points to an AI-enabled pilot case', () => {
     eq(r, dataId[1], `every hero navigation target must match data-case-id (${dataId[1]}), got ${r}`);
   }
 });
-test('hero carries the same subtle "AI Feedback Available" label as the four cards', () => {
+test('hero does NOT carry the AI Feedback Available label during freeze', () => {
   const hero = heroBlock();
-  truthy(/featured-ai-label[^"]*"[^>]*>[\s\S]*?AI Feedback Available/.test(hero),
-    'hero must show the AI Feedback Available label');
-  truthy(/featured-hero-ai-label/.test(hero),
-    'hero label should use the .featured-hero-ai-label modifier so spacing fits the larger card');
+  falsy(/AI Feedback Available/.test(hero), 'hero AI label must be removed during freeze');
+  falsy(/featured-ai-label/.test(hero), 'hero AI label markup must be removed during freeze');
 });
 test('hero metadata (title, description, tags, icon) matches the chosen pilot case', () => {
   const hero = heroBlock();
@@ -240,6 +240,30 @@ test('featured-grid-ai uses minmax that permits 4 columns on wide screens', () =
 test('card keeps focus-visible outline for keyboard a11y', () => {
   const css = fs.readFileSync(path.join(__dirname, '..', 'styles.css'), 'utf8');
   truthy(/\.featured-card\.ai-card:focus-visible/.test(css), 'ai-card:focus-visible rule missing');
+});
+
+// ─── Freeze guards ──────────────────────────────────────────────────────────
+
+console.log('\n--- Grader freeze guard ---');
+test('GRADER_ENABLED constant is declared and set to false in app.js', () => {
+  truthy(/const\s+GRADER_ENABLED\s*=\s*false\s*;/.test(APP),
+    'app.js must declare `const GRADER_ENABLED = false;` while the grader is frozen');
+});
+test('isPilotCase helper is gated by GRADER_ENABLED', () => {
+  const start = APP.indexOf('function isPilotCase');
+  const end = APP.indexOf('}', start);
+  const body = APP.slice(start, end);
+  truthy(/GRADER_ENABLED/.test(body),
+    'isPilotCase must AND with GRADER_ENABLED so one flag hides the whole UI');
+});
+test('GRADER_URL is preserved for easy reactivation', () => {
+  truthy(APP.includes("https://pm-gym-grader-production.joshisanket80.workers.dev/grade"),
+    'Worker URL must be preserved — reactivation flips a flag, no code hunt');
+});
+test('four pilot case IDs still declared so reactivation is a one-flag flip', () => {
+  for (const id of PILOT_IDS) {
+    truthy(APP.includes(`'${id}'`), `pilot id ${id} must remain in PILOT_CASE_IDS`);
+  }
 });
 
 // ─── Summary ───────────────────────────────────────────────────────────────

@@ -148,6 +148,13 @@ const STORAGE_KEYS = {
 // ─── AI Grader constants ─────────────────────────────────────────────────────
 
 const GRADER_URL = 'https://pm-gym-grader-production.joshisanket80.workers.dev/grade';
+
+// Public grader kill-switch. While false, the grader UI is fully hidden on every pilot case page,
+// no fetch to GRADER_URL can be initiated from the UI, and no stored result will be re-hydrated
+// into the DOM on reload. Drafts (pmgym_case_answers) and grading state (pmgym_case_grading) are
+// preserved in localStorage. See CHANGELOG [2.3.0] for the Cohort 21 calibration freeze and the
+// three-step reactivation procedure.
+const GRADER_ENABLED = false;
 const PILOT_CASE_IDS = new Set([
   'case-study-fotmob',
   'case-study-cricbuzz',
@@ -294,7 +301,7 @@ function countWords(text) {
 }
 
 function isPilotCase(topicId) {
-  return PILOT_CASE_IDS.has(topicId);
+  return GRADER_ENABLED && PILOT_CASE_IDS.has(topicId);
 }
 
 function escapeHtml(s) {
