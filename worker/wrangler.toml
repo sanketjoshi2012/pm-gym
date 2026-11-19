@@ -30,8 +30,30 @@ new_sqlite_classes = ["GlobalBudget"]
 # Local development:
 #   cp .dev.vars.example .dev.vars    # LLM_PROVIDER=mock is set there
 #
-# Production deployment:
-#   Add an [env.production.vars] block below with LLM_PROVIDER = "anthropic",
-#   then: wrangler secret put IP_HASH_SALT --env production
-#         wrangler secret put ANTHROPIC_API_KEY --env production
-#         wrangler deploy --env production
+# Production deployment: use the [env.production] section below.
+
+# ─── Production environment ────────────────────────────────────────────────────
+# Deploy with: wrangler deploy --env production
+# Bindings do NOT inherit from the top level — every binding must be redeclared here.
+
+[env.production]
+name = "pm-gym-grader-production"
+
+[env.production.vars]
+ENVIRONMENT = "production"
+LLM_PROVIDER = "anthropic"
+GLOBAL_DAILY_CAP = "20"
+
+[[env.production.kv_namespaces]]
+binding = "RATE_LIMIT_KV"
+# Created with `wrangler kv namespace create RATE_LIMIT_KV --env production`.
+# Not a secret — public identifier for the namespace within this Cloudflare account.
+id = "ce2ff6ba6f984319901f764031d86d3b"
+
+[[env.production.durable_objects.bindings]]
+name = "GLOBAL_BUDGET"
+class_name = "GlobalBudget"
+
+[[env.production.migrations]]
+tag = "v1"
+new_sqlite_classes = ["GlobalBudget"]
