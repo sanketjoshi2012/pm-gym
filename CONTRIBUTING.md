@@ -195,7 +195,67 @@ Other limits to know: the per-client KV limits are approximate and exist to dete
 
 **Current measured cost (synthetic calibration, not production):** mean ~$0.0011 per grading request on `claude-haiku-5-5` at verified pricing of $0.10 / $0.50 per million input / output tokens (prompts under 100k). At the default `GLOBAL_DAILY_CAP` of 20, worst-case spend is in the low cents per day. Re-measure with real learner traffic before raising the cap.
 
-**Implemented vs deployed.** As of v1.10.0: the real adapter is committed and offline-tested, and the Worker boots locally against the real model under `wrangler dev`. The Cloudflare Worker is **not deployed**, `index.html` and `app.js` have **no "Get AI feedback" control**, and no end user can reach the grader yet. Deployment and the frontend integration are tracked as separate steps.
+**Implemented, deployed, not yet integrated.** As of v2.0.0: the Worker is live at `https://pm-gym-grader-production.joshisanket80.workers.dev/grade` and will grade a well-formed `POST /grade` request on `claude-haiku-5-5`. However, `index.html` and `app.js` have **no "Get AI feedback" control**, and there is no code anywhere in the site that calls the production endpoint. End users cannot reach the grader without hand-crafting a request. The frontend integration is a separate step.
+
+### Production deployment (operator reference)
+
+**Account:** Cloudflare, `joshisanket80@gmail.com`, subdomain `joshisanket80.workers.dev`.
+**Worker script:** `pm-gym-grader-production`.
+**Endpoint:** `https://pm-gym-grader-production.joshisanket80.workers.dev/grade`.
+**Bindings in production** (all declared under `[env.production]` in `worker/wrangler.toml`):
+
+| Binding | Type | Value / class |
+|---|---|---|
+| `RATE_LIMIT_KV` | KV namespace | `ce2ff6ba6f984319901f764031d86d3b` |
+| `GLOBAL_BUDGET` | Durable Object | class `GlobalBudget`, migration `v1` with `new_sqlite_classes` |
+| `ENVIRONMENT` | var | `"production"` |
+| `LLM_PROVIDER` | var | `"anthropic"` |
+| `GLOBAL_DAILY_CAP` | var | `"20"` |
+| `ANTHROPIC_API_KEY` | secret | set via `wrangler secret put`, not in git |
+| `IP_HASH_SALT` | secret | set via `wrangler secret put`, not in git |
+
+**Deploy a new version** (after a code change):
+
+```bash
+cd worker
+npm test                              # must pass
+npx wrangler deploy --env production  # ships the current working tree
+```
+
+**Rotate the Anthropic API key:**
+
+1. Create a fresh key in [console.anthropic.com → API keys](https://console.anthropic.com/settings/keys). Copy it.
+2. In a terminal (not Claude chat), run:
+   ```bash
+   cd worker
+   npx wrangler secret put ANTHROPIC_API_KEY --env production
+   ```
+   Paste the new value at the prompt. Wait for `✨ Success!`. Each `secret put` auto-redeploys in a few seconds.
+3. Revoke the old key in the Anthropic console.
+
+**Rotate the IP hash salt** (invalidates all in-flight per-client counters; acceptable because they are approximate):
+
+```bash
+cd worker
+openssl rand -hex 32                      # copy the output
+npx wrangler secret put IP_HASH_SALT --env production
+```
+
+**Tail live logs:**
+
+```bash
+cd worker
+npx wrangler tail --env production --format=json
+```
+
+Successful grading calls emit one structured JSON line per request with `provider`, `model`, `case_id`, `input_tokens`, `output_tokens`, `stop_reason`, `latency_ms`, `attempt` and `status`. No answer text, no feedback text, no secret ever appears in these logs.
+
+**Rate-limit guarantees in production:**
+
+- Per-client: 10 grading requests per rolling hour and 50 per rolling day, keyed by an HMAC of `CF-Connecting-IP`. KV is eventually consistent, so these can be slightly exceeded under bursts.
+- Global: atomic daily cap of 20 requests per UTC day via the `GLOBAL_BUDGET` Durable Object. Concurrent requests cannot exceed it.
+- A missing or invalid binding, missing secret, or storage error returns HTTP 503 and never reaches the LLM.
+- The 20/day cap is a request count, not a euro amount. Measured cost at Haiku 5.5 prices is ~$0.0011/call, so the worst-case spend at the cap is ~$0.022/day, ~$0.66/month. Raise the cap only after real-traffic cost data is in.
 
 ---
 
