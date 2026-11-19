@@ -2123,6 +2123,11 @@ html { scroll-behavior: smooth; }
   gap: 1.25rem;
 }
 
+/* Four AI-enabled cards: on wide screens pack them into one row of four 260px+ cards. */
+.featured-grid-ai {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
 .featured-card {
   padding: 1.35rem;
   background: var(--bg-card);
@@ -2136,6 +2141,44 @@ html { scroll-behavior: smooth; }
 .featured-card:hover {
   border-color: var(--accent);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.featured-card.ai-card {
+  cursor: pointer;
+}
+.featured-card.ai-card:focus-visible {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+/* Subtle, secondary-to-title "AI Feedback Available" pill. Uses existing accent tokens;
+   kept inline so screen readers encounter it after the category and before the title. */
+.featured-ai-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  align-self: flex-start;
+  margin: 0 0 0.5rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 9999px;
+  background: var(--accent-soft);
+  color: var(--accent-text);
+  border: 1px solid var(--accent);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+}
+.featured-ai-spark {
+  font-size: 0.8125rem;
+  line-height: 1;
+}
+
+/* Hero variant: the hero card already has a tinted background, so give the label
+   a touch more spacing above and keep the same subtle accent pill styling. */
+.featured-hero-ai-label {
+  margin: 0.5rem 0 0.75rem;
 }
 
 .featured-card-top {

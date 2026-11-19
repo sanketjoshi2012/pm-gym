@@ -28,7 +28,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="styles.css?v=1.6.3">
+  <link rel="stylesheet" href="styles.css?v=1.7.1">
 </head>
 <body>
 
@@ -107,85 +107,89 @@
 
       <!-- Right Column: Featured Case -->
       <div class="hero-right">
-        <div class="featured-hero-card" onclick="showView('module', {levelId: 'advanced', topicId: 'case-study-notion'})" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){showView('module',{levelId:'advanced',topicId:'case-study-notion'})}">
+        <div class="featured-hero-card" id="featuredHeroCard" data-case-id="case-study-swiggy" onclick="showView('module', {levelId: 'advanced', topicId: 'case-study-swiggy'})" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();showView('module',{levelId:'advanced',topicId:'case-study-swiggy'})}">
           <div class="featured-hero-top">
             <span class="featured-hero-eyebrow">FEATURED CASE</span>
             <span class="featured-hero-time">15–20 min</span>
           </div>
+          <span class="featured-ai-label featured-hero-ai-label" aria-label="AI feedback available"><span class="featured-ai-spark" aria-hidden="true">✦</span> AI Feedback Available</span>
           <div class="featured-hero-body">
-            <div class="featured-hero-icon" aria-hidden="true">N</div>
+            <div class="featured-hero-icon" aria-hidden="true">S</div>
             <div class="featured-hero-text">
-              <h2 class="featured-hero-title">Notion Onboarding Drop-off</h2>
-              <p class="featured-hero-desc">New users sign up but don't return. Diagnose the drop-off and design initiatives to improve retention.</p>
+              <h2 class="featured-hero-title">Swiggy Order Cancellations Spike</h2>
+              <p class="featured-hero-desc">Cancellation rate jumped from 8% to 10% in two weeks, the highest in 18 months. Find the root cause and build a plan.</p>
             </div>
           </div>
           <div class="featured-hero-tags">
-            <span class="featured-tag">Activation</span>
-            <span class="featured-tag">Retention</span>
+            <span class="featured-tag">Unit Economics</span>
+            <span class="featured-tag">Logistics</span>
           </div>
-          <button class="featured-hero-cta" onclick="event.stopPropagation(); showView('module', {levelId: 'advanced', topicId: 'case-study-notion'})">
+          <button class="featured-hero-cta" onclick="event.stopPropagation(); showView('module', {levelId: 'advanced', topicId: 'case-study-swiggy'})">
             Start this case →
           </button>
         </div>
       </div>
     </div>
 
-    <!-- ─── Featured Case Teardowns ─── -->
-    <div class="featured-teardowns-section">
+    <!-- ─── Practice with AI Feedback ─── -->
+    <div class="featured-teardowns-section" id="aiFeaturedSection">
       <div class="featured-header">
         <div>
-          <div class="featured-kicker">Explore more cases</div>
-          <h2 class="featured-title">Featured Case Teardowns</h2>
-          <p class="featured-subtitle">Work through real product dilemmas, model answers, and rubric evaluations.</p>
+          <div class="featured-kicker">Try it now</div>
+          <h2 class="featured-title">Practice with AI Feedback</h2>
+          <p class="featured-subtitle">Pick a scenario, write your answer, and get instant AI feedback on your product thinking.</p>
         </div>
         <button class="featured-all-btn" onclick="showView('topics', {levelId: 'advanced'})">
           Explore all case studies →
         </button>
       </div>
 
-      <div class="featured-grid">
+      <div class="featured-grid featured-grid-ai">
+        <!-- FotMob -->
+        <div class="featured-card ai-card" data-case-id="case-study-fotmob" onclick="showView('module', {levelId: 'advanced', topicId: 'case-study-fotmob'})" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();showView('module',{levelId:'advanced',topicId:'case-study-fotmob'})}">
+          <div class="featured-card-top">
+            <span class="featured-badge">Sports</span>
+            <span class="featured-time">15–20 min</span>
+          </div>
+          <span class="featured-ai-label" aria-label="AI feedback available"><span class="featured-ai-spark" aria-hidden="true">✦</span> AI Feedback Available</span>
+          <h3 class="featured-card-title">FotMob Between-Game Retention</h3>
+          <p class="featured-card-desc">Casual fans only open FotMob on matchdays. Design a feature that brings them back between matches without alienating power users.</p>
+          <div class="featured-card-footer">
+            <span class="featured-tag">Engagement</span>
+            <span class="featured-tag">Segmentation</span>
+            <button class="featured-arrow-btn" onclick="event.stopPropagation(); showView('module', {levelId: 'advanced', topicId: 'case-study-fotmob'})">Open teardown →</button>
+          </div>
+        </div>
+
+        <!-- Cricbuzz -->
+        <div class="featured-card ai-card" data-case-id="case-study-cricbuzz" onclick="showView('module', {levelId: 'advanced', topicId: 'case-study-cricbuzz'})" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();showView('module',{levelId:'advanced',topicId:'case-study-cricbuzz'})}">
+          <div class="featured-card-top">
+            <span class="featured-badge">Sports</span>
+            <span class="featured-time">15–20 min</span>
+          </div>
+          <span class="featured-ai-label" aria-label="AI feedback available"><span class="featured-ai-spark" aria-hidden="true">✦</span> AI Feedback Available</span>
+          <h3 class="featured-card-title">Cricbuzz Feature Prioritisation</h3>
+          <p class="featured-card-desc">Three teams, one quarter of engineering. Choose between smartwatch widgets, fantasy cricket, or vernacular language support — and defend your call.</p>
+          <div class="featured-card-footer">
+            <span class="featured-tag">Prioritisation</span>
+            <span class="featured-tag">Strategy</span>
+            <button class="featured-arrow-btn" onclick="event.stopPropagation(); showView('module', {levelId: 'advanced', topicId: 'case-study-cricbuzz'})">Open teardown →</button>
+          </div>
+        </div>
+
         <!-- Spotify -->
-        <div class="featured-card">
+        <div class="featured-card ai-card" data-case-id="case-study-spotify" onclick="showView('module', {levelId: 'advanced', topicId: 'case-study-spotify'})" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();showView('module',{levelId:'advanced',topicId:'case-study-spotify'})}">
           <div class="featured-card-top">
             <span class="featured-badge">Media &amp; Entertainment</span>
             <span class="featured-time">15–20 min</span>
           </div>
+          <span class="featured-ai-label" aria-label="AI feedback available"><span class="featured-ai-spark" aria-hidden="true">✦</span> AI Feedback Available</span>
           <h3 class="featured-card-title">Spotify Engagement Drop</h3>
           <p class="featured-card-desc">Discover Weekly's full listen-through rate fell 15% over 8 weeks. Diagnose the root cause and propose a recovery plan.</p>
           <div class="featured-card-footer">
             <span class="featured-tag">Engagement</span>
             <span class="featured-tag">Metrics</span>
-            <button class="featured-arrow-btn" onclick="showView('module', {levelId: 'advanced', topicId: 'case-study-spotify'})">Open teardown →</button>
-          </div>
-        </div>
-
-        <!-- Swiggy -->
-        <div class="featured-card">
-          <div class="featured-card-top">
-            <span class="featured-badge">Food Delivery</span>
-            <span class="featured-time">15–20 min</span>
-          </div>
-          <h3 class="featured-card-title">Swiggy Order Cancellations Spike</h3>
-          <p class="featured-card-desc">Cancellation rate jumped from 8% to 10% in two weeks, the highest in 18 months. Find the root cause and build a plan.</p>
-          <div class="featured-card-footer">
-            <span class="featured-tag">Unit Economics</span>
-            <span class="featured-tag">Logistics</span>
-            <button class="featured-arrow-btn" onclick="showView('module', {levelId: 'advanced', topicId: 'case-study-swiggy'})">Open teardown →</button>
-          </div>
-        </div>
-
-        <!-- Chess.com -->
-        <div class="featured-card">
-          <div class="featured-card-top">
-            <span class="featured-badge">Sports</span>
-            <span class="featured-time">15–20 min</span>
-          </div>
-          <h3 class="featured-card-title">Chess.com Puzzle Drop</h3>
-          <p class="featured-card-desc">Daily Puzzle completions, the top DAU driver, dropped 20%. Deconstruct the funnel, diagnose the cause, and design a fix.</p>
-          <div class="featured-card-footer">
-            <span class="featured-tag">Freemium</span>
-            <span class="featured-tag">Paywall</span>
-            <button class="featured-arrow-btn" onclick="showView('module', {levelId: 'advanced', topicId: 'case-study-chess'})">Open teardown →</button>
+            <button class="featured-arrow-btn" onclick="event.stopPropagation(); showView('module', {levelId: 'advanced', topicId: 'case-study-spotify'})">Open teardown →</button>
           </div>
         </div>
       </div>

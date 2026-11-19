@@ -9,6 +9,25 @@ Format: [Semantic Versioning](https://semver.org) — `MAJOR.MINOR.PATCH`
 
 ---
 
+## [2.2.0] — 2026-11-19
+
+### Added
+- **Homepage promotes AI-enabled case studies** (`index.html`, `styles.css`): the right-column hero card now features Swiggy Order Cancellations Spike with a subtle `✦ AI Feedback Available` pill; the lower section, renamed from "Featured Case Teardowns" to **Practice with AI Feedback**, showcases FotMob, Cricbuzz, and Spotify in a responsive card grid. Together the hero and the grid cover all four AI-enabled pilot cases exactly once.
+- **"AI Feedback Available" label** on every promoted card (hero + three grid cards). Uses the existing accent tokens as a small pill that stays secondary to the title. No animation, no oversized badge, and never shown for cases that don't support AI grading.
+- **Keyboard-activatable cards**: each promoted card is a `role="button"`, `tabindex="0"` surface that responds to Enter / Space; inner CTA buttons stop propagation so they still work independently.
+- **Regression tests** (`tests/homepage-ai-tests.js`, +23 tests): assert that the hero points to an AI-enabled pilot case; that the grid holds exactly the three non-hero pilot cases in order; that every pilot id appears exactly once across the homepage (hero or grid, never both); that non-pilot cases are never featured; that all ten case studies remain in the library and reachable; that the AI label uses accent tokens with no animation; and that the responsive grid and focus-visible outline stay intact.
+
+### Changed
+- **Hero case swapped Notion → Swiggy** (`index.html`). Notion remains in `data.js` and reachable via the full library — it is no longer the hero, only to keep every promoted card linked to a case where visitors can actually try the AI grader.
+- Section heading changed from "Featured Case Teardowns" to **"Practice with AI Feedback"**, with a single-line subtitle. Kicker reads "Try it now".
+
+### Notes
+- **AI grader, Cloudflare Worker, analytics consent logic, rubrics, draft persistence, quiz, lessons, homepage hero layout, and bottom-nav are unchanged.**
+- **Full library preserved**: all ten case studies (including Notion, Chess.com, LinkedIn, Flipkart, Revolut, Zalando) remain available via Explore all case studies and Practice.
+- **Verification**: 23 homepage tests + 77 grader + 163 quiz-validation + 40 logic + 102 Worker tests all pass. Zero paid AI grading requests were made for this change.
+
+---
+
 ## [2.1.0] — 2026-11-19
 
 ### Added
