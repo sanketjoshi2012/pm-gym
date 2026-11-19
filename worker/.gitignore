@@ -2,3 +2,5 @@ node_modules/
 .wrangler/
 dist/
 .dev.vars
+scripts/real-grade-report.json
+scripts/retry-swiggy-report.json

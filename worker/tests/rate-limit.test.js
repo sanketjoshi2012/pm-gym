@@ -63,7 +63,7 @@ function makeEnv({ cap = '1000', clock } = {}) {
   const kv = new FakeKV();
   const storage = new FakeStorage();
   const budget = makeBudget({ cap, storage, clock });
-  return { RATE_LIMIT_KV: kv, GLOBAL_BUDGET: makeNamespace(budget), IP_HASH_SALT: SALT, _kv: kv, _storage: storage, _budget: budget };
+  return { RATE_LIMIT_KV: kv, GLOBAL_BUDGET: makeNamespace(budget), IP_HASH_SALT: SALT, LLM_PROVIDER: 'mock', _kv: kv, _storage: storage, _budget: budget };
 }
 
 function req(ip, extraHeaders = {}) {
@@ -443,4 +443,44 @@ describe('request body size cap', () => {
     assert.equal((await post('{not json')).status, 400);
     assert.equal((await post(new Uint8Array([0x7b, 0xff, 0xfe, 0x7d]))).status, 400);
   });
+});
+
+// ---- Adapter selection (fail closed) ----
+
+describe('adapter selection', () => {
+  const answer = Array.from({ length: 200 }, (_, i) => `word${i}`).join(' ');
+  const gradeRequest = () => new Request('https://grader.test/grade', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'CF-Connecting-IP': '203.0.113.7' },
+    body: JSON.stringify({ case_id: 'case-study-fotmob', answer }),
+  });
+
+  test('returns 503 when LLM_PROVIDER is missing', quiet(async () => {
+    const env = makeEnv(); delete env.LLM_PROVIDER;
+    const res = await worker.fetch(gradeRequest(), env);
+    assert.equal(res.status, 503);
+    assert.equal(env._budget.count, 0);
+    assert.equal(env._kv.store.size, 0);
+  }));
+
+  test('returns 503 for an unknown LLM_PROVIDER value', quiet(async () => {
+    const env = makeEnv(); env.LLM_PROVIDER = 'secretly-live';
+    assert.equal((await worker.fetch(gradeRequest(), env)).status, 503);
+    assert.equal(env._budget.count, 0);
+  }));
+
+  test('returns 200 only when LLM_PROVIDER is explicitly set to mock', async () => {
+    const env = makeEnv();
+    assert.equal(env.LLM_PROVIDER, 'mock');
+    assert.equal((await worker.fetch(gradeRequest(), env)).status, 200);
+  });
+
+  test('anthropic without an API key returns 503, not mock', quiet(async () => {
+    const env = makeEnv(); env.LLM_PROVIDER = 'anthropic';
+    const res = await worker.fetch(gradeRequest(), env);
+    assert.equal(res.status, 503);
+    const body = await res.json();
+    assert.ok(!body._mock);
+    assert.deepEqual(Object.keys(body), ['error']);
+  }));
 });

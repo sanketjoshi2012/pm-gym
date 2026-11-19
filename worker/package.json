@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "wrangler dev",
-    "test": "node --test tests/grade.test.js tests/rate-limit.test.js",
+    "test": "node --test tests/grade.test.js tests/rate-limit.test.js tests/anthropic-llm.test.js",
     "deploy": "wrangler deploy"
   },
   "devDependencies": {

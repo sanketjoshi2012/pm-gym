@@ -1,3 +1,11 @@
 # Copy to .dev.vars for local development. Never commit .dev.vars.
+
 # Used to key the HMAC of client addresses in rate-limit storage. Must be 16+ characters.
 IP_HASH_SALT=replace-with-a-long-random-local-value
+
+# Adapter selection. Must be set explicitly, otherwise the Worker returns 503 (fail closed).
+# "mock" runs the stub adapter locally. "anthropic" calls the real Claude API (billable).
+LLM_PROVIDER=mock
+
+# Required only when LLM_PROVIDER=anthropic. Get from console.anthropic.com. Never commit.
+# ANTHROPIC_API_KEY=

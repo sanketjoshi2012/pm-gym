@@ -23,5 +23,15 @@ class_name = "GlobalBudget"
 tag = "v1"
 new_sqlite_classes = ["GlobalBudget"]
 
-# IP_HASH_SALT is a secret (16+ characters) and is deliberately not listed here.
-# Local: copy .dev.vars.example to .dev.vars. Production: wrangler secret put IP_HASH_SALT.
+# Adapter selection and secrets are DELIBERATELY not set here as defaults.
+# Without a trusted source of truth for LLM_PROVIDER, the Worker returns 503. This keeps a
+# bare `wrangler deploy` from silently running mock in production.
+#
+# Local development:
+#   cp .dev.vars.example .dev.vars    # LLM_PROVIDER=mock is set there
+#
+# Production deployment:
+#   Add an [env.production.vars] block below with LLM_PROVIDER = "anthropic",
+#   then: wrangler secret put IP_HASH_SALT --env production
+#         wrangler secret put ANTHROPIC_API_KEY --env production
+#         wrangler deploy --env production

@@ -1,9 +1,20 @@
 import { validateInput } from './validate.js';
 import { buildGradingContext } from './context.js';
 import { mockLLM } from './mock-llm.js';
+import { anthropicLLM, GraderError } from './anthropic-llm.js';
 import { validateAndEnrichResponse } from './schema.js';
 import { checkRateLimit } from './rate-limit.js';
 import { readJsonBody } from './body.js';
+
+// Mock mode must be explicitly selected. Any other value (including missing) fails closed,
+// so a misconfigured production Worker never silently returns mock grades to real learners.
+function pickAdapter(env) {
+  switch (env?.LLM_PROVIDER) {
+    case 'anthropic': return anthropicLLM;
+    case 'mock': return mockLLM;
+    default: return null;
+  }
+}
 
 const CORS_HEADERS = {
   'Content-Type': 'application/json',
@@ -48,6 +59,12 @@ export default {
 
     const { case_id, answer, attempt, assisted } = validation.data;
 
+    const adapter = pickAdapter(env);
+    if (!adapter) {
+      console.error('adapter_misconfigured', { provider: env?.LLM_PROVIDER ?? null });
+      return json({ error: 'Grading is temporarily unavailable. Please try again later.' }, 503);
+    }
+
     // Runs after validation so rejected requests never consume the global budget,
     // and immediately before the LLM call so nothing billable can bypass it.
     const rl = await checkRateLimit(request, env);
@@ -57,12 +74,19 @@ export default {
     }
 
     const context = buildGradingContext(case_id, answer);
-    const rawFeedback = await mockLLM(context);
-    const result = validateAndEnrichResponse(rawFeedback, case_id, answer, attempt, assisted);
 
+    let rawFeedback;
+    try {
+      rawFeedback = await adapter(context, env);
+    } catch (err) {
+      if (err instanceof GraderError) return json({ error: err.userMessage }, err.status);
+      console.error('adapter_unexpected_error', err?.name ?? 'unknown');
+      return json({ error: 'Grading service error' }, 502);
+    }
+
+    const result = validateAndEnrichResponse(rawFeedback, case_id, answer, attempt, assisted);
     if (!result.ok) {
-      // LLM returned invalid schema — in production this would trigger a retry
-      return json({ error: 'Grading service error', detail: result.error }, 502);
+      return json({ error: 'Grading service error' }, 502);
     }
 
     return json(result.data);
