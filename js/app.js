@@ -141,8 +141,22 @@ const STORAGE_KEYS = {
   QUIZ_SCORES: 'pmgym_scores',
   DARK_MODE: 'pmgym_dark',
   CASE_ANSWERS: 'pmgym_case_answers',
+  CASE_GRADING: 'pmgym_case_grading',
   LESSON_DONE: 'pmgym_lessons',
 };
+
+// ─── AI Grader constants ─────────────────────────────────────────────────────
+
+const GRADER_URL = 'https://pm-gym-grader-production.joshisanket80.workers.dev/grade';
+const PILOT_CASE_IDS = new Set([
+  'case-study-fotmob',
+  'case-study-cricbuzz',
+  'case-study-spotify',
+  'case-study-swiggy',
+]);
+const GRADER_MIN_WORDS = 120;
+const GRADER_MAX_WORDS = 1500;
+const GRADER_MAX_CHARS = 15_000;
 
 // ─── State ───────────────────────────────────────────────────────────────────
 
@@ -165,6 +179,7 @@ let state = {
   streak: 0,
   lastActive: null,
   caseAnswers: {},
+  caseGrading: {},
 };
 
 // ─── Storage ─────────────────────────────────────────────────────────────────
@@ -243,6 +258,10 @@ function loadState() {
   const casesRaw = safeLoadJSON(STORAGE_KEYS.CASE_ANSWERS, {});
   state.caseAnswers = (casesRaw && typeof casesRaw === 'object' && !Array.isArray(casesRaw)) ? casesRaw : {};
 
+  // CASE_GRADING: per-case {attempt, assisted, lastResult, gradedAnswer}. Corrupt entries fall back to empty.
+  const gradingRaw = safeLoadJSON(STORAGE_KEYS.CASE_GRADING, {});
+  state.caseGrading = (gradingRaw && typeof gradingRaw === 'object' && !Array.isArray(gradingRaw)) ? gradingRaw : {};
+
   // DARK_MODE: plain string, not JSON
   try {
     const darkMode = localStorage.getItem(STORAGE_KEYS.DARK_MODE);
@@ -264,7 +283,102 @@ function saveState() {
     localStorage.setItem(STORAGE_KEYS.STREAK, String(state.streak));
     localStorage.setItem(STORAGE_KEYS.LAST_ACTIVE, state.lastActive || '');
     localStorage.setItem(STORAGE_KEYS.CASE_ANSWERS, JSON.stringify(state.caseAnswers));
+    localStorage.setItem(STORAGE_KEYS.CASE_GRADING, JSON.stringify(state.caseGrading));
   } catch (e) {}
+}
+
+// ─── AI Grader helpers (pure; mirrored by tests/grader-ui-tests.js) ──────────
+
+function countWords(text) {
+  return (text || '').trim().split(/\s+/).filter(w => w.length > 0).length;
+}
+
+function isPilotCase(topicId) {
+  return PILOT_CASE_IDS.has(topicId);
+}
+
+function escapeHtml(s) {
+  const str = String(s == null ? '' : s);
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+// Lowest score; ties broken by first-listed order (rubric order == dimensions array order)
+function pickBiggestLever(dimensions) {
+  if (!Array.isArray(dimensions) || dimensions.length === 0) return null;
+  let best = dimensions[0];
+  for (let i = 1; i < dimensions.length; i++) {
+    if (dimensions[i].score < best.score) best = dimensions[i];
+  }
+  return best;
+}
+
+// Whether the displayed grade applies to a different answer than the textarea currently shows.
+// Compared on trimmed text so trailing whitespace tweaks don't trigger a false "stale" flag.
+function isStaleGrade(currentAnswer, gradedAnswer) {
+  return (currentAnswer || '').trim() !== (gradedAnswer || '').trim();
+}
+
+// Returns {disabled, reason} for the Get AI feedback button based on the current draft.
+function graderButtonState(answer) {
+  const chars = (answer || '').length;
+  if (chars > GRADER_MAX_CHARS) {
+    return { disabled: true, reason: `Shorten to under ${GRADER_MAX_CHARS.toLocaleString()} characters` };
+  }
+  const words = countWords(answer);
+  if (words < GRADER_MIN_WORDS) {
+    return { disabled: true, reason: `Write at least ${GRADER_MIN_WORDS} words (${words} so far)` };
+  }
+  if (words > GRADER_MAX_WORDS) {
+    return { disabled: true, reason: `Shorten to under ${GRADER_MAX_WORDS.toLocaleString()} words (${words} now)` };
+  }
+  return { disabled: false, reason: '' };
+}
+
+// Maps a Worker response (status + JSON body) to a user-facing error string.
+function graderErrorMessage(status, bodyErrorText) {
+  if (status === 429) return "You've hit the grading limit. Please try again later.";
+  if (status === 503) return bodyErrorText || 'Grading is temporarily unavailable. Please try again later.';
+  if (status === 504) return 'Grading timed out. Please try again.';
+  if (status === 502) return 'Grading service error. Please try again.';
+  if (status === 400 || status === 413) return 'We could not grade that answer. Please check the length and try again.';
+  return 'Something went wrong. Please try again.';
+}
+
+// Decide whether to flip the per-browser assisted flag for a case when the model answer is revealed.
+// Once true, stays true for this browser (until localStorage is cleared externally).
+function nextAssistedFlag(prev) { return true; }
+
+// Compact status for the word counter: {count, hint, charWarning, state}.
+// count is always "N words"; hint is only set when below the minimum. charWarning only when nearing/over 15k chars.
+function wordCounterStatus(answer) {
+  const safe = answer || '';
+  const words = countWords(safe);
+  const chars = safe.length;
+  const CHAR_WARN_AT = Math.round(GRADER_MAX_CHARS * 0.9); // 13,500
+  const count = `${words.toLocaleString()} word${words === 1 ? '' : 's'}`;
+  let hint = '';
+  let state = 'ok';
+  if (words < GRADER_MIN_WORDS) {
+    const need = GRADER_MIN_WORDS - words;
+    hint = `${need.toLocaleString()} more word${need === 1 ? '' : 's'} needed`;
+    state = 'under';
+  } else if (words > GRADER_MAX_WORDS) {
+    hint = `Shorten to ${GRADER_MAX_WORDS.toLocaleString()} words`;
+    state = 'over';
+  }
+  let charWarning = '';
+  if (chars > GRADER_MAX_CHARS) {
+    charWarning = `Over ${GRADER_MAX_CHARS.toLocaleString()} character limit`;
+    state = 'over';
+  } else if (chars >= CHAR_WARN_AT) {
+    charWarning = `${chars.toLocaleString()} / ${GRADER_MAX_CHARS.toLocaleString()} characters`;
+  }
+  return { count, hint, charWarning, state };
 }
 
 // ─── Streak ───────────────────────────────────────────────────────────────────
@@ -972,13 +1086,44 @@ function renderCaseStudy(container, topic, levelId) {
       id="caseTextarea"
       placeholder="Write your answer here... Think through the problem systematically before revealing the model answer."
       ></textarea>
+    ${isPilotCase(topic.id) ? `
+    <div class="grader-helper">
+      <div id="wordCounter" class="word-counter" aria-live="polite" role="status">
+        <span class="word-counter-left">
+          <span id="wordCounterCount" class="word-counter-count"></span>
+          <span id="wordCounterHint" class="word-counter-hint-dynamic hidden"></span>
+        </span>
+        <span class="word-counter-right">
+          <span id="wordCounterCharWarn" class="word-counter-charwarn hidden"></span>
+          <span class="word-counter-limits">Min ${GRADER_MIN_WORDS} · Max ${GRADER_MAX_WORDS.toLocaleString()}</span>
+        </span>
+      </div>
+    </div>` : ''}
 
-    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1.5rem; align-items: center;">
-      <button class="btn-secondary" onclick="saveCaseAnswer('${topic.id}')">💾 Save Draft</button>
+    <div class="case-actions">
+      ${isPilotCase(topic.id) ? `
+      <button
+        id="viewLastFeedbackBtn"
+        class="view-last-feedback-btn hidden"
+        type="button"
+        onclick="reopenGradeResult('${topic.id}')"
+        aria-label="View last AI feedback">
+        <span class="vlf-label">↺ View last feedback</span>
+        <span class="vlf-stale hidden">needs refresh</span>
+      </button>
+      <button class="grader-btn" id="getFeedbackBtn" type="button" onclick="requestGrade('${topic.id}')" aria-describedby="wordCounter">
+        <span class="grader-btn-label">🪄 Get AI feedback</span>
+        <span class="grader-btn-spinner" aria-hidden="true"></span>
+      </button>` : ''}
       <button class="reveal-btn" onclick="toggleModelAnswer('${topic.id}')">
         <span id="revealBtnText">👁 Reveal Model Answer</span>
       </button>
+      <button class="btn-secondary" onclick="saveCaseAnswer('${topic.id}')">💾 Save Draft</button>
     </div>
+
+    ${isPilotCase(topic.id) ? `
+    <div id="graderErrorBanner" class="grader-error-banner hidden" role="alert"></div>
+    <div id="graderResult" class="grader-result hidden" tabindex="-1" aria-label="AI feedback result"></div>` : ''}
 
     <div id="modelAnswerSection" class="hidden">
       <div class="model-answer">
@@ -1013,7 +1158,278 @@ function renderCaseStudy(container, topic, levelId) {
   // Populate textarea via .value — never interpolate user content into innerHTML
   const textarea = document.getElementById('caseTextarea');
   if (textarea && savedAnswer) textarea.value = savedAnswer;
+
+  if (isPilotCase(topic.id)) {
+    // Re-render a previous result from localStorage so attempts survive reload.
+    // If the learner closed the panel last session, keep it closed but expose "View last feedback".
+    const grading = state.caseGrading[topic.id];
+    if (grading && grading.lastResult && Array.isArray(grading.lastResult.dimensions) && !grading.hidden) {
+      renderGradeResult(topic.id);
+    }
+    updateGraderUI(topic.id);
+    if (textarea) {
+      textarea.addEventListener('input', () => updateGraderUI(topic.id));
+    }
+  }
 }
+
+// ─── AI Grader UI ────────────────────────────────────────────────────────────
+
+function currentAnswerFor(topicId) {
+  const textarea = document.getElementById('caseTextarea');
+  if (textarea) return textarea.value;
+  return state.caseAnswers[topicId] || '';
+}
+
+function updateGraderUI(topicId) {
+  if (!isPilotCase(topicId)) return;
+  const answer = currentAnswerFor(topicId);
+  const btnState = graderButtonState(answer);
+  const status = wordCounterStatus(answer);
+
+  const counter = document.getElementById('wordCounter');
+  const countEl = document.getElementById('wordCounterCount');
+  const hintEl = document.getElementById('wordCounterHint');
+  const charWarnEl = document.getElementById('wordCounterCharWarn');
+  if (counter && countEl) {
+    countEl.textContent = status.count;
+    if (hintEl) {
+      hintEl.textContent = status.hint;
+      hintEl.classList.toggle('hidden', !status.hint);
+    }
+    if (charWarnEl) {
+      charWarnEl.textContent = status.charWarning;
+      charWarnEl.classList.toggle('hidden', !status.charWarning);
+    }
+    counter.classList.toggle('ok', status.state === 'ok');
+    counter.classList.toggle('over', status.state === 'over');
+    counter.classList.toggle('under', status.state === 'under');
+  }
+
+  const btn = document.getElementById('getFeedbackBtn');
+  if (btn) {
+    btn.disabled = btnState.disabled;
+    btn.title = btnState.reason || '';
+    btn.setAttribute('aria-disabled', btnState.disabled ? 'true' : 'false');
+  }
+
+  // Previous result preserved; tag and visibly label it as stale if the answer has changed since grading.
+  const grading = state.caseGrading[topicId];
+  const resultEl = document.getElementById('graderResult');
+  const stale = grading && grading.lastResult
+    ? isStaleGrade(answer, grading.gradedAnswer)
+    : false;
+  if (grading && grading.lastResult && resultEl && !resultEl.classList.contains('hidden')) {
+    resultEl.classList.toggle('stale', stale);
+    let dynamicBadge = resultEl.querySelector('.stale-badge.dynamic');
+    if (stale && !dynamicBadge) {
+      dynamicBadge = document.createElement('div');
+      dynamicBadge.className = 'stale-badge dynamic';
+      dynamicBadge.textContent = "You've edited your answer since this feedback was generated. Click “Get AI feedback” again for an updated grade.";
+      resultEl.prepend(dynamicBadge);
+    } else if (!stale && dynamicBadge) {
+      dynamicBadge.remove();
+    }
+  }
+
+  // "View last feedback" is visible only when a result exists AND the panel is hidden.
+  const vlfBtn = document.getElementById('viewLastFeedbackBtn');
+  if (vlfBtn) {
+    const hasHiddenResult = !!(grading && grading.lastResult && grading.hidden);
+    vlfBtn.classList.toggle('hidden', !hasHiddenResult);
+    const staleTag = vlfBtn.querySelector('.vlf-stale');
+    if (staleTag) staleTag.classList.toggle('hidden', !(hasHiddenResult && stale));
+    vlfBtn.classList.toggle('stale', hasHiddenResult && stale);
+  }
+}
+
+function clearGraderError() {
+  const banner = document.getElementById('graderErrorBanner');
+  if (banner) { banner.textContent = ''; banner.classList.add('hidden'); }
+}
+
+function showGraderError(message) {
+  const banner = document.getElementById('graderErrorBanner');
+  if (!banner) return;
+  banner.textContent = message;
+  banner.classList.remove('hidden');
+}
+
+async function requestGrade(topicId) {
+  if (!isPilotCase(topicId)) return;
+  const btn = document.getElementById('getFeedbackBtn');
+  const answer = currentAnswerFor(topicId);
+  const btnState = graderButtonState(answer);
+  if (btnState.disabled) { updateGraderUI(topicId); return; }
+
+  // Persist the draft before sending so a reload mid-request doesn't lose it.
+  state.caseAnswers[topicId] = answer;
+  saveState();
+
+  clearGraderError();
+  if (btn) { btn.classList.add('loading'); btn.disabled = true; }
+  const textarea = document.getElementById('caseTextarea');
+  if (textarea) textarea.classList.add('dim');
+
+  const grading = state.caseGrading[topicId] || {};
+  const nextAttempt = (grading.attempt || 0) + 1;
+  const assisted = !!grading.assisted;
+
+  let result = null;
+  let errorMsg = null;
+  try {
+    const response = await fetch(GRADER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ case_id: topicId, answer, attempt: nextAttempt, assisted }),
+    });
+    let body = null;
+    try { body = await response.json(); } catch {}
+    if (response.ok && body && Array.isArray(body.dimensions)) {
+      result = body;
+    } else {
+      errorMsg = graderErrorMessage(response.status, body && body.error);
+    }
+  } catch (e) {
+    errorMsg = 'Network error. Please check your connection and try again.';
+  }
+
+  if (btn) { btn.classList.remove('loading'); btn.disabled = false; }
+  if (textarea) textarea.classList.remove('dim');
+  updateGraderUI(topicId);
+
+  if (errorMsg) { showGraderError(errorMsg); return; }
+
+  // Persist the successful result alongside the exact answer it graded.
+  // A fresh grade always shows the panel, so hidden resets to false.
+  state.caseGrading[topicId] = {
+    attempt: nextAttempt,
+    assisted,
+    lastResult: result,
+    gradedAnswer: answer,
+    hidden: false,
+  };
+  saveState();
+  renderGradeResult(topicId);
+  const resultEl = document.getElementById('graderResult');
+  if (resultEl) { resultEl.focus(); resultEl.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+}
+
+function renderGradeResult(topicId) {
+  const container = document.getElementById('graderResult');
+  if (!container) return;
+  const grading = state.caseGrading[topicId];
+  if (!grading || !grading.lastResult) { container.classList.add('hidden'); return; }
+
+  const result = grading.lastResult;
+  const dimensions = Array.isArray(result.dimensions) ? result.dimensions : [];
+  const biggest = pickBiggestLever(dimensions);
+  const total = Number.isInteger(result.total_score) ? result.total_score : null;
+  const max = Number.isInteger(result.max_total_score) ? result.max_total_score : null;
+  const assistedBadge = grading.assisted
+    ? `<div class="assisted-badge">You saw the model answer before grading. Treat this score as a rough guide.</div>`
+    : '';
+  // Stale badge is owned exclusively by updateGraderUI (inserted as .stale-badge.dynamic) so it
+  // can appear and disappear as the learner edits without re-rendering the whole panel.
+
+  const rows = dimensions.map((d, i) => {
+    const isStar = biggest && d.dimension === biggest.dimension && d.score === biggest.score ? ' ★' : '';
+    const detailsId = `grader-row-${i}`;
+    const quote = d.evidence_quote
+      ? `<div class="dim-quote"><span class="dim-quote-label">Evidence:</span> &ldquo;${escapeHtml(d.evidence_quote)}&rdquo;</div>`
+      : '';
+    return `
+      <details class="dim-row">
+        <summary>
+          <span class="dim-name">${escapeHtml(d.dimension)}${isStar}</span>
+          <span class="dim-score">${Number(d.score)} / ${Number(d.max_score || 3)}</span>
+        </summary>
+        <div class="dim-body" id="${detailsId}">
+          ${quote}
+          <div class="dim-reasoning"><span class="dim-sub-label">Reasoning:</span> ${escapeHtml(d.reasoning || '')}</div>
+          <div class="dim-improvement"><span class="dim-sub-label">To improve:</span> ${escapeHtml(d.improvement || '')}</div>
+        </div>
+      </details>`;
+  }).join('');
+
+  const scoreLine = (total !== null && max !== null) ? `${total} / ${max}` : '—';
+  const overall = result.overall_comment ? escapeHtml(result.overall_comment) : '';
+  const biggestBlock = biggest ? `
+    <div class="biggest-lever">
+      <div class="biggest-lever-label"><span class="bl-star" aria-hidden="true">★</span> Biggest lever</div>
+      <div class="biggest-lever-body">${escapeHtml(biggest.improvement || '')}</div>
+    </div>` : '';
+
+  container.innerHTML = `
+    <button
+      class="grader-close-btn"
+      type="button"
+      onclick="closeGradeResult('${topicId}')"
+      aria-label="Close feedback (your answer and grade are kept)"
+      title="Close feedback — your answer and grade are kept">×</button>
+    ${assistedBadge}
+    <div class="grader-total">
+      <div class="grader-total-row">
+        <div class="grader-total-score">${scoreLine}</div>
+        <div class="grader-ai-label" aria-label="AI-generated feedback">✦ AI-generated feedback</div>
+      </div>
+      ${overall ? `<div class="grader-total-sub">${overall}</div>` : ''}
+    </div>
+    ${biggestBlock}
+    <button class="btn-primary improve-answer-btn" type="button" onclick="improveMyAnswer('${topicId}')">✎ Improve my answer</button>
+    <div class="grader-dimensions">
+      <div class="grader-dimensions-label">By dimension</div>
+      ${rows}
+    </div>
+  `;
+  container.classList.remove('hidden');
+  // .stale class is managed by updateGraderUI alongside the dynamic stale badge.
+
+  // Panel is visible, so clear the hidden flag and refresh the View Last Feedback button.
+  const grading2 = state.caseGrading[topicId];
+  if (grading2 && grading2.hidden) {
+    state.caseGrading[topicId] = { ...grading2, hidden: false };
+    saveState();
+  }
+  updateGraderUI(topicId);
+}
+
+// Closes the feedback panel without discarding the grade, the answer, or the attempt history.
+function closeGradeResult(topicId) {
+  const result = document.getElementById('graderResult');
+  if (result) result.classList.add('hidden');
+  const grading = state.caseGrading[topicId];
+  if (grading && grading.lastResult) {
+    state.caseGrading[topicId] = { ...grading, hidden: true };
+    saveState();
+  }
+  updateGraderUI(topicId);
+  // Return focus to the editor so keyboard users don't lose their place.
+  const textarea = document.getElementById('caseTextarea');
+  if (textarea) textarea.focus();
+}
+
+// Reopens the stored last result without regrading. Stale status reflects the current answer.
+function reopenGradeResult(topicId) {
+  const grading = state.caseGrading[topicId];
+  if (!grading || !grading.lastResult) return;
+  renderGradeResult(topicId);
+  const result = document.getElementById('graderResult');
+  if (result) { result.focus(); result.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+}
+
+// Primary "Improve my answer" action: hide the panel (keep the grade), refocus the textarea.
+function improveMyAnswer(topicId) {
+  closeGradeResult(topicId);
+  const textarea = document.getElementById('caseTextarea');
+  if (textarea) {
+    textarea.focus();
+    textarea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+// Back-compat alias so any lingering onclick="tryAgainWithFix(...)" still works.
+function tryAgainWithFix(topicId) { improveMyAnswer(topicId); }
 
 function saveCaseAnswer(topicId) {
   const textarea = document.getElementById('caseTextarea');
@@ -1032,6 +1448,18 @@ function toggleModelAnswer(topicId) {
   const isHidden = section.classList.contains('hidden');
   section.classList.toggle('hidden', !isHidden);
   if (btnText) btnText.textContent = isHidden ? '▲ Hide Model Answer' : '👁 Reveal Model Answer';
+
+  // Once the learner has seen the model answer, every subsequent grading attempt for this case
+  // in this browser is marked assisted. This cannot be undone by clearing the draft.
+  if (isHidden && isPilotCase(topicId)) {
+    const grading = state.caseGrading[topicId] || {};
+    if (!grading.assisted) {
+      state.caseGrading[topicId] = { ...grading, assisted: nextAssistedFlag(grading.assisted) };
+      saveState();
+      // If a result is already on screen, refresh so the assisted badge appears
+      renderGradeResult(topicId);
+    }
+  }
 }
 
 function markCaseComplete(topicId, levelId) {

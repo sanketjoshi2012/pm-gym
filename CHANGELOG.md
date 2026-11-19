@@ -9,6 +9,28 @@ Format: [Semantic Versioning](https://semver.org) — `MAJOR.MINOR.PATCH`
 
 ---
 
+## [2.1.0] — 2026-11-19
+
+### Added
+- **AI Grader frontend wired up for the 4 pilot cases** (`js/app.js`, `styles.css`, `index.html`): FotMob, Cricbuzz, Spotify, and Swiggy case studies now expose a "Get AI feedback" control that calls the deployed Worker at `https://pm-gym-grader-production.joshisanket80.workers.dev/grade`. All other case studies are unchanged. `data.js`, `grader-rubric.js`, the Worker, and the homepage are untouched.
+- **Learner-facing result panel**: total score, concise overall comment, a small `✦ AI-GENERATED FEEDBACK` label, a highlighted "Biggest lever" card with the single highest-leverage improvement, a prominent brand-blue "Improve my answer" primary action, and a "By dimension" accordion (collapsed by default) with per-dimension score, reasoning, improvement, and optional evidence quote. Previous attempts persist in `localStorage` under `pmgym_case_grading` and survive reloads; corrupted storage falls back safely to `{}` via `safeLoadJSON`.
+- **Close / reopen panel without losing work**: an accessible `×` button in the top-right of the result panel hides the feedback (storing `hidden: true`) without discarding the grade, the attempt counter, the assisted flag, the graded answer, or the learner's current draft. A subtle "↺ View last feedback" button appears in the actions row whenever a stored result is hidden; it carries a `NEEDS REFRESH` pill when the current answer has drifted since grading. Reopening never regrades and never advances the attempt counter.
+- **Draft protection**: once the learner reveals the model answer for a pilot case in this browser, every subsequent grade for that case is permanently flagged `assisted: true` (sticky — not cleared by closing, reopening, clearing the draft, or reloading). An "assisted" badge inside the result panel communicates this to the learner.
+- **Word-count guidance**: a compact counter below the editor shows `N words` on the left with a contextual hint (`5 more words needed`) when under the 120-word minimum, and a `Min 120 · Max 1,500` chip on the right. A soft character warning appears at 90% of the 15,000-character limit; the limit itself is still enforced before any Worker call via `graderButtonState`.
+- **Error surface**: network, 429, 502, 503, 504, 400, and 413 responses each map to a targeted banner. The Worker does not expose `Retry-After` to browser JS, so the 429 message stays generic. In every error path, the learner's draft text is preserved verbatim.
+- **XSS safety**: every LLM-sourced field (dimension name, reasoning, improvement, evidence quote, overall comment, biggest-lever copy) is run through `escapeHtml` before interpolation. A grep-based test asserts no field reaches `innerHTML` unwrapped.
+
+### Changed
+- **Mobile consent banner compacted** (`styles.css`): on screens ≤ 500 px the banner padding tightens from `0.875rem` to `0.55rem`, text drops to `0.75rem` with a 2-line clamp, and the Accept / Decline buttons shrink to a single no-wrap row with a 36 px tap-target floor. The "Learn more" control was moved out of the clamped `<p>` in `index.html` so the privacy-details disclosure is never hidden by the clamp; its id, `onclick`, `aria-expanded`, and `aria-controls` are unchanged. Banner height on 375 × 812 drops from ~95 px to ~77 px (55 px without Learn more). Consent logic, storage, and analytics preferences are unchanged.
+- **Grader panel badges** now reserve 2.5 rem of right padding so the absolute-positioned `×` never overlaps the stale-feedback warning or the assisted badge.
+
+### Notes
+- **Rate limits unchanged.** 10/hour and 50/day per client via KV (approximate), global 20/day via Durable Object (atomic). HMAC-salted identifiers only, no raw IPs or learner answers stored.
+- **Rubrics, Worker, and analytics unchanged.** No new Mixpanel events in this release — analytics instrumentation for the grader is tracked as a separate task.
+- **Verification**: 73 new frontend tests (word counter, close/reopen, VLF visibility, stale-across-hide/reopen, Improve My Answer styling, AI label, no bottom disclaimer, badge × clearance, consent banner mobile tuning, XSS guards) + the existing 163 quiz-validation, 40 logic, and 102 Worker tests all pass. One real production call (Swiggy, 14/18) was made during the first integration pass; this release adds no further paid calls.
+
+---
+
 ## [2.0.0] — 2026-11-19
 
 ### Added

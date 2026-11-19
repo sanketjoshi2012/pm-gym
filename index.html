@@ -28,7 +28,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="styles.css?v=1.5.1">
+  <link rel="stylesheet" href="styles.css?v=1.6.3">
 </head>
 <body>
 
@@ -370,7 +370,10 @@
   <div class="consent-banner" id="consentBanner" role="region" aria-label="Analytics consent" hidden>
     <div class="consent-banner-inner">
       <div class="consent-banner-main">
-        <p class="consent-banner-text">PM Gym uses <strong>Mixpanel</strong> to understand how people use the site (EU servers only). Your learning progress is saved in your browser and never sent anywhere. <button class="consent-more-btn" id="consentMoreBtn" onclick="toggleConsentDetails()" aria-expanded="false" aria-controls="consentDetails">Learn more</button></p>
+        <div class="consent-banner-text-wrap">
+          <p class="consent-banner-text">PM Gym uses <strong>Mixpanel</strong> to understand how people use the site (EU servers only). Your learning progress is saved in your browser and never sent anywhere.</p>
+          <button class="consent-more-btn" id="consentMoreBtn" onclick="toggleConsentDetails()" aria-expanded="false" aria-controls="consentDetails">Learn more</button>
+        </div>
         <div class="consent-banner-actions">
           <button class="consent-btn consent-btn-decline" onclick="declineAnalytics()">No thanks</button>
           <button class="consent-btn consent-btn-accept" onclick="acceptAnalytics()">Accept analytics</button>
@@ -391,6 +394,6 @@
 
   <!-- Scripts -->
   <script src="js/data.js?v=1.2.5"></script>
-  <script src="js/app.js?v=1.6.2"></script>
+  <script src="js/app.js?v=1.7.2"></script>
 </body>
 </html>
