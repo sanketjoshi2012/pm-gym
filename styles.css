@@ -2200,6 +2200,65 @@ html { scroll-behavior: smooth; }
   border: 1px solid var(--border);
 }
 
+/* Experimental Beta badge on the four pilot cases. Soft-launch v2.5.0. */
+.ai-beta-badge {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.15rem 0.55rem;
+  border-radius: 9999px;
+  background: rgba(37, 99, 235, 0.10);
+  color: #1d4ed8;
+  border: 1px solid rgba(37, 99, 235, 0.35);
+  cursor: help;
+}
+@media (prefers-color-scheme: dark) {
+  .ai-beta-badge {
+    background: rgba(96, 165, 250, 0.14);
+    color: #93c5fd;
+    border-color: rgba(96, 165, 250, 0.40);
+  }
+}
+
+/* In-page disclaimer banner inside each pilot case page, above the word counter. */
+.grader-beta-banner {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 0.75rem 0 0.5rem;
+  padding: 0.55rem 0.85rem;
+  border-radius: 10px;
+  background: rgba(37, 99, 235, 0.06);
+  border: 1px solid rgba(37, 99, 235, 0.25);
+  font-size: 0.8125rem;
+  color: var(--fg-2);
+}
+.grader-beta-banner .grader-beta-badge {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.15rem 0.55rem;
+  border-radius: 9999px;
+  background: rgba(37, 99, 235, 0.14);
+  color: #1d4ed8;
+  border: 1px solid rgba(37, 99, 235, 0.35);
+}
+.grader-beta-banner .grader-beta-text { flex: 1 1 auto; }
+@media (prefers-color-scheme: dark) {
+  .grader-beta-banner {
+    background: rgba(96, 165, 250, 0.08);
+    border-color: rgba(96, 165, 250, 0.30);
+  }
+  .grader-beta-banner .grader-beta-badge {
+    background: rgba(96, 165, 250, 0.18);
+    color: #93c5fd;
+    border-color: rgba(96, 165, 250, 0.40);
+  }
+}
+
 .featured-time {
   font-size: 0.6875rem;
   font-family: var(--font-mono);

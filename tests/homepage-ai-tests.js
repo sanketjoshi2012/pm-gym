@@ -249,10 +249,17 @@ test('card keeps focus-visible outline for keyboard a11y', () => {
 
 // ─── Freeze guards ──────────────────────────────────────────────────────────
 
-console.log('\n--- Grader freeze guard ---');
-test('GRADER_ENABLED constant is declared and set to false in app.js', () => {
-  truthy(/const\s+GRADER_ENABLED\s*=\s*false\s*;/.test(APP),
-    'app.js must declare `const GRADER_ENABLED = false;` while the grader is frozen');
+console.log('\n--- Grader reactivation (v2.5.0 soft launch) ---');
+test('GRADER_ENABLED constant is declared and set to true in app.js', () => {
+  truthy(/const\s+GRADER_ENABLED\s*=\s*true\s*;/.test(APP),
+    'app.js must declare `const GRADER_ENABLED = true;` for the 10-user experimental beta');
+});
+test('Experimental Beta badge appears on the hero and all three pilot grid cards', () => {
+  const hero = heroBlock();
+  truthy(/ai-beta-badge/.test(hero), 'hero must carry the Experimental Beta badge');
+  const block = featuredBlock();
+  const badges = (block.match(/ai-beta-badge/g) || []).length;
+  eq(badges, 3, 'grid must carry one Experimental Beta badge per pilot card (expected 3)');
 });
 test('isPilotCase helper is gated by GRADER_ENABLED', () => {
   const start = APP.indexOf('function isPilotCase');

@@ -9,6 +9,27 @@ Format: [Semantic Versioning](https://semver.org) — `MAJOR.MINOR.PATCH`
 
 ---
 
+## [2.5.0] — 2026-11-23
+
+### Changed — AI grader reactivated for a 10-user experimental soft launch
+Reverses the v2.3.0 freeze after a two-stage calibration pass: a 24-call synthetic consistency run and a 20-answer human-vs-AI blind benchmark. Soft-launch scope is unchanged: exactly four pilot cases (FotMob, Cricbuzz, Spotify, Swiggy) are AI-graded; the remaining eleven case studies are not.
+
+- **Production Worker** — `worker/wrangler.toml` `LLM_PROVIDER` flipped `"off" → "anthropic"` and redeployed with `wrangler deploy --env production`. `GLOBAL_DAILY_CAP = "20"` retained. KV + Durable Object bindings unchanged.
+- **Smoke-test** — one blind production `POST /grade` returned HTTP 200 with a valid five-dimension JSON response, totals computed server-side, and every evidence quote an exact substring of the submitted answer (prior freeze returned 503 before this path).
+- **Frontend** — `js/app.js` `GRADER_ENABLED` flipped `false → true`. `isPilotCase` gate and `PILOT_CASE_IDS` set unchanged. Grader URL, drafts, and all stored grading records untouched.
+- **UI labelling** — four pilot case cards on the homepage (hero + three grid cards) now carry a small `AI · Beta` / `AI · Experimental Beta` pill. Each pilot case page shows a short banner above the word counter: *"Experimental Beta — AI feedback is in calibration; treat scores as directional."* No new features, no feedback forms, no new case studies, no rubric changes.
+- **Calibration evidence (summary, full reports kept in gitignored local files)** — 65.7% exact human–AI agreement across 105 dimension ratings, 95.2% within-one-point, 5 two-point disagreements (all AI more generous), MAE 0.39 on a 3-point scale, zero fabricated evidence quotes accepted. Feedback prose inspection: 3/3 PASS on strong / medium / keyword-stuffed representative answers. Combined paid-API spend across both calibration passes: ~$0.053.
+- **To re-freeze if needed**: flip `GRADER_ENABLED` back to `false` in `js/app.js`, redeploy Pages; optionally also set `LLM_PROVIDER = "off"` in `worker/wrangler.toml` and redeploy the Worker so the backend returns 503 before any billable call.
+
+### Unchanged in this release
+- All 15 case studies, including the five from v2.4.0, are intact.
+- Grading prompts, rubric anchors (`js/grader-rubric.js`), and the Worker schema validator are unchanged from v2.3.0 and before.
+- Per-client rate limit, global daily cap, and Durable Object bindings.
+- Analytics consent behavior and homepage structure.
+- No public announcement; this is a 10-person private recruitment beta.
+
+---
+
 ## [2.4.0] — 2026-11-23
 
 ### Added — Five new case studies (library grows from 10 → 15)

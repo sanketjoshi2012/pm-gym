@@ -149,12 +149,11 @@ const STORAGE_KEYS = {
 
 const GRADER_URL = 'https://pm-gym-grader-production.joshisanket80.workers.dev/grade';
 
-// Public grader kill-switch. While false, the grader UI is fully hidden on every pilot case page,
-// no fetch to GRADER_URL can be initiated from the UI, and no stored result will be re-hydrated
-// into the DOM on reload. Drafts (pmgym_case_answers) and grading state (pmgym_case_grading) are
-// preserved in localStorage. See CHANGELOG [2.3.0] for the Cohort 21 calibration freeze and the
-// three-step reactivation procedure.
-const GRADER_ENABLED = false;
+// Public grader kill-switch. True from v2.5.0 for the 10-user experimental soft launch after
+// human-vs-AI calibration (see CHANGELOG [2.5.0]). Setting this to false fully hides the grader
+// UI on every pilot case page, blocks any fetch to GRADER_URL, and stops stored results from
+// being re-hydrated into the DOM on reload. Drafts and grading state in localStorage are kept.
+const GRADER_ENABLED = true;
 const PILOT_CASE_IDS = new Set([
   'case-study-fotmob',
   'case-study-cricbuzz',
@@ -1094,6 +1093,10 @@ function renderCaseStudy(container, topic, levelId) {
       placeholder="Write your answer here... Think through the problem systematically before revealing the model answer."
       ></textarea>
     ${isPilotCase(topic.id) ? `
+    <div class="grader-beta-banner" role="note" aria-label="AI grading is in experimental beta">
+      <span class="grader-beta-badge">Experimental Beta</span>
+      <span class="grader-beta-text">AI feedback is in calibration — treat scores as directional.</span>
+    </div>
     <div class="grader-helper">
       <div id="wordCounter" class="word-counter" aria-live="polite" role="status">
         <span class="word-counter-left">
