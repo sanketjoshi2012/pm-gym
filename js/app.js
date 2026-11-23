@@ -619,7 +619,7 @@ function renderTopics(levelId) {
   const otherTopics = level.topics.filter(topic => !topic.isCaseStudy);
 
   // Dynamically derive categories from data.js
-  const preferredOrder = ['Sports', 'Media & Entertainment', 'E-commerce & Fashion', 'Food Delivery', 'Work & Productivity', 'Fintech'];
+  const preferredOrder = ['Sports', 'Media & Entertainment', 'E-commerce & Fashion', 'Food Delivery', 'Work & Productivity', 'Fintech', 'Travel & Hospitality', 'Maps & Navigation', 'Gaming'];
   const uniqueCategories = [...new Set(caseStudies.map(t => t.category).filter(Boolean))];
   const categories = uniqueCategories.sort((a, b) => {
     const idxA = preferredOrder.indexOf(a);

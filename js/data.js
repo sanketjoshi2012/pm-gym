@@ -1590,6 +1590,390 @@ You are the CPO. Which do you ship and why?`,
           }
         },
         {
+          id: "case-study-slack",
+          title: "Case Study: Slack Workspaces That Never Become Teams",
+          duration: "20–25 min",
+          isCaseStudy: true,
+          category: "Work & Productivity",
+          scenario: {
+            title: "Slack: Workspaces That Never Become Teams",
+            context: `Slack is a workplace communication platform that helps teams exchange messages and collaborate. Assume the following illustrative, hypothetical analytics for this exercise: 10,000 new workspaces are created each month, 65% of workspace creators invite at least one teammate within seven days, but only 20% of new workspaces reach meaningful collaboration within 30 days. Workspaces that achieve meaningful collaboration show significantly stronger long-term retention. For this exercise, meaningful collaboration means at least three members exchanging messages across two separate days within their first 30 days. You are the PM responsible for new-workspace activation. Leadership wants to improve the 30-day collaboration rate without introducing unnecessary onboarding complexity.`,
+            prompt: `In your answer, address the following:
+1. How would you distinguish a successful workspace signup from successful team activation?
+2. What data and qualitative research would you use to identify the largest activation barriers?
+3. Propose three distinct product interventions and explain the user value and risks of each.
+4. Which intervention would you prioritise, and what would its minimum viable experiment look like?
+5. How would you measure success, including guardrail metrics?`,
+            rubric: [
+              {
+                dimension: "Activation Framing",
+                strong: "Distinguishes workspace creation, invitations, teammate onboarding, and repeated collaboration. Treats the workspace (not the individual) as the primary unit of analysis because Slack's value depends on multiple people participating.",
+                weak: "Treats new workspace creation as activation, or ignores that Slack's value is multi-user by nature."
+              },
+              {
+                dimension: "Investigation",
+                strong: "Would analyse invitation acceptance rates, first shared conversations, workspace size distribution, and differences between activating and abandoning workspaces. Would interview creators and invitees separately because they face different problems.",
+                weak: "Assumes inactivity is caused by a missing feature, or jumps to solutions without diagnosing the funnel first."
+              },
+              {
+                dimension: "Solution Breadth",
+                strong: "Proposes meaningfully different interventions targeting separate funnel barriers (e.g., a guided first collaboration, team-specific templates, and richer invitation context) with explicit user value and risks for each.",
+                weak: "Suggests several variations of reminder notifications or three near-identical onboarding tweaks."
+              },
+              {
+                dimension: "Prioritisation and MVP",
+                strong: "Selects a specific barrier based on evidence from the funnel analysis and scopes a narrow test (for example, a short setup prompt for a random slice of new workspaces that guides the creator to start one team conversation).",
+                weak: "Proposes a complete onboarding redesign immediately, or picks a solution without connecting it to a diagnosed barrier."
+              },
+              {
+                dimension: "Metrics and Guardrails",
+                strong: "Measures collaborative activation by workspace cohort (not individual engagement) and monitors invitation acceptance, time to first multi-person conversation, notification fatigue, and retention. Guardrails cover workspace creation completion, onboarding abandonment, and opt-outs.",
+                weak: "Uses signups or total message volume alone, which conflates per-workspace success with workspace size."
+              }
+            ],
+            modelAnswer: `
+              <p><em>Illustrative PM reasoning. A well-argued alternative that addresses the underlying problem with evidence and trade-offs is also acceptable.</em></p>
+
+              <h3>1. Define Activation</h3>
+              <p>Workspace creation is an expression of intent, not proof of collaborative value. I would map activation as a sequence: <strong>workspace created → teammates invited → invitations accepted → first meaningful exchange → repeat collaboration</strong>.</p>
+              <p>The primary unit of analysis should be the <strong>workspace</strong>, not the individual user, because Slack's value depends on multiple people participating. A workspace with three regular contributors is far more valuable than one with ten passive accounts.</p>
+
+              <h3>2. Investigate the Funnel</h3>
+              <ul>
+                <li>Invitation acceptance rates and time to acceptance.</li>
+                <li>Percentage of workspaces with at least three active members within 30 days.</li>
+                <li>Time from first invitation to first multi-person conversation.</li>
+                <li>Activation by workspace size, company type, and acquisition channel.</li>
+                <li>Differences between workspaces that activate and those that abandon setup.</li>
+              </ul>
+              <p>Qualitatively, I would interview creators and invitees <em>separately</em>. A workspace creator might struggle to convince colleagues to join. An invitee might join but see no reason to contribute. Those are different problems requiring different solutions.</p>
+
+              <h3>3. Three Interventions</h3>
+              <p><strong>Option A: Guided first collaboration.</strong> Help creators invite teammates and complete one useful collaborative task, such as a team check-in. <em>Value:</em> demonstrates the product's purpose quickly. <em>Risk:</em> generic guidance may not fit every team's workflow.</p>
+              <p><strong>Option B: Team-specific workspace templates.</strong> Offer templates for project teams, small businesses, or community groups. <em>Value:</em> reduces the blank-workspace problem and establishes context. <em>Risk:</em> templates can create unnecessary channels and complexity.</p>
+              <p><strong>Option C: Invitation context.</strong> Let workspace creators include a clear reason for joining, such as a project or shared goal, in invitations. <em>Value:</em> improves invitee understanding and willingness to participate. <em>Risk:</em> additional invitation steps could reduce invitations sent.</p>
+
+              <h3>4. Prioritise and Test</h3>
+              <p>I would not select a solution before examining the funnel. If invitation acceptance is healthy but conversations rarely begin, I would prioritise <strong>guided first collaboration</strong>. The MVP would introduce a short setup prompt to a randomly selected group of newly created workspaces, guiding the creator to start one team conversation. I would avoid rebuilding the entire onboarding experience.</p>
+
+              <h3>5. Define Success</h3>
+              <p><strong>Primary metric:</strong> percentage of new workspaces reaching meaningful collaboration (three members exchanging messages across two separate days) within 30 days.</p>
+              <p><strong>Leading metrics:</strong> invitation acceptance, first multi-person conversation, and time to first collaboration.</p>
+              <p><strong>Guardrails:</strong> workspace creation completion rate, onboarding abandonment, notification opt-outs, and member satisfaction.</p>
+              <p>I would examine results by workspace cohort rather than relying on total message volume, which larger workspaces would dominate.</p>
+              <p><strong>Key learning:</strong> B2B activation is about helping multiple users reach shared value, not merely increasing individual engagement.</p>
+            `
+          }
+        },
+        {
+          id: "case-study-netflix",
+          title: "Case Study: Netflix Cheaper Subscription Tier Decision",
+          duration: "20–25 min",
+          isCaseStudy: true,
+          category: "Media & Entertainment",
+          scenario: {
+            title: "Netflix: Should We Introduce a Cheaper Subscription Tier?",
+            context: `Netflix operates a subscription-based video streaming platform. Assume the following illustrative, hypothetical situation for this exercise: subscriber growth has slowed in a particular market, price-sensitive users have a higher cancellation rate than other subscribers, consumer research suggests some non-subscribers consider the current entry price too high, and the business is considering a new lower-priced subscription tier with restricted features. Leadership expects the cheaper tier to attract new subscribers but worries it may encourage existing subscribers to downgrade. You are the PM responsible for subscription growth and monetisation in this market. Should Netflix introduce the new tier?`,
+            prompt: `In your answer, address the following:
+1. How would you frame the business problem and identify the relevant subscriber segments?
+2. What data would you gather to understand willingness to pay, churn, and potential cannibalisation?
+3. What pricing or packaging alternatives would you evaluate?
+4. How would you design an experiment to determine whether the new tier creates incremental value?
+5. What metrics and decision criteria would determine whether to launch, iterate, or reject it?`,
+            rubric: [
+              {
+                dimension: "Business Framing",
+                strong: "Differentiates acquisition, retention, pricing accessibility, and revenue objectives, and recognises that these can conflict. Identifies segments: price-sensitive prospects, recent churners, existing subscribers likely to downgrade, and subscribers with low price sensitivity.",
+                weak: "Assumes lower prices automatically improve the business, or treats the decision as a single-metric optimisation."
+              },
+              {
+                dimension: "Customer and Revenue Analysis",
+                strong: "Examines churn and cancellation reasons by tier, historical price-change response, acquisition conversion by segment, margin per subscriber, and downgrade behaviour. Uses stated willingness to pay as a signal but relies on revealed behaviour for the decision.",
+                weak: "Focuses exclusively on subscriber growth, or relies on surveyed willingness to pay without validating against actual behaviour."
+              },
+              {
+                dimension: "Option Evaluation",
+                strong: "Considers at least three distinct approaches (new restricted tier, limited-duration acquisition offer, repackaged existing tiers) with explicit trade-offs for each.",
+                weak: "Treats a cheaper tier as the only solution, or considers alternatives that are variants of the same lever."
+              },
+              {
+                dimension: "Experiment Design",
+                strong: "Tests incremental acquisition against cannibalisation with an appropriate control (contained market or eligible prospect population), defines a minimum acceptable improvement in incremental contribution, and runs long enough to observe cancellation and downgrade behaviour.",
+                weak: "Launches broadly and compares before-and-after subscribers, or ignores cannibalisation."
+              },
+              {
+                dimension: "Financial Metrics",
+                strong: "Evaluates incremental contribution, ARPU, retention, downgrade rates, and costs. Guardrails cover existing-subscriber downgrade rate, ARPU, customer support contacts, and dissatisfaction with plan restrictions.",
+                weak: "Measures success using total subscriptions alone, ignoring unit economics."
+              }
+            ],
+            modelAnswer: `
+              <p><em>Illustrative PM reasoning. A well-argued alternative that addresses the underlying problem with evidence and trade-offs is also acceptable.</em></p>
+
+              <h3>1. Frame the Problem</h3>
+              <p>I would first clarify whether the primary objective is new customer acquisition, reduced churn, or improved revenue. These objectives can conflict: a lower-priced plan may increase subscriber count while reducing total contribution if too many existing customers downgrade.</p>
+              <p>I would segment users into price-sensitive prospects, recent churners, existing subscribers likely to downgrade, and subscribers with low price sensitivity.</p>
+
+              <h3>2. Understand Willingness to Pay</h3>
+              <ul>
+                <li>Churn and cancellation reasons by tier.</li>
+                <li>Historical subscriber response to past pricing changes.</li>
+                <li>Acquisition conversion by market and customer segment.</li>
+                <li>Revenue and variable service costs per subscriber.</li>
+                <li>Qualitative research about which features customers value most.</li>
+              </ul>
+              <p>Surveyed willingness to pay is useful but insufficient on its own. Actual purchase behaviour should drive the decision.</p>
+
+              <h3>3. Consider Alternatives</h3>
+              <p><strong>Option A: Lower-priced restricted tier.</strong> Attracts price-sensitive consumers. <em>Risk:</em> existing subscribers downgrade.</p>
+              <p><strong>Option B: Limited-duration acquisition offer.</strong> Reduces initial commitment for new customers. <em>Risk:</em> attracts deal-seekers who churn after the offer.</p>
+              <p><strong>Option C: Adjust existing tier packaging.</strong> Differentiate plans by features, access, or usage without necessarily lowering the entry price as much. <em>Risk:</em> more confusing plan choices.</p>
+
+              <h3>4. Design the Experiment</h3>
+              <p>I would test the new tier in a contained market or eligible prospect population, with a comparable control group. Crucially, the test must allow us to estimate cannibalisation among eligible existing customers, not just new subscriptions. I would predefine a minimum acceptable improvement in incremental contribution and run the experiment long enough to observe meaningful cancellation and downgrade behaviour.</p>
+
+              <h3>5. Define Success</h3>
+              <p><strong>Primary metric:</strong> incremental contribution profit attributable to the new tier over a defined period.</p>
+              <p><strong>Secondary metrics:</strong> incremental paid acquisition, conversion, retention, and subscriber lifetime value.</p>
+              <p><strong>Guardrails:</strong> existing subscriber downgrade rate, ARPU, customer support contacts, and dissatisfaction with plan restrictions.</p>
+              <p>I would launch only if the evidence suggests the new tier produces incremental value, not simply a higher subscriber count.</p>
+              <p><strong>Key learning:</strong> monetisation decisions require optimising business value, not maximising a single growth metric.</p>
+            `
+          }
+        },
+        {
+          id: "case-study-airbnb",
+          title: "Case Study: Airbnb Reducing Misleading Listings",
+          duration: "20–25 min",
+          isCaseStudy: true,
+          category: "Travel & Hospitality",
+          scenario: {
+            title: "Airbnb: Reducing Misleading Listings Without Hurting Bookings",
+            context: `Airbnb is a marketplace connecting travellers with accommodation hosts. Assume the following illustrative, hypothetical quarterly business review for this exercise: guest reports about misleading listings have increased by 30%, complaints primarily involve inaccurate property descriptions, outdated photos, and missing amenities, and some complaints result in refunds, cancellations, and negative guest experiences. Leadership proposes introducing stricter host verification before listings can accept bookings. However, hosts worry that additional verification requirements could delay listing activation and increase administrative work. You are the PM responsible for listing quality and guest trust. Your goal is to improve listing reliability while maintaining a healthy supply of accommodation.`,
+            prompt: `In your answer, address the following:
+1. How would you define and size the trust problem before deciding on a solution?
+2. What data would you investigate, and how would you segment affected listings and guests?
+3. Evaluate three possible interventions, including their impact on guests and hosts.
+4. What solution would you prioritise, and how would you test it safely?
+5. How would you measure trust improvements while protecting marketplace health?`,
+            rubric: [
+              {
+                dimension: "Trust Problem Framing",
+                strong: "Separates complaint volume, complaint rate (per completed stay), severity, and actual listing inaccuracies. Recognises that rising reports may reflect worsening quality, higher booking volume, or improved reporting.",
+                weak: "Assumes every complaint represents fraud, or confuses raw complaint count with trust deterioration."
+              },
+              {
+                dimension: "Marketplace Investigation",
+                strong: "Considers guests, hosts, listing characteristics, complaint validity, severity, and both sides of the marketplace. Segments by host type, property, location, listing age, and the proportion of complaints that are substantiated.",
+                weak: "Examines guest complaints without considering host supply, or ignores complaint validity."
+              },
+              {
+                dimension: "Intervention Trade-offs",
+                strong: "Evaluates verification, post-stay accuracy feedback, and quality signals, and explicitly weighs host burden, supply growth, and false-positive risk alongside guest protection.",
+                weak: "Assumes universal strict verification is risk-free, or ignores host friction entirely."
+              },
+              {
+                dimension: "Risk-Based Prioritisation",
+                strong: "Targets higher-risk listings based on validated signals (repeated complaints, outdated information), tests enforcement with safeguards (appeal and correction), and keeps serious safety issues in existing escalation paths.",
+                weak: "Applies expensive restrictions indiscriminately, or disregards appeal and correction mechanisms."
+              },
+              {
+                dimension: "Marketplace Metrics",
+                strong: "Balances verified listing accuracy, guest outcomes (refunds, cancellations), supply activation, host fairness, and complaint reporting rates. Watches for reduced reporting as a false improvement signal.",
+                weak: "Measures only reduction in complaints, missing the risk of suppressed reporting."
+              }
+            ],
+            modelAnswer: `
+              <p><em>Illustrative PM reasoning. A well-argued alternative that addresses the underlying problem with evidence and trade-offs is also acceptable.</em></p>
+
+              <h3>1. Define the Problem</h3>
+              <p>I would distinguish deliberate misrepresentation from inaccurate but unintentional listing information. A 30% rise in reports might reflect worsening listing quality, increased booking volume, or improved complaint reporting.</p>
+              <p>I would measure the rate of substantiated complaints per completed stay and categorise complaints by severity. Raw complaint count on its own is not a trust metric.</p>
+
+              <h3>2. Investigate the Data</h3>
+              <ul>
+                <li>New versus established hosts.</li>
+                <li>Professional versus occasional hosts.</li>
+                <li>Property type, location, and listing age.</li>
+                <li>Complaint category and severity.</li>
+                <li>Listings with repeated complaints.</li>
+                <li>Time since photos and amenities were last updated.</li>
+              </ul>
+              <p>I would also examine the proportion of complaints that are validated, and their refund and cancellation outcomes.</p>
+
+              <h3>3. Evaluate Interventions</h3>
+              <p><strong>Option A: Universal listing verification.</strong> Requires hosts to verify descriptions, photos, and amenities. <em>Benefit:</em> broad coverage. <em>Risk:</em> onboarding friction, operational expense, and slower supply growth.</p>
+              <p><strong>Option B: Risk-based verification.</strong> Target listings with repeated complaints, outdated information, or other validated risk indicators. <em>Benefit:</em> directs verification effort where it is most useful. <em>Risk:</em> false positives and unfair treatment of certain host segments.</p>
+              <p><strong>Option C: Improved post-stay listing accuracy feedback.</strong> Ask guests to confirm whether key amenities and descriptions were accurate. <em>Benefit:</em> generates ongoing quality signals. <em>Risk:</em> feedback can be noisy, incomplete, or biased.</p>
+
+              <h3>4. Prioritise and Test</h3>
+              <p>I would start with risk-based verification paired with clearer listing accuracy feedback. First, validate the risk signals using historical complaints. Then introduce the process to a limited group of listings, monitor false positives, and provide hosts with an appeal and correction process. Serious safety violations should continue through existing safety escalation processes rather than being left to the experiment.</p>
+
+              <h3>5. Define Success</h3>
+              <p><strong>Primary metric:</strong> rate of substantiated material listing inaccuracies per completed stay.</p>
+              <p><strong>Secondary metrics:</strong> refunds, listing-related cancellations, repeated complaints, and guest trust scores.</p>
+              <p><strong>Guardrails:</strong> host listing activation time, active supply, booking conversion, false-positive verification flags, and host satisfaction.</p>
+              <p>I would also monitor complaint reporting rates to avoid mistaking reduced reporting for improved trust.</p>
+              <p><strong>Key learning:</strong> marketplace safety improvements must protect guests without unnecessarily penalising legitimate supply.</p>
+            `
+          }
+        },
+        {
+          id: "case-study-google-maps",
+          title: "Case Study: Google Maps Route Recommendation Experiment",
+          duration: "20–25 min",
+          isCaseStudy: true,
+          category: "Maps & Navigation",
+          scenario: {
+            title: "Google Maps: An Experiment Improves Engagement but Not Navigation",
+            context: `Google Maps helps people discover places and navigate routes. Imagine your team has developed a hypothetical AI-powered route recommendation experience. Instead of only displaying conventional route choices, the feature highlights a recommended route with a brief explanation. Assume the following illustrative, fictional four-week A/B test, with eligible users randomly assigned to control and treatment. Route recommendation engagement: control 40% versus treatment 48%. Median journey completion time: 28 minutes in both arms. Post-trip satisfaction: 4.3 out of 5 in both arms. Route changes during navigation: control 12% versus treatment 15%. The engagement increase is statistically significant at the experiment's predefined threshold. The other differences have not been established as statistically significant. Your team is excited about the engagement increase and recommends a full rollout. You are the PM responsible for the experiment.`,
+            prompt: `In your answer, address the following:
+1. What decision should this experiment help you make, and which metric should be primary?
+2. How would you interpret the results? What can and cannot you conclude?
+3. What additional analyses would you conduct before making a decision?
+4. Would you launch, iterate, or stop the feature? Explain your reasoning and next experiment.
+5. What launch criteria and guardrails would you establish?`,
+            rubric: [
+              {
+                dimension: "Objective and Metric Selection",
+                strong: "Aligns the primary metric with navigation usefulness (validated travel outcome, successful journey completion, user satisfaction), not feature engagement alone.",
+                weak: "Treats recommendation clicks as proof of better navigation."
+              },
+              {
+                dimension: "Statistical Interpretation",
+                strong: "Separates statistically significant findings from inconclusive ones. Recognises that a non-significant result is not the same as 'no effect', and considers uncertainty and practical impact.",
+                weak: "Treats nonsignificant results as proof of no effect, or ignores confidence intervals."
+              },
+              {
+                dimension: "Diagnostic Depth",
+                strong: "Checks exposure, randomisation balance, sample size and power, segments (urban vs rural, driving/walking/transit, short vs long trips), route types, and instrument quality.",
+                weak: "Accepts aggregate numbers without investigating heterogeneity or power."
+              },
+              {
+                dimension: "Product Decision",
+                strong: "Makes a defensible decision (hold or run a targeted follow-up) and specifies the next experiment, including which hypothesis it is testing.",
+                weak: "Launches solely because engagement increased, or proposes continuous testing without a clear decision point."
+              },
+              {
+                dimension: "Experimental Safeguards",
+                strong: "Pre-registers primary metric, minimum practically meaningful improvement, power and duration requirements, and guardrails (rerouting, journey duration, distraction/safety signals).",
+                weak: "No launch criteria or guardrails, or vague thresholds that cannot settle a launch decision."
+              }
+            ],
+            modelAnswer: `
+              <p><em>Illustrative PM reasoning. A well-argued alternative that addresses the underlying problem with evidence and trade-offs is also acceptable.</em></p>
+
+              <h3>1. Identify the Objective</h3>
+              <p>The objective should be to help people select routes that improve their travel experience. Higher engagement with an explanation is useful only if it supports that outcome. I would prioritise a validated navigation quality metric that considers successful route completion, travel outcomes, and user satisfaction.</p>
+
+              <h3>2. Interpret the Results</h3>
+              <p>The treatment increased engagement from 40% to 48%, an absolute increase of eight percentage points. However, journey completion time and reported satisfaction did not show a demonstrated improvement.</p>
+              <p>Route changes increased numerically, from 12% to 15%, but without established significance we cannot conclude that the feature caused a genuine deterioration.</p>
+              <p>The experiment shows people interact with the feature more. It does not yet establish that their journeys improve.</p>
+
+              <h3>3. Investigate Further</h3>
+              <ul>
+                <li>Experiment sample size and statistical power.</li>
+                <li>Confidence intervals for each outcome.</li>
+                <li>Randomisation balance and instrumentation.</li>
+                <li>Urban versus rural routes.</li>
+                <li>Driving, walking, and public transport segments.</li>
+                <li>Short versus long trips.</li>
+                <li>Whether route changes reflect confusion, better alternatives, or changing traffic conditions.</li>
+              </ul>
+              <p>I would also inspect whether users understand the explanation and whether the additional interaction creates distraction.</p>
+
+              <h3>4. Make the Decision</h3>
+              <p>I would <strong>not approve a full rollout yet</strong>. I would keep the existing experience for the majority of users and run a targeted follow-up experiment focused on the segments where recommendations appear most useful. Potential refinements include explanation clarity, route comparison, or restricting recommendations to situations where there is meaningful trade-off information.</p>
+
+              <h3>5. Define Launch Criteria</h3>
+              <p>I would pre-register the primary navigation outcome, the minimum practically meaningful improvement, sample-size requirements, and experiment duration.</p>
+              <p><strong>Primary metric:</strong> a validated measure of successful navigation quality.</p>
+              <p><strong>Secondary metrics:</strong> route selection confidence and post-trip satisfaction.</p>
+              <p><strong>Guardrails:</strong> excessive rerouting, journey duration deterioration, and distraction-related safety indicators.</p>
+              <p><strong>Key learning:</strong> a statistically significant change in feature engagement does not automatically justify a product launch.</p>
+            `
+          }
+        },
+        {
+          id: "case-study-figma",
+          title: "Case Study: Figma Plugin Ecosystem Quality",
+          duration: "20–25 min",
+          isCaseStudy: true,
+          category: "Work & Productivity",
+          scenario: {
+            title: "Figma: Growing a Plugin Ecosystem Without Losing Product Quality",
+            context: `Figma is a collaborative design platform with an ecosystem of third-party plugins that extend its functionality. Assume the following illustrative, hypothetical situation for this exercise: plugin submissions have doubled over the past year, plugin discovery is becoming difficult as the catalogue grows, users increasingly report outdated plugins, unreliable performance, and unclear permission requests, and developers argue that stricter reviews and approval requirements could discourage innovation. Leadership wants to accelerate ecosystem growth while maintaining trust in the core design experience. You are the PM responsible for Figma's plugin ecosystem. You have one quarter to improve ecosystem quality without materially slowing developer participation.`,
+            prompt: `In your answer, address the following:
+1. How would you define a healthy plugin ecosystem for users, developers, and the platform?
+2. What data would you gather to identify the most important quality and discovery problems?
+3. Evaluate three possible initiatives to improve the ecosystem, including their trade-offs.
+4. Which initiative would you prioritise for the next quarter, and how would you scope its MVP?
+5. What metrics would you use to evaluate ecosystem health and developer experience?`,
+            rubric: [
+              {
+                dimension: "Ecosystem Framing",
+                strong: "Identifies incentives and needs of users, plugin developers, and the platform, and recognises plugin count alone is a weak measure of ecosystem success.",
+                weak: "Focuses only on the number of available plugins or treats developers as a single undifferentiated group."
+              },
+              {
+                dimension: "Quality Investigation",
+                strong: "Evaluates adoption, retention, crash and failure rates, support complaints, permission concerns, discovery-to-install conversion, and developer submission-to-approval time.",
+                weak: "Assumes more review requirements automatically improve quality without diagnosing the underlying problem."
+              },
+              {
+                dimension: "Strategic Options",
+                strong: "Compares discovery improvements, quality signals, risk-based governance, and developer tooling. Separates discovery problems from quality and security problems.",
+                weak: "Recommends only tighter approval processes, or conflates discovery, quality, and security into one lever."
+              },
+              {
+                dimension: "Prioritisation and MVP",
+                strong: "Selects an evidence-based intervention, defines a small initial scope (for example, trust signals shown on a subset of plugins), and considers the impact on smaller developers.",
+                weak: "Proposes rebuilding the marketplace without a testable hypothesis or an MVP that can be delivered within one quarter."
+              },
+              {
+                dimension: "Ecosystem Metrics",
+                strong: "Measures trusted adoption (installations that lead to meaningful repeat usage without trust incidents), reliability, developer participation, and marketplace efficiency. Guardrails cover developer approval time and false-positive enforcement.",
+                weak: "Measures success only through submission growth or raw install counts."
+              }
+            ],
+            modelAnswer: `
+              <p><em>Illustrative PM reasoning. A well-argued alternative that addresses the underlying problem with evidence and trade-offs is also acceptable.</em></p>
+
+              <h3>1. Define Ecosystem Health</h3>
+              <p>A healthy ecosystem creates value for three stakeholders. <strong>Users</strong> can find useful, reliable plugins that respect their data. <strong>Developers</strong> can build, publish, and improve plugins without unnecessary friction. <strong>Figma</strong> benefits from a platform that becomes more useful without undermining its core product experience.</p>
+              <p>Plugin count alone is a weak measure of ecosystem success.</p>
+
+              <h3>2. Diagnose the Issues</h3>
+              <ul>
+                <li>Plugin discovery-to-install conversion.</li>
+                <li>Active usage and repeat usage by plugin category.</li>
+                <li>Crash and failure rates.</li>
+                <li>Frequency of plugin updates.</li>
+                <li>Complaints and permission-related concerns.</li>
+                <li>Developer submission-to-approval time.</li>
+                <li>Developer abandonment during publishing.</li>
+              </ul>
+              <p>I would separate discovery problems from quality and security problems rather than assuming a single solution addresses all three.</p>
+
+              <h3>3. Evaluate Strategic Initiatives</h3>
+              <p><strong>Option A: Trust and quality signals.</strong> Display verified information about update recency, permissions, and reliability. <em>Benefit:</em> users make better-informed decisions. <em>Risk:</em> simplified quality labels may unfairly penalise new plugins.</p>
+              <p><strong>Option B: Risk-based plugin reviews.</strong> Require stronger review for plugins with sensitive permissions or elevated risk. <em>Benefit:</em> protects users while avoiding universal review overhead. <em>Risk:</em> inconsistent classification and longer approval times for some developers.</p>
+              <p><strong>Option C: Improved discovery and recommendations.</strong> Help users find relevant plugins based on their workflows. <em>Benefit:</em> greater value from the existing catalogue. <em>Risk:</em> recommendations may disproportionately favour established developers.</p>
+
+              <h3>4. Prioritise and Scope</h3>
+              <p>I would begin by assessing which issue creates the greatest measurable harm. If reliability and unclear permissions are major drivers of dissatisfaction, I would prioritise <strong>trust and quality signals</strong>, supported by a targeted verification process.</p>
+              <p>The MVP would show permission disclosures, last update date, and a limited reliability indicator for a subset of plugins. I would test whether these signals improve successful plugin adoption without unfairly reducing discovery of smaller developers. Plugins presenting serious security risks should be handled through existing security controls, independently of the experiment.</p>
+
+              <h3>5. Define Success</h3>
+              <p><strong>Primary metric:</strong> percentage of plugin installations that lead to meaningful repeat usage without a reliability or trust incident.</p>
+              <p><strong>Secondary metrics:</strong> discovery-to-install conversion, plugin retention, reported issues, and successful developer publications.</p>
+              <p><strong>Guardrails:</strong> developer approval time, developer retention, discoverability of new plugins, and false-positive enforcement actions.</p>
+              <p><strong>Key learning:</strong> platform strategy is about balancing ecosystem growth, developer incentives, governance, and user trust.</p>
+            `
+          }
+        },
+        {
           id: "product-strategy",
           title: "Product Strategy Fundamentals",
           duration: "4 min read",

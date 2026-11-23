@@ -9,6 +9,45 @@ Format: [Semantic Versioning](https://semver.org) — `MAJOR.MINOR.PATCH`
 
 ---
 
+## [2.4.0] — 2026-11-23
+
+### Added — Five new case studies (library grows from 10 → 15)
+All five join the Advanced level and are available immediately in the library, category filters, Save Draft, Reveal Model Answer, Mark as Completed, and progress tracking. None of them is wired into AI grading — the public grader stays frozen.
+
+- **Slack — Workspaces That Never Become Teams** (`case-study-slack`, Work & Productivity). B2B activation / organisational adoption scenario with illustrative hypothetical workspace-funnel metrics. Five prompt questions, five-dimension rubric, worked model answer that frames the workspace (not the user) as the primary activation unit.
+- **Netflix — Cheaper Subscription Tier Decision** (`case-study-netflix`, Media & Entertainment). Monetisation and pricing scenario exploring incremental acquisition vs. cannibalisation among existing subscribers. Model answer insists on incremental-contribution economics over single-metric subscriber growth.
+- **Airbnb — Reducing Misleading Listings Without Hurting Bookings** (`case-study-airbnb`, **Travel & Hospitality** — new category). Marketplace trust and safety scenario balancing guest trust against host supply friction. Model answer prefers risk-based verification with appeals over universal review.
+- **Google Maps — An Experiment Improves Engagement but Not Navigation** (`case-study-google-maps`, **Maps & Navigation** — new category). Experimentation / A/B-testing scenario with a hypothetical four-week test where engagement moved but navigation outcomes did not. Model answer treats a statistically significant engagement change as insufficient for a launch decision.
+- **Figma — Growing a Plugin Ecosystem Without Losing Product Quality** (`case-study-figma`, Work & Productivity). Platform governance and ecosystem growth scenario balancing user trust, developer friction, and discovery. Model answer scopes a quarter-sized MVP of trust/quality signals.
+
+Every scenario context explicitly labels its invented figures as illustrative / hypothetical / fictional, and every model answer opens with "Illustrative PM reasoning. A well-argued alternative that addresses the underlying problem with evidence and trade-offs is also acceptable." Content governance keeps invented metrics distinct from stated company facts.
+
+### Added — Two new industry categories
+- **Travel & Hospitality** (Airbnb).
+- **Maps & Navigation** (Google Maps).
+
+The category system is unchanged in structure: `preferredOrder` in `renderTopics()` was extended with the two new categories plus "Gaming" (which already existed in data but was previously ordered alphabetically after the preferred list). Category filter chips, counts, hidden/visible card logic, badge rendering, and the active-category URL/hash flow work unchanged. Case studies now span exactly 9 unique categories across 15 cases:
+
+    Sports 2 · Media & Entertainment 2 · E-commerce & Fashion 2 · Food Delivery 1 ·
+    Work & Productivity 4 · Fintech 1 · Travel & Hospitality 1 · Maps & Navigation 1 · Gaming 1
+
+No skill-based categories ("B2B SaaS", "Monetization", "Experimentation", "Trust & Safety") were introduced — categories remain industries, not PM skills.
+
+### Preserved
+- All ten existing case studies (Spotify, LinkedIn, Chess, FotMob, Cricbuzz, Flipkart, Swiggy, Notion, Revolut, Zalando) are unchanged in content, order, titles, rubrics, and model answers (verified by `git diff` showing zero deletions in the original regions of `js/data.js`).
+- **AI grading remains frozen.** `GRADER_ENABLED = false` in `js/app.js`. Production Worker `[env.production.vars].LLM_PROVIDER = "off"` in `worker/wrangler.toml`. None of the five new IDs appears in `PILOT_CASE_IDS` or `js/grader-rubric.js`.
+- No changes to `js/grader-rubric.js`, the Worker, analytics, consent logic, homepage featured case (Swiggy hero), homepage grid (FotMob / Cricbuzz / Spotify), `styles.css`, or draft / progress storage keys.
+
+### Tests
+- New `tests/new-case-studies-tests.js` (33 tests): library size, original-ten preservation, per-case structure / duration / category, per-case rubric depth, hypothetical-labelling, alternative-reasoning model-answer note, grading exclusion for each new case (both `PILOT_CASE_IDS` and `grader-rubric.js`), category system integrity (9 unique, two new present, skill-based categories absent), and cache-buster bump.
+- `tests/homepage-ai-tests.js` updated in place to assert the library now holds fifteen case studies (not ten), with a regex that allows multi-word slugs.
+
+### Cache busters
+- `styles.css` unchanged.
+- `index.html` references `data.js?v=1.3.0` and `app.js?v=1.8.1`.
+
+---
+
 ## [2.3.0] — 2026-11-19
 
 ### Changed — AI Grader temporarily frozen for Cohort 21 calibration (Section 5)

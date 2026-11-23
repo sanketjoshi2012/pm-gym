@@ -135,14 +135,18 @@ test('inner "Open teardown →" button stopPropagation and routes to the same ca
 // ─── Library integrity ─────────────────────────────────────────────────────
 
 console.log('\n--- Full library preserved ---');
-test('data.js still defines all ten case studies', () => {
-  const allTen = [
+test('data.js still defines all original ten case studies plus the five new ones', () => {
+  const originalTen = [
     'case-study-spotify', 'case-study-linkedin', 'case-study-chess',
     'case-study-fotmob', 'case-study-cricbuzz', 'case-study-flipkart',
     'case-study-swiggy', 'case-study-notion', 'case-study-revolut',
     'case-study-zalando',
   ];
-  for (const id of allTen) {
+  const newFive = [
+    'case-study-slack', 'case-study-netflix', 'case-study-airbnb',
+    'case-study-google-maps', 'case-study-figma',
+  ];
+  for (const id of [...originalTen, ...newFive]) {
     truthy(DATA.includes(`id: "${id}"`), `${id} missing from data.js`);
   }
 });
@@ -211,11 +215,12 @@ test('hero is not duplicated — exactly one featured-hero-card in the markup', 
   const matches = HTML.match(/class="featured-hero-card"/g) || [];
   eq(matches.length, 1, 'hero should appear exactly once; duplicates would risk inconsistent copy');
 });
-test('Advanced level still lists all ten case studies', () => {
+test('Advanced level now lists exactly 15 case studies (10 original + 5 new)', () => {
   const advSection = DATA.slice(DATA.indexOf('id: "advanced"'), DATA.length);
-  const caseIds = (advSection.match(/id: "case-study-[a-z]+"/g) || []).map(m => m.replace(/.*"(case-study-[a-z]+)".*/, '$1'));
+  // Allow hyphens in slugs so multi-word ids like "case-study-google-maps" are counted.
+  const caseIds = (advSection.match(/id: "case-study-[a-z-]+"/g) || []).map(m => m.replace(/.*"(case-study-[a-z-]+)".*/, '$1'));
   const unique = Array.from(new Set(caseIds));
-  eq(unique.length, 10, `expected 10 case studies in advanced level, found ${unique.length}`);
+  eq(unique.length, 15, `expected 15 case studies in advanced level, found ${unique.length}: ${unique.join(', ')}`);
 });
 test('non-pilot cases can still be opened via the library topics page', () => {
   // renderCaseStudy renders a case study regardless of pilot status — grader UI is gated separately.
