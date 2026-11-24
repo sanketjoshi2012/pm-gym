@@ -1834,6 +1834,14 @@ html { scroll-behavior: smooth; }
   flex-wrap: wrap;
 }
 
+/* Compact line under the "How it works" strip clarifying the 4-vs-15 scope. */
+.hero-flow-note {
+  margin: 0.5rem 0 0;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--fg-muted);
+}
+
 .flow-label {
   font-size: 0.75rem;
   font-weight: 600;
@@ -2102,6 +2110,25 @@ html { scroll-behavior: smooth; }
   margin: 0.25rem 0 0;
 }
 
+/* Visible homepage-level experimental disclaimer. Sits between the section header and the
+   card grid so mobile users see it inline without a tooltip or modal. */
+.featured-ai-disclaimer {
+  margin: 0.75rem 0 1rem;
+  padding: 0.6rem 0.85rem;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--fg-2);
+  background: rgba(37, 99, 235, 0.06);
+  border: 1px solid rgba(37, 99, 235, 0.25);
+  border-radius: 10px;
+}
+@media (prefers-color-scheme: dark) {
+  .featured-ai-disclaimer {
+    background: rgba(96, 165, 250, 0.08);
+    border-color: rgba(96, 165, 250, 0.30);
+  }
+}
+
 .featured-all-btn {
   font-size: 0.875rem;
   font-weight: 600;
@@ -2200,7 +2227,9 @@ html { scroll-behavior: smooth; }
   border: 1px solid var(--border);
 }
 
-/* Experimental Beta badge on the four pilot cases. Soft-launch v2.5.0. */
+/* "AI Feedback Available" pill on the four pilot cases. v2.6.0 — the class name retains
+   "ai-beta-badge" to preserve existing CSS and markup wiring; the label itself now describes
+   what users get rather than the release stage. */
 .ai-beta-badge {
   font-size: 0.6875rem;
   font-weight: 600;
@@ -2212,6 +2241,7 @@ html { scroll-behavior: smooth; }
   color: #1d4ed8;
   border: 1px solid rgba(37, 99, 235, 0.35);
   cursor: help;
+  white-space: nowrap;
 }
 @media (prefers-color-scheme: dark) {
   .ai-beta-badge {
@@ -3118,6 +3148,83 @@ html { scroll-behavior: smooth; }
   padding: 0.85rem 1rem;
   margin-bottom: 1rem;
   flex-wrap: wrap;
+}
+
+/* Persistent compact Biggest Lever panel shown below the editor during revision. It mirrors the
+   biggest-lever colour system but is a standalone inline block (no overlay, no sticky) so it
+   works on mobile without covering the textarea or submit button. */
+.grader-compact-lever {
+  margin: 0.4rem 0 0.9rem;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  background: var(--accent-soft);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--fg);
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.grader-compact-lever.hidden { display: none; }
+.grader-compact-lever.stale {
+  border-color: var(--border-strong, var(--border));
+  background: var(--bg-muted);
+}
+.grader-compact-lever .gcl-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.6rem;
+}
+.grader-compact-lever .gcl-star { color: var(--accent); font-weight: 700; }
+.grader-compact-lever .gcl-title {
+  font-weight: 700;
+  color: var(--accent-text);
+  font-size: 0.9375rem;
+  letter-spacing: 0.01em;
+}
+.grader-compact-lever .gcl-dim {
+  font-size: 0.8125rem;
+  color: var(--fg-2);
+  background: rgba(255, 255, 255, 0.35);
+  border: 1px solid var(--accent);
+  border-radius: 9999px;
+  padding: 0.1rem 0.5rem;
+  margin-left: auto;
+}
+.grader-compact-lever .gcl-body { color: var(--fg); }
+.grader-compact-lever .gcl-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.8125rem;
+  color: var(--fg-2);
+}
+.grader-compact-lever .gcl-view-full {
+  background: transparent;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: 0.8125rem;
+  color: var(--accent-text);
+  text-decoration: underline;
+  cursor: pointer;
+}
+.grader-compact-lever .gcl-view-full:hover { color: var(--accent); }
+.grader-compact-lever .gcl-view-full:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+.grader-compact-lever .gcl-helper { flex: 1 1 auto; }
+@media (max-width: 480px) {
+  .grader-compact-lever .gcl-dim { margin-left: 0; }
+  .grader-compact-lever .gcl-helper { flex-basis: 100%; }
+}
+@media (prefers-color-scheme: dark) {
+  .grader-compact-lever .gcl-dim { background: rgba(255, 255, 255, 0.05); }
 }
 .biggest-lever-label {
   display: inline-flex;

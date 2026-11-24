@@ -28,7 +28,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="styles.css?v=1.8.0">
+  <link rel="stylesheet" href="styles.css?v=1.9.0">
 </head>
 <body>
 
@@ -97,12 +97,13 @@
         <!-- Crisp Micro-Flow -->
         <div class="hero-flow-split">
           <span class="flow-label">How it works:</span>
-          <span class="flow-step"><span class="flow-num">1</span> Pick a case</span>
+          <span class="flow-step"><span class="flow-num">1</span> Choose a case</span>
           <span class="flow-sep">→</span>
-          <span class="flow-step"><span class="flow-num">2</span> Write your answer</span>
+          <span class="flow-step"><span class="flow-num">2</span> Write your solution</span>
           <span class="flow-sep">→</span>
-          <span class="flow-step"><span class="flow-num">3</span> Compare with the rubric</span>
+          <span class="flow-step"><span class="flow-num">3</span> Get AI feedback &amp; improve</span>
         </div>
+        <p class="hero-flow-note">AI feedback is available on 4 selected cases. Other cases include model answers and evaluation rubrics.</p>
       </div>
 
       <!-- Right Column: Featured Case -->
@@ -110,14 +111,14 @@
         <div class="featured-hero-card" id="featuredHeroCard" data-case-id="case-study-swiggy" onclick="showView('module', {levelId: 'advanced', topicId: 'case-study-swiggy'})" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();showView('module',{levelId:'advanced',topicId:'case-study-swiggy'})}">
           <div class="featured-hero-top">
             <span class="featured-hero-eyebrow">FEATURED CASE</span>
-            <span class="ai-beta-badge" title="AI feedback is in calibration — scores are directional.">AI · Experimental Beta</span>
+            <span class="ai-beta-badge" title="AI feedback is experimental and still being calibrated.">AI Feedback Available</span>
             <span class="featured-hero-time">15–20 min</span>
           </div>
           <div class="featured-hero-body">
             <div class="featured-hero-icon" aria-hidden="true">S</div>
             <div class="featured-hero-text">
               <h2 class="featured-hero-title">Swiggy Order Cancellations Spike</h2>
-              <p class="featured-hero-desc">Cancellation rate jumped from 8% to 10% in two weeks, the highest in 18 months. Find the root cause and build a plan.</p>
+              <p class="featured-hero-desc">Cancellation rate jumped from 8% to 10% in two weeks, the highest in 18 months. Find the root cause and build a plan. Get personalized feedback on your PM reasoning, strengths, and areas to improve.</p>
             </div>
           </div>
           <div class="featured-hero-tags">
@@ -131,25 +132,27 @@
       </div>
     </div>
 
-    <!-- ─── Featured Case Teardowns ─── -->
+    <!-- ─── Practice with AI Feedback ─── -->
     <div class="featured-teardowns-section" id="aiFeaturedSection">
       <div class="featured-header">
         <div>
           <div class="featured-kicker">Explore more cases</div>
-          <h2 class="featured-title">Featured Case Teardowns</h2>
-          <p class="featured-subtitle">Work through real product dilemmas, model answers, and rubric evaluations.</p>
+          <h2 class="featured-title">Practice with AI Feedback</h2>
+          <p class="featured-subtitle">Solve real-world inspired PM challenges, receive structured feedback on your reasoning, and discover what to improve next.</p>
         </div>
         <button class="featured-all-btn" onclick="showView('topics', {levelId: 'advanced'})">
           Explore all case studies →
         </button>
       </div>
 
+      <p class="featured-ai-disclaimer" role="note">AI grading is experimental. Scores are directional and still being calibrated.</p>
+
       <div class="featured-grid featured-grid-ai">
         <!-- FotMob -->
         <div class="featured-card ai-card" data-case-id="case-study-fotmob" onclick="showView('module', {levelId: 'advanced', topicId: 'case-study-fotmob'})" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();showView('module',{levelId:'advanced',topicId:'case-study-fotmob'})}">
           <div class="featured-card-top">
             <span class="featured-badge">Sports</span>
-            <span class="ai-beta-badge" title="AI feedback is in calibration — scores are directional.">AI · Beta</span>
+            <span class="ai-beta-badge" title="AI feedback is experimental and still being calibrated.">AI Feedback Available</span>
             <span class="featured-time">15–20 min</span>
           </div>
           <h3 class="featured-card-title">FotMob Between-Game Retention</h3>
@@ -157,7 +160,7 @@
           <div class="featured-card-footer">
             <span class="featured-tag">Engagement</span>
             <span class="featured-tag">Segmentation</span>
-            <button class="featured-arrow-btn" onclick="event.stopPropagation(); showView('module', {levelId: 'advanced', topicId: 'case-study-fotmob'})">Open teardown →</button>
+            <button class="featured-arrow-btn" onclick="event.stopPropagation(); showView('module', {levelId: 'advanced', topicId: 'case-study-fotmob'})">Practice this case →</button>
           </div>
         </div>
 
@@ -165,7 +168,7 @@
         <div class="featured-card ai-card" data-case-id="case-study-cricbuzz" onclick="showView('module', {levelId: 'advanced', topicId: 'case-study-cricbuzz'})" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();showView('module',{levelId:'advanced',topicId:'case-study-cricbuzz'})}">
           <div class="featured-card-top">
             <span class="featured-badge">Sports</span>
-            <span class="ai-beta-badge" title="AI feedback is in calibration — scores are directional.">AI · Beta</span>
+            <span class="ai-beta-badge" title="AI feedback is experimental and still being calibrated.">AI Feedback Available</span>
             <span class="featured-time">15–20 min</span>
           </div>
           <h3 class="featured-card-title">Cricbuzz Feature Prioritisation</h3>
@@ -173,7 +176,7 @@
           <div class="featured-card-footer">
             <span class="featured-tag">Prioritisation</span>
             <span class="featured-tag">Strategy</span>
-            <button class="featured-arrow-btn" onclick="event.stopPropagation(); showView('module', {levelId: 'advanced', topicId: 'case-study-cricbuzz'})">Open teardown →</button>
+            <button class="featured-arrow-btn" onclick="event.stopPropagation(); showView('module', {levelId: 'advanced', topicId: 'case-study-cricbuzz'})">Practice this case →</button>
           </div>
         </div>
 
@@ -181,7 +184,7 @@
         <div class="featured-card ai-card" data-case-id="case-study-spotify" onclick="showView('module', {levelId: 'advanced', topicId: 'case-study-spotify'})" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();showView('module',{levelId:'advanced',topicId:'case-study-spotify'})}">
           <div class="featured-card-top">
             <span class="featured-badge">Media &amp; Entertainment</span>
-            <span class="ai-beta-badge" title="AI feedback is in calibration — scores are directional.">AI · Beta</span>
+            <span class="ai-beta-badge" title="AI feedback is experimental and still being calibrated.">AI Feedback Available</span>
             <span class="featured-time">15–20 min</span>
           </div>
           <h3 class="featured-card-title">Spotify Engagement Drop</h3>
@@ -189,7 +192,7 @@
           <div class="featured-card-footer">
             <span class="featured-tag">Engagement</span>
             <span class="featured-tag">Metrics</span>
-            <button class="featured-arrow-btn" onclick="event.stopPropagation(); showView('module', {levelId: 'advanced', topicId: 'case-study-spotify'})">Open teardown →</button>
+            <button class="featured-arrow-btn" onclick="event.stopPropagation(); showView('module', {levelId: 'advanced', topicId: 'case-study-spotify'})">Practice this case →</button>
           </div>
         </div>
       </div>
@@ -398,6 +401,6 @@
 
   <!-- Scripts -->
   <script src="js/data.js?v=1.3.0"></script>
-  <script src="js/app.js?v=1.9.0"></script>
+  <script src="js/app.js?v=1.10.0"></script>
 </body>
 </html>

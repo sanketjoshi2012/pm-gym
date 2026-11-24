@@ -9,6 +9,35 @@ Format: [Semantic Versioning](https://semver.org) — `MAJOR.MINOR.PATCH`
 
 ---
 
+## [2.6.0] — 2026-11-24
+
+### Changed — Benefit-oriented homepage copy for the AI-enabled cases
+Four cards switch from release-stage labelling (`AI · Beta`, `AI · Experimental Beta`) to a benefit label (`AI Feedback Available`) and the featured section is re-themed around the feedback promise rather than "teardowns". The 4-case scope and all 15 cases in the library are unchanged.
+
+- **Featured section** — `h2` → *"Practice with AI Feedback"*; subtitle → *"Solve real-world inspired PM challenges, receive structured feedback on your reasoning, and discover what to improve next."*
+- **Hero "How it works"** — steps become *"Choose a case → Write your solution → Get AI feedback & improve"*, with a new visible note below the strip: *"AI feedback is available on 4 selected cases. Other cases include model answers and evaluation rubrics."*
+- **Swiggy hero** — adds *"Get personalized feedback on your PM reasoning, strengths, and areas to improve."* to the existing description; card height, CTA, and click behavior unchanged.
+- **Grid CTAs** — three *"Open teardown →"* buttons become *"Practice this case →"*; navigation destinations unchanged.
+- **Visible experimental disclaimer** — a new inline `.featured-ai-disclaimer` under the section header reads *"AI grading is experimental. Scores are directional and still being calibrated."* It is standard copy (not a tooltip), visible on mobile. The in-page `.grader-beta-banner` above the editor on each pilot case is preserved unchanged.
+- **Non-pilot cases** — the other 11 cases carry no new badges, copy, or UI.
+
+### Changed — Improve My Answer keeps guidance visible during revision
+Clicking **Improve my answer** previously hid the entire feedback card, forcing the learner to remember the advice while editing. It now collapses the full feedback panel to a compact *Biggest Lever* panel below the editor, showing the lowest-scoring dimension's name, score, and the model's specific improvement note.
+
+- New `#graderCompactLever` element rendered inside the pilot-case markup, immediately after the textarea. Visibility is gated on the same `hidden + lastResult` signal as the existing *View Last Feedback* button, so the two surfaces stay consistent.
+- Content is pulled verbatim from the stored `lastResult` via the existing `pickBiggestLever` helper (lowest score, rubric order for tie-break). **No additional API call, no prompt or rubric change.**
+- *"View full feedback"* link inside the compact panel calls `reopenGradeResult` — the existing behavior — so the full dimension-by-dimension view is one click away without a new grade.
+- Stale behavior reuses the same signal as the full panel and the VLF button; the compact panel picks up the `.stale` class the moment the learner edits the textarea.
+- On a successful regrade, `renderGradeResult` sets `hidden: false`, the full panel returns, the compact lever hides, and the attempt counter increments through the existing path.
+- Mobile (375px): panel is inline, no sticky positioning, no horizontal overflow, does not cover the textarea or submit button; `.gcl-helper` wraps to its own line, `.gcl-dim` drops the `margin-left: auto` so the chip sits under the title instead of pushing off-screen.
+
+### Unchanged in this release
+- `GRADER_ENABLED = true`, `LLM_PROVIDER = "anthropic"`, the Cloudflare Worker, `PILOT_CASE_IDS`, score calculation, evidence quote validation, rate limits, daily budget cap, analytics events and consent flow, the 15 case studies, and all model-answer / rubric content.
+- No new feedback forms, logins, dashboards, or product features.
+- Zero paid AI API calls made for this release (all QA ran against a stubbed `fetch`).
+
+---
+
 ## [2.5.0] — 2026-11-23
 
 ### Changed — AI grader reactivated for a 10-user experimental soft launch

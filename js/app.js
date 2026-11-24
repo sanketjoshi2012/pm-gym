@@ -1093,6 +1093,18 @@ function renderCaseStudy(container, topic, levelId) {
       placeholder="Write your answer here... Think through the problem systematically before revealing the model answer."
       ></textarea>
     ${isPilotCase(topic.id) ? `
+    <div id="graderCompactLever" class="grader-compact-lever hidden" role="note" aria-label="Your biggest improvement opportunity from the last grade">
+      <div class="gcl-head">
+        <span class="gcl-star" aria-hidden="true">★</span>
+        <span class="gcl-title">Your biggest improvement opportunity</span>
+        <span class="gcl-dim" id="graderCompactLeverDim"></span>
+      </div>
+      <div class="gcl-body" id="graderCompactLeverBody"></div>
+      <div class="gcl-foot">
+        <button type="button" class="gcl-view-full" onclick="reopenGradeResult('${topic.id}')">View full feedback</button>
+        <span class="gcl-helper">Use this guidance to strengthen your answer before trying again.</span>
+      </div>
+    </div>
     <div class="grader-beta-banner" role="note" aria-label="AI grading is in experimental beta">
       <span class="grader-beta-badge">Experimental Beta</span>
       <span class="grader-beta-text">AI feedback is in calibration — treat scores as directional.</span>
@@ -1244,12 +1256,33 @@ function updateGraderUI(topicId) {
 
   // "View last feedback" is visible only when a result exists AND the panel is hidden.
   const vlfBtn = document.getElementById('viewLastFeedbackBtn');
+  const hasHiddenResult = !!(grading && grading.lastResult && grading.hidden);
   if (vlfBtn) {
-    const hasHiddenResult = !!(grading && grading.lastResult && grading.hidden);
     vlfBtn.classList.toggle('hidden', !hasHiddenResult);
     const staleTag = vlfBtn.querySelector('.vlf-stale');
     if (staleTag) staleTag.classList.toggle('hidden', !(hasHiddenResult && stale));
     vlfBtn.classList.toggle('stale', hasHiddenResult && stale);
+  }
+
+  // Compact "Biggest lever" panel near the editor. Visible whenever the full feedback panel is
+  // hidden but a prior successful grade still exists — i.e. the same signal as View Last Feedback.
+  // No new API call, no prompt change: content is pulled verbatim from the stored lastResult.
+  const compactLever = document.getElementById('graderCompactLever');
+  if (compactLever) {
+    const dims = (grading && grading.lastResult && Array.isArray(grading.lastResult.dimensions))
+      ? grading.lastResult.dimensions : [];
+    const biggest = dims.length ? pickBiggestLever(dims) : null;
+    const show = hasHiddenResult && !!biggest && !!(biggest.improvement && String(biggest.improvement).trim());
+    if (show) {
+      const dimEl  = document.getElementById('graderCompactLeverDim');
+      const bodyEl = document.getElementById('graderCompactLeverBody');
+      if (dimEl)  dimEl.textContent  = `${biggest.dimension} · ${Number(biggest.score)} / ${Number(biggest.max_score || 3)}`;
+      if (bodyEl) bodyEl.textContent = String(biggest.improvement);
+      compactLever.classList.toggle('stale', stale);
+      compactLever.classList.remove('hidden');
+    } else {
+      compactLever.classList.add('hidden');
+    }
   }
 }
 
@@ -1428,13 +1461,21 @@ function reopenGradeResult(topicId) {
   if (result) { result.focus(); result.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
 }
 
-// Primary "Improve my answer" action: hide the panel (keep the grade), refocus the textarea.
+// Primary "Improve my answer" action: collapse the full panel but keep the stored grade, then move
+// focus to the editor. The compact Biggest Lever panel above the editor stays visible (shown by
+// updateGraderUI whenever a hidden lastResult exists), so the learner can revise with the top-
+// priority recommendation in view without a second API call. The full previous feedback remains
+// one click away via the "View full feedback" link inside the compact panel and via View Last
+// Feedback in the actions row.
 function improveMyAnswer(topicId) {
   closeGradeResult(topicId);
   const textarea = document.getElementById('caseTextarea');
   if (textarea) {
     textarea.focus();
-    textarea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // 'nearest' avoids a disruptive jump when the editor is already in view (common case) and
+    // still brings it visible if it isn't. The compact lever sits just below the editor, so a
+    // short scroll reveals it without overlapping the active typing area.
+    textarea.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 }
 

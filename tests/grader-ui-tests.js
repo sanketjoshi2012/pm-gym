@@ -583,6 +583,62 @@ test('improveMyAnswer does not clear the answer or the grade', () => {
   // It must refocus the textarea
   truthy(/textarea\.focus\(\)/.test(body), 'must refocus the editor');
 });
+test('improveMyAnswer does NOT trigger a fresh grading call', () => {
+  const src = fs.readFileSync(path.join(__dirname, '..', 'js', 'app.js'), 'utf8');
+  const start = src.indexOf('function improveMyAnswer');
+  const end = src.indexOf('\nfunction ', start + 1);
+  const body = src.slice(start, end > 0 ? end : src.length);
+  falsy(/requestGrade\s*\(/.test(body), 'improveMyAnswer must never auto-request another grade');
+  falsy(/fetch\s*\(/.test(body), 'improveMyAnswer must not initiate any fetch');
+});
+
+// ─── Tests: persistent Biggest Lever panel during revision (v2.6.0) ─────────
+
+console.log('\n--- Compact Biggest Lever panel (persistent during revision) ---');
+test('renderCaseStudy declares the compact lever element inside pilot-case markup', () => {
+  const src = fs.readFileSync(path.join(__dirname, '..', 'js', 'app.js'), 'utf8');
+  truthy(/id="graderCompactLever"/.test(src), 'compact lever element missing');
+  truthy(/class="grader-compact-lever hidden"/.test(src), 'compact lever must start hidden');
+  truthy(/id="graderCompactLeverDim"/.test(src), 'dimension slot missing');
+  truthy(/id="graderCompactLeverBody"/.test(src), 'body slot missing');
+  truthy(/onclick="reopenGradeResult\('\$\{topic\.id\}'\)"/.test(src),
+    'compact lever must include a "View full feedback" link that reopens the full panel');
+});
+test('updateGraderUI shows the compact lever iff the full panel is hidden AND a prior grade exists', () => {
+  const src = fs.readFileSync(path.join(__dirname, '..', 'js', 'app.js'), 'utf8');
+  const start = src.indexOf('function updateGraderUI');
+  const end = src.indexOf('\nfunction ', start + 1);
+  const body = src.slice(start, end);
+  truthy(/graderCompactLever/.test(body), 'updateGraderUI must manage the compact lever');
+  // Visibility must gate on the same hasHiddenResult signal as the View Last Feedback button.
+  truthy(/hasHiddenResult\s*&&/.test(body),
+    'compact lever visibility must reuse the same hidden+lastResult gate as View Last Feedback');
+  truthy(/pickBiggestLever/.test(body), 'compact lever must use the existing biggest-lever picker');
+});
+test('compact lever populates from stored lastResult, never from a fresh API call', () => {
+  const src = fs.readFileSync(path.join(__dirname, '..', 'js', 'app.js'), 'utf8');
+  const start = src.indexOf('const compactLever =');
+  truthy(start > 0, 'compact lever handling block missing');
+  const block = src.slice(start, start + 1200);
+  falsy(/fetch\s*\(/.test(block), 'compact lever must not trigger any fetch');
+  falsy(/requestGrade\s*\(/.test(block), 'compact lever must not request a new grade');
+  truthy(/grading\.lastResult/.test(block), 'compact lever must read grading.lastResult only');
+});
+test('compact lever element lives below the textarea (visible when editor is focused)', () => {
+  const src = fs.readFileSync(path.join(__dirname, '..', 'js', 'app.js'), 'utf8');
+  const textareaIdx = src.indexOf('id="caseTextarea"');
+  const leverIdx = src.indexOf('id="graderCompactLever"');
+  truthy(textareaIdx > 0 && leverIdx > 0, 'both elements must exist');
+  truthy(leverIdx > textareaIdx,
+    'compact lever must appear after the textarea so scrolling to the editor keeps it in view');
+});
+test('compact lever class is defined in styles.css and has a mobile fallback', () => {
+  const css = fs.readFileSync(path.join(__dirname, '..', 'styles.css'), 'utf8');
+  truthy(/\.grader-compact-lever\s*\{/.test(css), '.grader-compact-lever CSS rule missing');
+  truthy(/\.grader-compact-lever\.hidden/.test(css), '.grader-compact-lever.hidden must hide the element');
+  truthy(/@media\s*\(max-width:\s*480px\)/.test(css) || /@media[^{]*480px[\s\S]{0,300}gcl-/.test(css),
+    'compact lever must have a mobile-width override');
+});
 
 // ─── Tests: View Last Feedback button ────────────────────────────────────────
 

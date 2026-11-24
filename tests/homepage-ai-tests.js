@@ -41,20 +41,33 @@ function featuredBlock() {
 
 // ─── Section heading + copy ─────────────────────────────────────────────────
 
-console.log('\n--- Freeze: heading + section copy reverted ---');
-test('section heading reverted to "Featured Case Teardowns"', () => {
-  truthy(/<h2 class="featured-title">Featured Case Teardowns<\/h2>/.test(HTML),
-    'freeze heading missing — expected "Featured Case Teardowns"');
+console.log('\n--- Section heading + section copy (v2.6.0 reactivation copy) ---');
+test('section heading reads "Practice with AI Feedback"', () => {
+  truthy(/<h2 class="featured-title">Practice with AI Feedback<\/h2>/.test(HTML),
+    'heading missing — expected "Practice with AI Feedback"');
 });
-test('AI-era heading "Practice with AI Feedback" is absent', () => {
-  falsy(HTML.includes('Practice with AI Feedback'), 'AI-era heading must not appear while grader is frozen');
+test('freeze-era heading "Featured Case Teardowns" is gone', () => {
+  falsy(/>Featured Case Teardowns</.test(HTML),
+    'freeze-era heading must not appear once the grader is reactivated');
 });
-test('kicker reverted and subtitle has no AI promotional copy', () => {
-  truthy(/<div class="featured-kicker">Explore more cases<\/div>/.test(HTML), 'freeze kicker missing');
+test('kicker + subtitle describe the AI feedback benefit (not just release stage)', () => {
+  truthy(/<div class="featured-kicker">Explore more cases<\/div>/.test(HTML), 'kicker missing');
   const sub = HTML.match(/<p class="featured-subtitle">([^<]+)<\/p>/);
   truthy(sub, 'subtitle missing');
-  truthy(sub[1].length < 160, `subtitle must stay short (got ${sub[1].length} chars)`);
-  falsy(/AI\b/i.test(sub[1]), 'subtitle must not mention AI during freeze');
+  truthy(/AI/i.test(sub[1]) || /feedback/i.test(sub[1]),
+    'subtitle must describe what users get (mention AI feedback or feedback on reasoning)');
+  truthy(/improve|reasoning|discover/i.test(sub[1]),
+    'subtitle must mention what the user learns or improves');
+});
+test('visible homepage-level experimental disclaimer is present (not hover-only)', () => {
+  truthy(/class="featured-ai-disclaimer"/.test(HTML),
+    'featured-ai-disclaimer element must be present as visible copy, not a tooltip');
+  const disc = HTML.match(/<p class="featured-ai-disclaimer"[^>]*>([^<]+)<\/p>/);
+  truthy(disc, 'disclaimer text missing');
+  truthy(/experimental/i.test(disc[1]) && /directional/i.test(disc[1]) && /calibrat/i.test(disc[1]),
+    'disclaimer must say grading is experimental, scores are directional, and calibration is ongoing');
+  falsy(/expert[- ]?verified|scientifically|independently calibrated/i.test(HTML),
+    'must not describe scoring as expert-verified, scientifically accurate, or independently calibrated');
 });
 
 // ─── Featured card selection ────────────────────────────────────────────────
@@ -85,11 +98,17 @@ test('no non-pilot case is featured on the homepage', () => {
     falsy(block.includes(bad), `${bad} must not appear in the AI featured grid`);
   }
 });
-test('no "AI Feedback Available" label anywhere on the homepage', () => {
-  eq((HTML.match(/AI Feedback Available/g) || []).length, 0,
-    'AI label markup must be removed from the hero and all grid cards during freeze');
-  eq((HTML.match(/featured-ai-label/g) || []).length, 0,
-    '.featured-ai-label markup must not appear in HTML during freeze (CSS rule may remain for reactivation)');
+test('every pilot case (hero + 3 grid cards) carries an "AI Feedback Available" pill', () => {
+  // The badge class name is retained from the Experimental Beta rollout; the user-visible label
+  // was swapped to describe what the feature does, not just the release stage.
+  const labels = (HTML.match(/AI Feedback Available/g) || []).length;
+  eq(labels, 4, `expected 4 "AI Feedback Available" labels (hero + 3 grid cards), found ${labels}`);
+  const pills = (HTML.match(/class="ai-beta-badge"/g) || []).length;
+  eq(pills, 4, `expected 4 .ai-beta-badge pills (hero + 3 grid cards), found ${pills}`);
+});
+test('older freeze-era / beta-era label text is gone', () => {
+  falsy(/AI · Experimental Beta|AI · Beta\b/.test(HTML),
+    'previous release-stage labels must be replaced with benefit-oriented copy');
 });
 test('across the whole homepage, every pilot case appears exactly once', () => {
   // Hero markup + grid markup together should cover all four pilot IDs, with no duplicates.
@@ -192,10 +211,15 @@ test('hero featured card points to an AI-enabled pilot case', () => {
     eq(r, dataId[1], `every hero navigation target must match data-case-id (${dataId[1]}), got ${r}`);
   }
 });
-test('hero does NOT carry the AI Feedback Available label during freeze', () => {
+test('hero carries the "AI Feedback Available" pill', () => {
   const hero = heroBlock();
-  falsy(/AI Feedback Available/.test(hero), 'hero AI label must be removed during freeze');
-  falsy(/featured-ai-label/.test(hero), 'hero AI label markup must be removed during freeze');
+  truthy(/AI Feedback Available/.test(hero), 'hero must advertise AI Feedback Available');
+  truthy(/class="ai-beta-badge"/.test(hero), 'hero must use the shared pill style for the AI label');
+});
+test('Swiggy hero description includes the personalized-feedback benefit line', () => {
+  const hero = heroBlock();
+  truthy(/personalized feedback/i.test(hero),
+    'Swiggy hero copy must mention personalized feedback so the benefit is visible without a tooltip');
 });
 test('hero metadata (title, description, tags, icon) matches the chosen pilot case', () => {
   const hero = heroBlock();
@@ -249,17 +273,31 @@ test('card keeps focus-visible outline for keyboard a11y', () => {
 
 // ─── Freeze guards ──────────────────────────────────────────────────────────
 
-console.log('\n--- Grader reactivation (v2.5.0 soft launch) ---');
+console.log('\n--- Grader reactivation (v2.6.0 benefit-oriented copy) ---');
 test('GRADER_ENABLED constant is declared and set to true in app.js', () => {
   truthy(/const\s+GRADER_ENABLED\s*=\s*true\s*;/.test(APP),
     'app.js must declare `const GRADER_ENABLED = true;` for the 10-user experimental beta');
 });
-test('Experimental Beta badge appears on the hero and all three pilot grid cards', () => {
-  const hero = heroBlock();
-  truthy(/ai-beta-badge/.test(hero), 'hero must carry the Experimental Beta badge');
+test('How-it-works flow uses the new wording', () => {
+  truthy(/>Choose a case<\/span>/.test(HTML) || /Choose a case/.test(HTML),
+    'step 1 must read "Choose a case"');
+  truthy(/>Write your solution<\/span>/.test(HTML) || /Write your solution/.test(HTML),
+    'step 2 must read "Write your solution"');
+  truthy(/Get AI feedback/.test(HTML), 'step 3 must mention AI feedback and improvement');
+  truthy(/class="hero-flow-note"/.test(HTML),
+    'a visible note must clarify that AI feedback is available on 4 of the case studies');
+  const note = HTML.match(/<p class="hero-flow-note"[^>]*>([^<]+)<\/p>/);
+  truthy(note, 'hero-flow-note text missing');
+  truthy(/4 selected cases|4 of the|4 case/i.test(note[1]),
+    'clarification must name the 4-case scope so other cases aren’t implied to have AI');
+  truthy(/model answers|evaluation rubric|rubric/i.test(note[1]),
+    'clarification must say the other cases include model answers / rubrics');
+});
+test('Grid card CTAs read "Practice this case" (not "Open teardown")', () => {
   const block = featuredBlock();
-  const badges = (block.match(/ai-beta-badge/g) || []).length;
-  eq(badges, 3, 'grid must carry one Experimental Beta badge per pilot card (expected 3)');
+  const practice = (block.match(/Practice this case/g) || []).length;
+  eq(practice, 3, 'each of the three grid pilot cards must use "Practice this case" as its CTA');
+  falsy(/Open teardown/.test(block), 'legacy "Open teardown" CTA must be removed from the grid');
 });
 test('isPilotCase helper is gated by GRADER_ENABLED', () => {
   const start = APP.indexOf('function isPilotCase');
